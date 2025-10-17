@@ -2,9 +2,9 @@ import './style.css';
 
 import { GameLoop } from './gameEngine/GameLoop';
 import { Main } from './gameEngine/Main';
-import { CaveLevel } from './levels/CaveLevel';
 import { gridCells } from './utils/grid';
 import { Vector2 } from './utils/vector';
+import { Pinball } from './levels/Pinball';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas')!;
 const ctx = canvas.getContext('2d')!;
@@ -12,7 +12,7 @@ const ctx = canvas.getContext('2d')!;
 const mainScene = new Main({ ctx });
 
 mainScene.setLevel(
-  new CaveLevel({ actorPosition: new Vector2(gridCells(3), gridCells(6)) })
+  new Pinball({ actorPosition: new Vector2(gridCells(3), gridCells(6)) })
 );
 
 const update = (deltaTime: number) => {

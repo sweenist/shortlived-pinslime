@@ -11,22 +11,9 @@ class Resources {
   constructor() {
     this.images = {};
     this.toLoad = {
-      caveBackground: 'sprites/cave.png',
-      caveForeground: 'sprites/cave-ground.png',
-      customOverworld: 'sprites/overworld.png',
-      custom2: 'sprites/grasspaths.png',
-      custom3: 'sprites/water.png',
-      exit: 'sprites/exit.png',
       fontWhite: 'sprites/sprite-font-white.png',
-      ground: 'sprites/ground.png',
-      hero: 'sprites/hero-sheet.png',
-      knight: 'sprites/knight-sheet.png',
-      portraits: 'sprites/portraits-sheet.png',
-      rod: 'sprites/rod.png',
+      hero: 'sprites/redslime.png',
       shadow: 'sprites/shadow.png',
-      sky: 'sprites/sky.png',
-      slimeRed: 'sprites/redslime.png',
-      spritesheet: 'sprites/spritesheet.png',
       textbox: 'sprites/text-box.png',
     };
 
