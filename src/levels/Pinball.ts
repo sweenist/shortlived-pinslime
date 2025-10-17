@@ -9,7 +9,7 @@ import { resources } from '../Resources';
 import { gridCells } from '../utils/grid';
 import { Vector2 } from '../utils/vector';
 import mapContent from './config/overworld.txt?raw';
-import levelConfig from './config/custom.config.json';
+import levelConfig from './config/level.config.json';
 
 type tempType = {
   resourceName: string;
