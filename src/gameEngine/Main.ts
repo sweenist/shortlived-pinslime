@@ -2,7 +2,7 @@ import { Hero } from '../actors/Hero';
 import { Npc } from '../actors/Npc';
 import { fadeIn, fadeOut } from '../constants';
 import { Inventory } from '../menu/Inventory';
-import { SpriteText } from '../objects/TextBox/SpriteText';
+import { SpriteTextBox } from '../objects/TextBox/SpriteTextBox';
 import type { fader } from '../types';
 import { Vector2 } from '../utils/vector';
 import { Camera } from './Camera';
@@ -63,7 +63,7 @@ export class Main extends GameObject {
           storyFlags.enumerate();
         }
 
-        const textBox = new SpriteText(content!);
+        const textBox = new SpriteTextBox(content!);
         this.addChild(textBox);
 
         const textBoxId = gameEvents.on(

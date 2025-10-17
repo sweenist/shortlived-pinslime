@@ -16,7 +16,7 @@ type SpriteFontProps = {
   }[];
 };
 
-export class SpriteText extends GameObject {
+export class SpriteTextBox extends GameObject {
   content: DialogueScenario;
   backdrop: Sprite;
   words: SpriteFontProps[];
