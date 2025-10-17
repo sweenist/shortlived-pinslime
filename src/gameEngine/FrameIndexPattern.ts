@@ -1,0 +1,29 @@
+import type { animationConfiguration } from '../actors/heroAnimations';
+
+export class FrameIndexPattern {
+  animationConfiguration: animationConfiguration;
+  duration: number;
+  currentTime: number;
+
+  constructor(animationConfiguration: animationConfiguration) {
+    this.currentTime = 0;
+    this.animationConfiguration = animationConfiguration;
+    this.duration = animationConfiguration.duration;
+  }
+
+  get frame() {
+    const { frames } = this.animationConfiguration;
+    for (let i = frames.length - 1; i >= 0; i--) {
+      if (this.currentTime >= frames[i].time) {
+        return frames[i].frame;
+      }
+    }
+    throw 'Time is before keyframe';
+  }
+
+  step(delta: number) {
+    this.currentTime += delta
+    if (this.currentTime >= this.duration)
+      this.currentTime = 0;
+  }
+}

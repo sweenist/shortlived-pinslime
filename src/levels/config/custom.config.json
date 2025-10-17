@@ -1,0 +1,112 @@
+{
+  "walls": [
+    { "x": 32, "y": 48 },
+    { "x": 256, "y": 48 },
+    { "x": 32, "y": 64 },
+    { "x": 256, "y": 64 },
+    { "x": 32, "y": 80 },
+    { "x": 256, "y": 80 },
+    { "x": 32, "y": 96 },
+    { "x": 256, "y": 96 },
+    { "x": 48, "y": 16 },
+    { "x": 48, "y": 112 },
+    { "x": 64, "y": 16 },
+    { "x": 64, "y": 112 },
+    { "x": 80, "y": 16 },
+    { "x": 80, "y": 112 },
+    { "x": 96, "y": 16 },
+    { "x": 96, "y": 112 },
+    { "x": 112, "y": 16 },
+    { "x": 112, "y": 112 },
+    { "x": 128, "y": 16 },
+    { "x": 128, "y": 112 },
+    { "x": 144, "y": 16 },
+    { "x": 144, "y": 112 },
+    { "x": 160, "y": 16 },
+    { "x": 160, "y": 112 },
+    { "x": 176, "y": 16 },
+    { "x": 176, "y": 112 },
+    { "x": 192, "y": 16 },
+    { "x": 192, "y": 112 },
+    { "x": 208, "y": 16 },
+    { "x": 208, "y": 112 },
+    { "x": 224, "y": 16 },
+    { "x": 224, "y": 112 },
+    { "x": 240, "y": 16 },
+    { "x": 240, "y": 112 },
+    { "x": 240, "y": 32 },
+    { "x": 64, "y": 32 },
+    { "x": 80, "y": 32 },
+    { "x": 96, "y": 32 }
+  ],
+  "treeA": {
+    "frameIndex": 18,
+    "imageName": "customOverworld",
+    "isSolid": false,
+    "positions": [{ "x": 128, "y": 48 }]
+  },
+  "treeB": {
+    "frameIndex": 19,
+    "imageName": "customOverworld",
+    "isSolid": false,
+    "positions": [{ "x": 144, "y": 48 }]
+  },
+  "treeC": {
+    "frameIndex": 24,
+    "imageName": "customOverworld",
+    "positions": [{ "x": 128, "y": 64 }]
+  },
+  "treeD": {
+    "frameIndex": 25,
+    "imageName": "customOverworld",
+    "positions": [{ "x": 144, "y": 64 }]
+  },
+  "rockA": {
+    "frameIndex": 21,
+    "imageName": "customOverworld",
+    "isSolid": false,
+    "positions": [{ "x": 176, "y": 32 }]
+  },
+  "rockB": {
+    "frameIndex": 22,
+    "imageName": "customOverworld",
+    "isSolid": false,
+    "positions": [{ "x": 192, "y": 32 }]
+  },
+  "rockC": {
+    "frameIndex": 27,
+    "imageName": "customOverworld",
+    "positions": [{ "x": 176, "y": 48 }]
+  },
+  "rockD": {
+    "frameIndex": 28,
+    "imageName": "customOverworld",
+    "positions": [{ "x": 192, "y": 48 }]
+  },
+  "resourceConfig": [
+    {
+      "name": "customOverworld",
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 6,
+        "rows": 5
+      }
+    },
+    {
+      "name": "custom2",
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 5,
+        "rows": 5
+      }
+    },
+    {
+      "name": "custom3",
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 5,
+        "rows": 3
+      }
+    }
+  ]
+}
