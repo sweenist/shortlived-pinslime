@@ -15,7 +15,6 @@ class StoryFlags {
         for (let i = 0; i < bypass.length; i++) {
           const currentFlag = bypass[i];
           if (this.flags.has(currentFlag)) {
-            console.warn('bypassing', currentFlag);
             return false;
           }
         }
@@ -24,7 +23,6 @@ class StoryFlags {
         for (let i = 0; i < required.length; i++) {
           const essential = required[i];
           if (!this.flags.has(essential)) {
-            console.info('interaction requires:', essential);
             return false;
           }
         }
