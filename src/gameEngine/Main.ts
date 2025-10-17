@@ -41,10 +41,7 @@ export class Main extends GameObject {
   }
 
   ready(): void {
-    const inventory = new Inventory();
-
-    this.addChild(inventory);
-
+    
     gameEvents.on<Level>(signals.levelChanging, this, (newLevel) => {
       console.info(`Leaving ${this.level?.constructor.name ?? 'None'}`);
       this.startFade(() => this.setLevel(newLevel));

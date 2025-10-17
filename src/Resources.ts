@@ -11,10 +11,11 @@ class Resources {
   constructor() {
     this.images = {};
     this.toLoad = {
-      fontWhite: 'sprites/sprite-font-white.png',
+      fontWhite: 'sprites/ArcadeFont.png',
       hero: 'sprites/redslime.png',
       shadow: 'sprites/shadow.png',
       textbox: 'sprites/text-box.png',
+      walls: 'sprites/PingWalls.png',
     };
 
     Object.keys(this.toLoad).forEach((key: string) => {

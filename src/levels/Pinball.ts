@@ -8,7 +8,7 @@ import { Sprite } from '../gameEngine/Sprite';
 import { resources } from '../Resources';
 import { gridCells } from '../utils/grid';
 import { Vector2 } from '../utils/vector';
-import mapContent from './config/overworld.txt?raw';
+import mapContent from './config/level1.txt?raw';
 import levelConfig from './config/level.config.json';
 
 type tempType = {
@@ -19,74 +19,45 @@ type tempType = {
 export class Pinball extends Level {
   mapAddresses: string[] = [];
   fancyMap: { [key: string]: tempType } = {
-    D1: { resourceName: 'custom2', frameIndex: 0 },
-    DN: { resourceName: 'custom2', frameIndex: 1 },
-    D2: { resourceName: 'custom2', frameIndex: 2 },
-    DX: { resourceName: 'custom2', frameIndex: 3 },
-    G1: { resourceName: 'custom2', frameIndex: 4 },
-    DW: { resourceName: 'custom2', frameIndex: 5 },
-    DC: { resourceName: 'custom2', frameIndex: 6 },
-    DE: { resourceName: 'custom2', frameIndex: 7 },
-    G0: { resourceName: 'custom2', frameIndex: 8 },
-    G2: { resourceName: 'custom2', frameIndex: 9 },
-    D3: { resourceName: 'custom2', frameIndex: 10 },
-    DS: { resourceName: 'custom2', frameIndex: 11 },
-    D4: { resourceName: 'custom2', frameIndex: 12 },
-    GR: { resourceName: 'custom2', frameIndex: 13 },
-    G3: { resourceName: 'custom2', frameIndex: 14 },
-    B1: { resourceName: 'custom2', frameIndex: 15 },
-    B2: { resourceName: 'custom2', frameIndex: 16 },
-    B5: { resourceName: 'custom2', frameIndex: 17 },
-    B6: { resourceName: 'custom2', frameIndex: 18 },
-    GD: { resourceName: 'custom2', frameIndex: 19 },
-    B3: { resourceName: 'custom2', frameIndex: 20 },
-    B4: { resourceName: 'custom2', frameIndex: 21 },
-    B7: { resourceName: 'custom2', frameIndex: 22 },
-    B8: { resourceName: 'custom2', frameIndex: 23 },
-    '12': { resourceName: 'customOverworld', frameIndex: 12 },
-    '13': { resourceName: 'customOverworld', frameIndex: 13 },
-    '14': { resourceName: 'customOverworld', frameIndex: 14 },
-    W1: { resourceName: 'custom3', frameIndex: 0 },
-    WN: { resourceName: 'custom3', frameIndex: 1 },
-    W2: { resourceName: 'custom3', frameIndex: 2 },
-    RV: { resourceName: 'custom3', frameIndex: 3 },
-    RH: { resourceName: 'custom3', frameIndex: 4 },
-    WW: { resourceName: 'custom3', frameIndex: 5 },
-    WC: { resourceName: 'custom3', frameIndex: 6 },
-    WE: { resourceName: 'custom3', frameIndex: 7 },
-    W5: { resourceName: 'custom3', frameIndex: 8 },
-    W6: { resourceName: 'custom3', frameIndex: 9 },
-    W3: { resourceName: 'custom3', frameIndex: 10 },
-    WS: { resourceName: 'custom3', frameIndex: 11 },
-    W4: { resourceName: 'custom3', frameIndex: 12 },
+    W0: { resourceName: 'walls', frameIndex: 0 },
+    W1: { resourceName: 'walls', frameIndex: 1 },
+    W2: { resourceName: 'walls', frameIndex: 2 },
+    R0: { resourceName: 'walls', frameIndex: 3 },
+    R1: { resourceName: 'walls', frameIndex: 4 },
+    W3: { resourceName: 'walls', frameIndex: 5 },
+    W4: { resourceName: 'walls', frameIndex: 6 },
+    W5: { resourceName: 'walls', frameIndex: 7 },
+    R2: { resourceName: 'walls', frameIndex: 8 },
+    R3: { resourceName: 'walls', frameIndex: 9 },
+    W6: { resourceName: 'walls', frameIndex: 10 },
+    W7: { resourceName: 'walls', frameIndex: 11 },
+    W8: { resourceName: 'walls', frameIndex: 12 },
+    '00': { resourceName: 'walls', frameIndex: 13 },
+    '14': { resourceName: 'walls', frameIndex: 14 },
+    '15': { resourceName: 'walls', frameIndex: 15 },
+    '16': { resourceName: 'walls', frameIndex: 16 },
+    '17': { resourceName: 'walls', frameIndex: 17 },
+    '18': { resourceName: 'walls', frameIndex: 18 },
+    '19': { resourceName: 'walls', frameIndex: 19 },
+    '20': { resourceName: 'walls', frameIndex: 20 },
+    '21': { resourceName: 'walls', frameIndex: 21 },
+    '22': { resourceName: 'walls', frameIndex: 22 },
+    '23': { resourceName: 'walls', frameIndex: 23 },
+    '24': { resourceName: 'walls', frameIndex: 24 },
+    '25': { resourceName: 'walls', frameIndex: 25 },
+    '26': { resourceName: 'walls', frameIndex: 26 },
+    '27': { resourceName: 'walls', frameIndex: 27 },
+    '28': { resourceName: 'walls', frameIndex: 28 },
   };
 
   constructor(params: LevelParams) {
     super({ actorPosition: new Vector2(gridCells(3), gridCells(8)) });
 
     const {
-      treeA,
-      treeB,
-      treeC,
-      treeD,
-      rockA,
-      rockB,
-      rockC,
-      rockD,
       resourceConfig,
     } = levelConfig;
 
     this.buildMap(resourceConfig);
-
-    this.layoutObstacles(resourceConfig, treeA);
-    this.layoutObstacles(resourceConfig, treeB);
-    this.layoutObstacles(resourceConfig, treeC);
-    this.layoutObstacles(resourceConfig, treeD);
-
-    this.layoutObstacles(resourceConfig, rockA);
-    this.layoutObstacles(resourceConfig, rockB);
-    this.layoutObstacles(resourceConfig, rockC);
-    this.layoutObstacles(resourceConfig, rockD);
 
     const hero = new Hero(params.actorPosition);
     this.addChild(hero);
