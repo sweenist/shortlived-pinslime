@@ -6,7 +6,7 @@ import { resources } from '../../Resources';
 import { Vector2 } from '../../utils/vector';
 import { signals } from '../../events/eventConstants';
 
-export class Rod extends GameObject {
+export class Item extends GameObject {
   sprite: Sprite;
   constructor(x: number, y: number) {
     super(new Vector2(x, y));
