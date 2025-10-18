@@ -44,8 +44,15 @@
       "name": "walls",
       "frameConfig": {
         "size": { "x": 16, "y": 16 },
-        "columns": 5,
-        "rows": 6
+        "columns": 6,
+        "rows": 9
+      }
+    },{
+      "name": "paddles",
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 4,
+        "rows": 4
       }
     }
   ]

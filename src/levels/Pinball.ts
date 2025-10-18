@@ -22,36 +22,57 @@ export class Pinball extends Level {
     W0: { resourceName: 'walls', frameIndex: 0 },
     W1: { resourceName: 'walls', frameIndex: 1 },
     W2: { resourceName: 'walls', frameIndex: 2 },
-    R0: { resourceName: 'walls', frameIndex: 3 },
-    R1: { resourceName: 'walls', frameIndex: 4 },
-    W3: { resourceName: 'walls', frameIndex: 5 },
+    W3: { resourceName: 'walls', frameIndex: 3 },
     W4: { resourceName: 'walls', frameIndex: 6 },
     W5: { resourceName: 'walls', frameIndex: 7 },
-    R2: { resourceName: 'walls', frameIndex: 8 },
-    R3: { resourceName: 'walls', frameIndex: 9 },
-    W6: { resourceName: 'walls', frameIndex: 10 },
-    W7: { resourceName: 'walls', frameIndex: 11 },
+    W6: { resourceName: 'walls', frameIndex: 8 },
+    W7: { resourceName: 'walls', frameIndex: 9 },
     W8: { resourceName: 'walls', frameIndex: 12 },
-    '00': { resourceName: 'walls', frameIndex: 13 },
-    '14': { resourceName: 'walls', frameIndex: 14 },
-    '15': { resourceName: 'walls', frameIndex: 15 },
-    '16': { resourceName: 'walls', frameIndex: 16 },
-    '17': { resourceName: 'walls', frameIndex: 17 },
-    '18': { resourceName: 'walls', frameIndex: 18 },
-    '19': { resourceName: 'walls', frameIndex: 19 },
-    '20': { resourceName: 'walls', frameIndex: 20 },
-    '21': { resourceName: 'walls', frameIndex: 21 },
-    '22': { resourceName: 'walls', frameIndex: 22 },
-    '23': { resourceName: 'walls', frameIndex: 23 },
-    '24': { resourceName: 'walls', frameIndex: 24 },
-    '25': { resourceName: 'walls', frameIndex: 25 },
-    '26': { resourceName: 'walls', frameIndex: 26 },
-    '27': { resourceName: 'walls', frameIndex: 27 },
-    '28': { resourceName: 'walls', frameIndex: 28 },
+    W9: { resourceName: 'walls', frameIndex: 13 },
+    WA: { resourceName: 'walls', frameIndex: 14 },
+    WB: { resourceName: 'walls', frameIndex: 15 },
+    WC: { resourceName: 'walls', frameIndex: 18 },
+    WD: { resourceName: 'walls', frameIndex: 19 },
+    WE: { resourceName: 'walls', frameIndex: 20 },
+    WF: { resourceName: 'walls', frameIndex: 21 },
+    BL: { resourceName: 'walls', frameIndex: 10 },
+    R0: { resourceName: 'walls', frameIndex: 27 },
+    R1: { resourceName: 'walls', frameIndex: 28 },
+    R2: { resourceName: 'walls', frameIndex: 33 },
+    R3: { resourceName: 'walls', frameIndex: 34 },
+    RA: { resourceName: 'walls', frameIndex: 25 },
+    RB: { resourceName: 'walls', frameIndex: 26 },
+    RC: { resourceName: 'walls', frameIndex: 31 },
+    RD: { resourceName: 'walls', frameIndex: 32 },
+    RP: { resourceName: 'walls', frameIndex: 37 },
+    RQ: { resourceName: 'walls', frameIndex: 38 },
+    RR: { resourceName: 'walls', frameIndex: 43 },
+    RS: { resourceName: 'walls', frameIndex: 44 },
+    RT: { resourceName: 'walls', frameIndex: 48 },
+    RU: { resourceName: 'walls', frameIndex: 49 },
+    RV: { resourceName: 'walls', frameIndex: 50 },
+    RW: { resourceName: 'walls', frameIndex: 51 },
+    '00': { resourceName: 'walls', frameIndex: 4 },
+    E0: { resourceName: 'walls', frameIndex: 39 },
+    EN: { resourceName: 'walls', frameIndex: 40 },
+    E1: { resourceName: 'walls', frameIndex: 41 },
+    E2: { resourceName: 'walls', frameIndex: 23 },
+    EE: { resourceName: 'walls', frameIndex: 29 },
+    E3: { resourceName: 'walls', frameIndex: 35 },
+    E4: { resourceName: 'walls', frameIndex: 45 },
+    ES: { resourceName: 'walls', frameIndex: 46 },
+    E5: { resourceName: 'walls', frameIndex: 47 },
+    E6: { resourceName: 'walls', frameIndex: 5 },
+    EW: { resourceName: 'walls', frameIndex: 11 },
+    E7: { resourceName: 'walls', frameIndex: 17 },
+    WW: { resourceName: 'walls', frameIndex: 24 },
+    WX: { resourceName: 'walls', frameIndex: 30 },
+    WY: { resourceName: 'walls', frameIndex: 42 },
+    WZ: { resourceName: 'walls', frameIndex: 36 },
   };
 
   constructor(params: LevelParams) {
-    super({ actorPosition: new Vector2(gridCells(3), gridCells(8)) });
+    super({ actorPosition: params.actorPosition });
 
     const {
       resourceConfig,
@@ -84,11 +105,11 @@ export class Pinball extends Level {
           frameIndex: tilecfg.frameIndex,
           position: new Vector2(gridCells(x), gridCells(y)),
         });
-        console.info(
-          `drawing index ${
-            this.mapAddresses[y * columns + x]
-          } at grid ${x}, ${y}`
-        );
+        // console.info(
+        //   `drawing index ${
+        //     this.mapAddresses[y * columns + x]
+        //   } at grid ${x}, ${y}`
+        // );
         tile.drawLayer = 'GROUND';
 
         this.addChild(tile);
