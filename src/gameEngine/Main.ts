@@ -1,7 +1,6 @@
 import { Hero } from '../actors/Hero';
 import { Npc } from '../actors/Npc';
 import { fadeIn, fadeOut } from '../constants';
-import { Inventory } from '../menu/Inventory';
 import { SpriteTextBox } from '../objects/TextBox/SpriteTextBox';
 import type { fader } from '../types';
 import { Vector2 } from '../utils/vector';
@@ -77,7 +76,7 @@ export class Main extends GameObject {
 
     this.input.consolate = () => {
       this.debug(0);
-      inventory.debug(1);
+      // inventory.debug(1);
     };
   }
 
