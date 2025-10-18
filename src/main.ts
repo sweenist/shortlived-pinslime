@@ -12,7 +12,7 @@ const ctx = canvas.getContext('2d')!;
 const mainScene = new Main({ ctx });
 
 mainScene.setLevel(
-  new Pinball({ actorPosition: new Vector2(gridCells(3), gridCells(6)) })
+  new Pinball({ actorPosition: new Vector2(gridCells(9), gridCells(8)) })
 );
 
 const update = (deltaTime: number) => {
