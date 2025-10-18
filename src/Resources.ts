@@ -12,7 +12,7 @@ class Resources {
     this.images = {};
     this.toLoad = {
       fontWhite: 'sprites/ArcadeFont.png',
-      hero: 'sprites/redslime.png',
+      hero: 'sprites/PinSlime.png',
       shadow: 'sprites/shadow.png',
       textbox: 'sprites/text-box.png',
       walls: 'sprites/PingWalls.png',

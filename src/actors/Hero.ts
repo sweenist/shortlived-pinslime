@@ -17,6 +17,7 @@ import {
   STAND_LEFT,
   STAND_RIGHT,
   PICK_UP_DOWN,
+  IDLE_START,
 } from './heroAnimations';
 import { moveTowards } from '../utils/moveUtils';
 import { gameEvents } from '../events/Events';
@@ -38,19 +39,20 @@ export class Hero extends GameObject {
     super(position);
     this.shadow = new Sprite({
       resource: resources.images.shadow,
-      frameSize: new Vector2(32, 32),
-      position: new Vector2(-8, -19),
+      frameSize: new Vector2(16, 16),
+      position: new Vector2(-4,-10),
     });
     this.addChild(this.shadow);
 
     this.body = new Sprite({
       resource: resources.images.hero,
-      frameSize: new Vector2(32, 32),
-      frameColumns: 3,
-      frameRows: 8,
+      frameSize: new Vector2(16, 16),
+      frameColumns: 4,
+      frameRows: 2,
       frameIndex: 1,
-      position: new Vector2(-8, -20),
+      position: new Vector2(0,-1),
       animations: new Animations({
+        idle: new FrameIndexPattern(IDLE_START),
         standDown: new FrameIndexPattern(STAND_DOWN),
         standUp: new FrameIndexPattern(STAND_UP),
         standLeft: new FrameIndexPattern(STAND_LEFT),
@@ -65,25 +67,13 @@ export class Hero extends GameObject {
 
     this.addChild(this.body);
 
-    this.facingDirection = DOWN;
+    this.facingDirection = RIGHT;
     this.destinationPosition = this.position.duplicate();
   }
 
   ready(): void {
     gameEvents.on<ItemEventMetaData>(signals.heroItemCollect, this, (value) =>
       this.onItemCollect(value)
-    );
-
-    gameEvents.on(
-      signals.startTextInteraction,
-      this,
-      () => (this.isLocked = true)
-    );
-
-    gameEvents.on(
-      signals.endTextInteraction,
-      this,
-      () => (this.isLocked = false)
     );
 
     gameEvents.on(signals.levelChanging, this, () => {
@@ -131,9 +121,7 @@ export class Hero extends GameObject {
     const { input, level } = root;
 
     if (!input.direction) {
-      this.body.animations?.play(
-        'stand'.concat(toTitleCase(this.facingDirection))
-      );
+      this.body.animations?.play('idle');
       return;
     }
 

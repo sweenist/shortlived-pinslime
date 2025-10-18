@@ -50,6 +50,8 @@ export const makeStandingFrames = (
   };
 };
 
+
+
 export const STAND_DOWN: animationConfiguration = makeStandingFrames(0);
 export const STAND_RIGHT: animationConfiguration = makeStandingFrames(3);
 export const STAND_UP: animationConfiguration = makeStandingFrames(6);
@@ -64,3 +66,36 @@ export const PICK_UP_DOWN: animationConfiguration = {
   duration: 400,
   frames: [{ frame: 12, time: 0 }],
 };
+
+export const IDLE_START: animationConfiguration = {
+    duration: 5000,
+    frames: [
+      {
+        time: 0,
+        frame: 0,
+      },
+      {
+        time: 800,
+        frame: 3,
+      },
+      {
+        time: 2000,
+        frame: 0,
+      },
+      {
+        time: 3500,
+        frame: 1,
+      },
+      {
+        time: 3583,
+        frame: 2,
+      },
+      {
+        time: 3650,
+        frame: 1,
+      },
+      {
+        time: 3800,
+        frame: 0,
+      },
+    ]};
