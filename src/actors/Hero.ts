@@ -99,7 +99,7 @@ export class Hero extends GameObject {
       this.body.isVisible = !this.body.isVisible;
     }
 
-    const distance = moveTowards(this.position, this.destinationPosition, 1);
+    const distance = moveTowards(this.position, this.destinationPosition, 4);
     const hasArrived = distance < 1;
     if (hasArrived) {
       this.tryMove(root);
