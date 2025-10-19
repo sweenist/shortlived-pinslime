@@ -8,16 +8,11 @@ import { isSpaceFree } from '../utils/grid';
 import { toTitleCase } from '../utils/stringUtils';
 import { Vector2 } from '../utils/vector';
 import {
-  WALK_DOWN,
-  WALK_UP,
-  WALK_LEFT,
-  WALK_RIGHT,
-  STAND_DOWN,
-  STAND_UP,
-  STAND_LEFT,
-  STAND_RIGHT,
-  PICK_UP_DOWN,
   IDLE_START,
+  MOVE_DOWN,
+  MOVE_LEFT,
+  MOVE_RIGHT,
+  MOVE_UP,
 } from './heroAnimations';
 import { moveTowards } from '../utils/moveUtils';
 import { gameEvents } from '../events/Events';
@@ -53,14 +48,10 @@ export class Hero extends GameObject {
       position: new Vector2(0,-1),
       animations: new Animations({
         idle: new FrameIndexPattern(IDLE_START),
-        standDown: new FrameIndexPattern(STAND_DOWN),
-        standUp: new FrameIndexPattern(STAND_UP),
-        standLeft: new FrameIndexPattern(STAND_LEFT),
-        standRight: new FrameIndexPattern(STAND_RIGHT),
-        walkDown: new FrameIndexPattern(WALK_DOWN),
-        walkUp: new FrameIndexPattern(WALK_UP),
-        walkLeft: new FrameIndexPattern(WALK_LEFT),
-        walkRight: new FrameIndexPattern(WALK_RIGHT),
+        moveDown: new FrameIndexPattern(MOVE_DOWN),
+        moveUp: new FrameIndexPattern(MOVE_UP),
+        moveLeft: new FrameIndexPattern(MOVE_LEFT),
+        moveRight: new FrameIndexPattern(MOVE_RIGHT),
       }),
     });
 
@@ -131,19 +122,19 @@ export class Hero extends GameObject {
 
     if (input.direction === UP) {
       nextY -= gridSize;
-      this.body.animations?.play('walkUp');
+      this.body.animations?.play('moveUp');
     }
     if (input.direction === DOWN) {
       nextY += gridSize;
-      this.body.animations?.play('walkDown');
+      this.body.animations?.play('moveDown');
     }
     if (input.direction === LEFT) {
       nextX -= gridSize;
-      this.body.animations?.play('walkLeft');
+      this.body.animations?.play('moveLeft');
     }
     if (input.direction === RIGHT) {
       nextX += gridSize;
-      this.body.animations?.play('walkRight');
+      this.body.animations?.play('moveRight');
     }
 
     const destination = new Vector2(nextX, nextY);
