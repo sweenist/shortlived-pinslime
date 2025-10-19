@@ -14,6 +14,7 @@ class Resources {
       fontWhite: 'sprites/ArcadeFont.png',
       hero: 'sprites/PinSlime.png',
       slimeTrail: 'sprites/SlimeTrail.png',
+      slimeDeath: 'sprites/death-spritesheet.png',
       shadow: 'sprites/shadow.png',
       textbox: 'sprites/text-box.png',
       walls: 'sprites/PingWalls.png',

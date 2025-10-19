@@ -8,6 +8,7 @@ import { isSpaceFree } from '../utils/grid';
 import { toTitleCase } from '../utils/stringUtils';
 import { Vector2 } from '../utils/vector';
 import {
+  DEATH,
   IDLE_START,
   MOVE_DOWN,
   MOVE_LEFT,
@@ -30,12 +31,15 @@ export class Hero extends GameObject {
   facingDirection: Direction;
   destinationPosition: Vector2;
   body: Sprite;
+  deathThroes: Sprite;
+  deathTime: number = 1700;
   speed: number;
   shadows: Shadows = {};
   trails: { [key: string]: Sprite };
   itemPickupTime: number = 0;
   itemPickupShell?: GameObject;
   isLocked: boolean = false;
+  isDead: boolean = false;
 
   constructor(position: Vector2, speed: number = 4) {
     super(position);
@@ -55,6 +59,17 @@ export class Hero extends GameObject {
         moveLeft: new FrameIndexPattern(MOVE_LEFT),
         moveRight: new FrameIndexPattern(MOVE_RIGHT),
       }),
+    });
+
+    this.deathThroes = new Sprite({
+      resource: resources.images['slimeDeath'],
+      frameSize: new Vector2(128, 128),
+      frameColumns: 8,
+      frameRows: 7,
+      position: new Vector2(-64, -112),
+      animations: new Animations(
+        { death: new FrameIndexPattern(DEATH), }
+      )
     });
 
     this.addChild(this.body);
@@ -86,6 +101,10 @@ export class Hero extends GameObject {
       return;
     }
 
+    if (this.isDead) {
+      this.deathTime -= deltaTime;
+    }
+
     const { input } = root;
     if (input.getActionJustPressed('Space') && !this.isLocked) {
       const interactablePosition = this.parent?.children.find((c) => {
@@ -101,6 +120,13 @@ export class Hero extends GameObject {
       this.body.isVisible = !this.body.isVisible;
     }
 
+    if (input.getActionJustPressed('KeyM')) {
+      this.body.isVisible = !this.body.isVisible;
+      this.isDead = true;
+      this.deathTime = 1700;
+      this.addChild(this.deathThroes);
+    }
+
     const distance = moveTowards(this.position, this.destinationPosition, this.speed);
     const hasArrived = distance < 1;
     if (hasArrived) {
@@ -112,6 +138,11 @@ export class Hero extends GameObject {
 
   tryMove(root: Main) {
     if (this.isLocked || root.isFading) return;
+
+    if (this.isDead) {
+      this.playDeath();
+      return;
+    }
 
     const { input, level } = root;
 
@@ -279,6 +310,15 @@ export class Hero extends GameObject {
         }),
 
     };
+  }
+
+  playDeath() {
+    if (this.deathTime <= 0) {
+      this.isDead = false;
+      this.removeChild(this.deathThroes);
+      return;
+    }
+    this.deathThroes.animations?.play('death');
   }
 
   debug(level: number) {

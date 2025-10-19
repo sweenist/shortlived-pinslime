@@ -18,7 +18,7 @@ export class FrameIndexPattern {
         return frames[i].frame;
       }
     }
-    throw 'Time is before keyframe';
+    throw `Time is before keyframe ${this.currentTime} < ${this.animationConfiguration.frames[0].time}`;
   }
 
   step(delta: number) {

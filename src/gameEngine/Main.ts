@@ -40,7 +40,7 @@ export class Main extends GameObject {
   }
 
   ready(): void {
-    
+
     gameEvents.on<Level>(signals.levelChanging, this, (newLevel) => {
       console.info(`Leaving ${this.level?.constructor.name ?? 'None'}`);
       this.startFade(() => this.setLevel(newLevel));
@@ -49,7 +49,6 @@ export class Main extends GameObject {
 
     gameEvents.on<GameObject>(signals.heroInteraction, this, (interaction) => {
       if (interaction instanceof Npc) {
-        //TODO: Implement ActionableObject
         const content = interaction.getContent();
         if (content === null) return;
 

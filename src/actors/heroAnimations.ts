@@ -8,6 +8,21 @@ export type animationConfiguration = {
   frames: frameConfiguration[];
 };
 
+export const makeAnimation = (rootFrame: number, duration: number, frameCount: number): animationConfiguration => {
+  const frames: frameConfiguration[] = []
+  const rate = duration / frameCount;
+  let accumulatedTime = 0;
+
+  for (let i = rootFrame; i < frameCount; i++) {
+    frames.push({
+      time: accumulatedTime,
+      frame: i
+    })
+    accumulatedTime += rate;
+  }
+  return { duration, frames }
+}
+
 export const makeMovementFrames = (
   rootFrame: number,
 ): animationConfiguration => {
@@ -30,6 +45,8 @@ export const MOVE_UP = makeMovementFrames(6);
 export const MOVE_RIGHT = makeMovementFrames(8)
 export const MOVE_DOWN = makeMovementFrames(10);
 export const MOVE_LEFT = makeMovementFrames(12);
+
+export const DEATH = makeAnimation(7, 1700, 47);
 
 export const IDLE_START: animationConfiguration = {
   duration: 5000,
