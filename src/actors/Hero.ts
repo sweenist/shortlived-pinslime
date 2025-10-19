@@ -229,17 +229,17 @@ export class Hero extends GameObject {
       frameRows: 4,
     };
     return {
-      DownUmbra: new Sprite(
+      UpUmbra: new Sprite(
         {
           ...spriteParams,
           frameIndex: 0,
           position: new Vector2(0, 5),
         }),
-      DownPenumbra: new Sprite(
+      UpPenumbra: new Sprite(
         {
           ...spriteParams,
           frameIndex: 1,
-          position: new Vector2(0, 21),
+          position: new Vector2(0, 14),
         }),
       RightUmbra: new Sprite(
         {
@@ -251,19 +251,19 @@ export class Hero extends GameObject {
         {
           ...spriteParams,
           frameIndex: 3,
-          position: new Vector2(-22, -1),
+          position: new Vector2(-15, -1),
         }),
-      UpUmbra: new Sprite(
+      DownUmbra: new Sprite(
         {
           ...spriteParams,
           frameIndex: 4,
           position: new Vector2(0, -7),
         }),
-      UpPenumbra: new Sprite(
+      DownPenumbra: new Sprite(
         {
           ...spriteParams,
           frameIndex: 5,
-          position: new Vector2(0, -23),
+          position: new Vector2(0, -16),
         }),
       LeftUmbra: new Sprite(
         {
@@ -275,7 +275,7 @@ export class Hero extends GameObject {
         {
           ...spriteParams,
           frameIndex: 7,
-          position: new Vector2(22, -1),
+          position: new Vector2(15, -1),
         }),
 
     };
