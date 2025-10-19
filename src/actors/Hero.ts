@@ -21,23 +21,23 @@ import type { Main } from '../gameEngine/Main';
 import type { Direction } from '../types';
 import { signals } from '../events/eventConstants';
 
+type Shadows = {
+  umbra?: Sprite | null,
+  penumbra?: Sprite | null
+};
+
 export class Hero extends GameObject {
   facingDirection: Direction;
   destinationPosition: Vector2;
   body: Sprite;
-  shadow: Sprite;
+  shadows: Shadows = {};
+  trails: { [key: string]: Sprite };
   itemPickupTime: number = 0;
   itemPickupShell?: GameObject;
   isLocked: boolean = false;
 
   constructor(position: Vector2) {
     super(position);
-    this.shadow = new Sprite({
-      resource: resources.images.shadow,
-      frameSize: new Vector2(16, 16),
-      position: new Vector2(-4,-10),
-    });
-    this.addChild(this.shadow);
 
     this.body = new Sprite({
       resource: resources.images.hero,
@@ -45,7 +45,7 @@ export class Hero extends GameObject {
       frameColumns: 6,
       frameRows: 4,
       frameIndex: 1,
-      position: new Vector2(0,-1),
+      position: new Vector2(0, -1),
       animations: new Animations({
         idle: new FrameIndexPattern(IDLE_START),
         moveDown: new FrameIndexPattern(MOVE_DOWN),
@@ -57,8 +57,11 @@ export class Hero extends GameObject {
 
     this.addChild(this.body);
 
+    this.trails = this.buildShadows()
+
     this.facingDirection = RIGHT;
     this.destinationPosition = this.position.duplicate();
+
   }
 
   ready(): void {
@@ -111,6 +114,15 @@ export class Hero extends GameObject {
     const { input, level } = root;
 
     if (!input.direction) {
+      if (this.shadows.penumbra) {
+        this.removeChild(this.shadows.penumbra);
+        this.shadows.penumbra = null;
+      }
+      else if (this.shadows.umbra) {
+        this.removeChild(this.shadows.umbra);
+        this.shadows.umbra = null;
+      }
+
       this.body.animations?.play('idle');
       return;
     }
@@ -122,18 +134,50 @@ export class Hero extends GameObject {
 
     if (input.direction === UP) {
       nextY -= gridSize;
+      if (!this.shadows.umbra) {
+        this.shadows.umbra = this.trails.UpUmbra
+        this.addChild(this.shadows.umbra);
+      } else if (!this.shadows.penumbra) {
+        this.shadows.penumbra = this.trails.UpPenumbra
+        this.addChild(this.shadows.penumbra);
+      }
+
       this.body.animations?.play('moveUp');
     }
     if (input.direction === DOWN) {
       nextY += gridSize;
+      if (!this.shadows.umbra) {
+        this.shadows.umbra = this.trails.DownUmbra
+        this.addChild(this.shadows.umbra);
+      } else if (!this.shadows.penumbra) {
+        this.shadows.penumbra = this.trails.DownPenumbra
+        this.addChild(this.shadows.penumbra);
+      }
+
       this.body.animations?.play('moveDown');
     }
     if (input.direction === LEFT) {
       nextX -= gridSize;
+      if (!this.shadows.umbra) {
+        this.shadows.umbra = this.trails.LeftUmbra
+        this.addChild(this.shadows.umbra);
+      } else if (!this.shadows.penumbra) {
+        this.shadows.penumbra = this.trails.LeftPenumbra
+        this.addChild(this.shadows.penumbra);
+      }
+
       this.body.animations?.play('moveLeft');
     }
     if (input.direction === RIGHT) {
       nextX += gridSize;
+      if (!this.shadows.umbra) {
+        this.shadows.umbra = this.trails.RightUmbra
+        this.addChild(this.shadows.umbra);
+      } else if (!this.shadows.penumbra) {
+        this.shadows.penumbra = this.trails.RightPenumbra
+        this.addChild(this.shadows.penumbra);
+      }
+
       this.body.animations?.play('moveRight');
     }
 
@@ -175,12 +219,71 @@ export class Hero extends GameObject {
     this.addChild(this.itemPickupShell);
   }
 
+  buildShadows() {
+    const spriteParams = {
+      resource: resources.images['slimeTrail'],
+      frameSize: new Vector2(16, 16),
+      frameColumns: 2,
+      frameRows: 4,
+    };
+    return {
+      DownUmbra: new Sprite(
+        {
+          ...spriteParams,
+          frameIndex: 0,
+          position: new Vector2(0, 5),
+        }),
+      DownPenumbra: new Sprite(
+        {
+          ...spriteParams,
+          frameIndex: 1,
+          position: new Vector2(0, 21),
+        }),
+      RightUmbra: new Sprite(
+        {
+          ...spriteParams,
+          frameIndex: 2,
+          position: new Vector2(-6, -1),
+        }),
+      RightPenumbra: new Sprite(
+        {
+          ...spriteParams,
+          frameIndex: 3,
+          position: new Vector2(-22, -1),
+        }),
+      UpUmbra: new Sprite(
+        {
+          ...spriteParams,
+          frameIndex: 4,
+          position: new Vector2(0, -7),
+        }),
+      UpPenumbra: new Sprite(
+        {
+          ...spriteParams,
+          frameIndex: 5,
+          position: new Vector2(0, -23),
+        }),
+      LeftUmbra: new Sprite(
+        {
+          ...spriteParams,
+          frameIndex: 6,
+          position: new Vector2(6, -1),
+        }),
+      LeftPenumbra: new Sprite(
+        {
+          ...spriteParams,
+          frameIndex: 7,
+          position: new Vector2(22, -1),
+        }),
+
+    };
+  }
+
   debug(level: number) {
     const arrow = '-'.repeat(level + 1);
 
     console.debug(
-      `${arrow}> ${this.constructor.name}, position: ${this.position} [${
-        this.position.x / 16
+      `${arrow}> ${this.constructor.name}, position: ${this.position} [${this.position.x / 16
       }, ${this.position.y / 16}] Parent: ${this.parent?.constructor.name}`
     );
     this.children.forEach((child) => {

@@ -14,15 +14,17 @@ export const makeMovementFrames = (
   return {
     duration: 900,
     frames: [
-    {
-      time: 0,
-      frame: rootFrame,
-    },
-    {
-      time: 367,
-      frame: rootFrame + 1,
-    }
-  ]}};
+      {
+        time: 0,
+        frame: rootFrame,
+      },
+      {
+        time: 367,
+        frame: rootFrame + 1,
+      }
+    ]
+  }
+};
 
 export const MOVE_UP = makeMovementFrames(6);
 export const MOVE_RIGHT = makeMovementFrames(8)
@@ -76,4 +78,5 @@ export const IDLE_START: animationConfiguration = {
       time: 3800,
       frame: 0,
     },
-  ]};
+  ]
+};
