@@ -75,24 +75,40 @@ export const IDLE_START: animationConfiguration = {
         frame: 0,
       },
       {
-        time: 800,
-        frame: 3,
+        time: 760,
+        frame: 1,
+      },
+      {
+        time: 860,
+        frame: 4,
+      },
+      {
+        time: 960,
+        frame: 5,
+      },
+      {
+        time: 1900,
+        frame: 4,
       },
       {
         time: 2000,
+        frame: 1,
+      },
+      {
+        time: 2100,
         frame: 0,
       },
       {
         time: 3500,
-        frame: 1,
-      },
-      {
-        time: 3583,
         frame: 2,
       },
       {
+        time: 3583,
+        frame: 3,
+      },
+      {
         time: 3650,
-        frame: 1,
+        frame: 2,
       },
       {
         time: 3800,

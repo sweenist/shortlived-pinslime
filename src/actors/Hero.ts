@@ -47,8 +47,8 @@ export class Hero extends GameObject {
     this.body = new Sprite({
       resource: resources.images.hero,
       frameSize: new Vector2(16, 16),
-      frameColumns: 4,
-      frameRows: 2,
+      frameColumns: 6,
+      frameRows: 4,
       frameIndex: 1,
       position: new Vector2(0,-1),
       animations: new Animations({
@@ -61,7 +61,6 @@ export class Hero extends GameObject {
         walkUp: new FrameIndexPattern(WALK_UP),
         walkLeft: new FrameIndexPattern(WALK_LEFT),
         walkRight: new FrameIndexPattern(WALK_RIGHT),
-        pickUpDown: new FrameIndexPattern(PICK_UP_DOWN),
       }),
     });
 
