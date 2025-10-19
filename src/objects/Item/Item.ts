@@ -8,8 +8,8 @@ import { signals } from '../../events/eventConstants';
 
 export class Item extends GameObject {
   sprite: Sprite;
-  constructor(x: number, y: number) {
-    super(new Vector2(x, y));
+  constructor(position: Vector2) {
+    super(position);
 
     this.sprite = new Sprite({
       resource: resources.images['rod'],

@@ -4,21 +4,23 @@ import {
   type LevelParams,
   type ResourceConfig,
 } from '../gameEngine/Level';
-import { Sprite } from '../gameEngine/Sprite';
 import { resources } from '../Resources';
 import { gridCells } from '../utils/grid';
 import { Vector2 } from '../utils/vector';
 import mapContent from './config/level1.txt?raw';
 import levelConfig from './config/level.config.json';
+import Obstacle from '../objects/Obstacles/Obstacle';
 
-type tempType = {
+type tileConfig = {
   resourceName: string;
   frameIndex: number;
+  turns?: 'NONE' | 'CCW' | 'CW',
+  isSolid?: boolean
 };
 
 export class Pinball extends Level {
   mapAddresses: string[] = [];
-  fancyMap: { [key: string]: tempType } = {
+  fancyMap: { [key: string]: tileConfig } = {
     W0: { resourceName: 'walls', frameIndex: 0 },
     W1: { resourceName: 'walls', frameIndex: 1 },
     W2: { resourceName: 'walls', frameIndex: 2 },
@@ -35,24 +37,24 @@ export class Pinball extends Level {
     WD: { resourceName: 'walls', frameIndex: 19 },
     WE: { resourceName: 'walls', frameIndex: 20 },
     WF: { resourceName: 'walls', frameIndex: 21 },
-    BL: { resourceName: 'walls', frameIndex: 10 },
-    R0: { resourceName: 'walls', frameIndex: 27 },
-    R1: { resourceName: 'walls', frameIndex: 28 },
-    R2: { resourceName: 'walls', frameIndex: 33 },
-    R3: { resourceName: 'walls', frameIndex: 34 },
+    BL: { resourceName: 'walls', frameIndex: 10, isSolid: false, },
+    R0: { resourceName: 'walls', frameIndex: 27, isSolid: false, turns: 'CCW' },
+    R1: { resourceName: 'walls', frameIndex: 28, isSolid: false, turns: 'CCW' },
+    R2: { resourceName: 'walls', frameIndex: 33, isSolid: false, turns: 'CCW' },
+    R3: { resourceName: 'walls', frameIndex: 34, isSolid: false, turns: 'CCW' },
     RA: { resourceName: 'walls', frameIndex: 25 },
     RB: { resourceName: 'walls', frameIndex: 26 },
     RC: { resourceName: 'walls', frameIndex: 31 },
     RD: { resourceName: 'walls', frameIndex: 32 },
-    RP: { resourceName: 'walls', frameIndex: 37 },
-    RQ: { resourceName: 'walls', frameIndex: 38 },
-    RR: { resourceName: 'walls', frameIndex: 43 },
-    RS: { resourceName: 'walls', frameIndex: 44 },
-    RT: { resourceName: 'walls', frameIndex: 48 },
-    RU: { resourceName: 'walls', frameIndex: 49 },
-    RV: { resourceName: 'walls', frameIndex: 50 },
-    RW: { resourceName: 'walls', frameIndex: 51 },
-    '00': { resourceName: 'walls', frameIndex: 4 },
+    RP: { resourceName: 'walls', frameIndex: 37, isSolid: false, turns: 'CCW' },
+    RQ: { resourceName: 'walls', frameIndex: 38, isSolid: false, turns: 'CCW' },
+    RR: { resourceName: 'walls', frameIndex: 43, isSolid: false, turns: 'CCW' },
+    RS: { resourceName: 'walls', frameIndex: 44, isSolid: false, turns: 'CCW' },
+    RT: { resourceName: 'walls', frameIndex: 48, isSolid: false, turns: 'CCW' },
+    RU: { resourceName: 'walls', frameIndex: 49, isSolid: false, turns: 'CCW' },
+    RV: { resourceName: 'walls', frameIndex: 50, isSolid: false, turns: 'CCW' },
+    RW: { resourceName: 'walls', frameIndex: 51, isSolid: false, turns: 'CCW' },
+    '00': { resourceName: 'walls', frameIndex: 4, isSolid: false },
     E0: { resourceName: 'walls', frameIndex: 39 },
     EN: { resourceName: 'walls', frameIndex: 40 },
     E1: { resourceName: 'walls', frameIndex: 41 },
@@ -97,19 +99,20 @@ export class Pinball extends Level {
         const tilecfg = this.fancyMap[mapTile];
         const fc = config.find((c) => c.name === tilecfg.resourceName);
         if (!fc) continue;
-        const tile = new Sprite({
-          resource: resources.images[tilecfg.resourceName],
-          frameColumns: fc?.frameConfig.columns,
-          frameRows: fc?.frameConfig.rows,
-          frameSize: Vector2.fromPoint(fc?.frameConfig.size),
-          frameIndex: tilecfg.frameIndex,
-          position: new Vector2(gridCells(x), gridCells(y)),
+
+        const position = new Vector2(gridCells(x), gridCells(y));
+        const tile = new Obstacle({
+          position,
+          isSolid: tilecfg.isSolid ?? true,
+          turns: tilecfg.turns ?? 'NONE',
+          content: {
+            resource: resources.images[tilecfg.resourceName],
+            frameColumns: fc?.frameConfig.columns,
+            frameRows: fc?.frameConfig.rows,
+            frameSize: Vector2.fromPoint(fc?.frameConfig.size),
+            frameIndex: tilecfg.frameIndex,
+          }
         });
-        // console.info(
-        //   `drawing index ${
-        //     this.mapAddresses[y * columns + x]
-        //   } at grid ${x}, ${y}`
-        // );
         tile.drawLayer = 'GROUND';
 
         this.addChild(tile);
