@@ -30,15 +30,17 @@ export class Hero extends GameObject {
   facingDirection: Direction;
   destinationPosition: Vector2;
   body: Sprite;
+  speed: number;
   shadows: Shadows = {};
   trails: { [key: string]: Sprite };
   itemPickupTime: number = 0;
   itemPickupShell?: GameObject;
   isLocked: boolean = false;
 
-  constructor(position: Vector2) {
+  constructor(position: Vector2, speed: number = 4) {
     super(position);
 
+    this.speed = speed;
     this.body = new Sprite({
       resource: resources.images.hero,
       frameSize: new Vector2(16, 16),
@@ -99,7 +101,7 @@ export class Hero extends GameObject {
       this.body.isVisible = !this.body.isVisible;
     }
 
-    const distance = moveTowards(this.position, this.destinationPosition, 4);
+    const distance = moveTowards(this.position, this.destinationPosition, this.speed);
     const hasArrived = distance < 1;
     if (hasArrived) {
       this.tryMove(root);
