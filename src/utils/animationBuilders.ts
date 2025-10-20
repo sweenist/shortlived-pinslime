@@ -15,3 +15,13 @@ export const makeAnimation = (rootFrame: number, duration: number, frameCount: n
   }
   return { duration, frames }
 }
+
+export const singleFrame = (frame: number): animationConfiguration => {
+  return {
+    duration: 1,
+    frames: [{
+      frame,
+      time: 0
+    }]
+  }
+}
