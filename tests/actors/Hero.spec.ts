@@ -8,7 +8,7 @@ describe('Hero', () => {
     const target = new Hero(new Vector2(24, 42));
 
     expect(target.position).toStrictEqual(new Vector2(24, 42));
-    expect(target.shadow).toBeDefined();
+    expect(target.shadows).toBeDefined();
     expect(target.body).toBeDefined();
     expect(target.facingDirection).toBe(DOWN);
     expect(target.children).toHaveLength(2);

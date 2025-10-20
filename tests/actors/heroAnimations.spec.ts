@@ -1,17 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import {
-  makeAnimationFrames,
-  type frameConfiguration,
+  makeMovementFrames
 } from '@src/actors/heroAnimations';
+import type { frameConfiguration } from '@src/types/animationTypes';
 
 describe('heroAnimations', () => {
   it('should create animation frames', () => {
-    const target = makeAnimationFrames(1, 800);
+    const target = makeMovementFrames(1);
     const expectedFrames: frameConfiguration[] = [
       { time: 0, frame: 2 },
-      { time: 200, frame: 1 },
-      { time: 400, frame: 2 },
-      { time: 600, frame: 3 },
+      { time: 367, frame: 3 },
     ];
 
     expect(target.duration).toBe(800);

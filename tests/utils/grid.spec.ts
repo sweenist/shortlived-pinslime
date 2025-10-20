@@ -28,7 +28,7 @@ describe('grid.ts', () => {
     });
 
     it('should be true if wall is not encountered', () => {
-      const result = isSpaceFree(walls, Vector2.Zero);
+      const result = isSpaceFree(walls, Vector2.Zero());
 
       expect(result).toBeTruthy();
     });
