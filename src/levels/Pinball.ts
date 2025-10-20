@@ -10,6 +10,8 @@ import { Vector2 } from '../utils/vector';
 import mapContent from './config/level1.txt?raw';
 import levelConfig from './config/level.config.json';
 import Obstacle from '../objects/Obstacles/Obstacle';
+import { Paddle } from '../objects/Paddle/Paddle';
+import type { DirectionShift } from '../types';
 
 type tileConfig = {
   resourceName: string;
@@ -77,10 +79,20 @@ export class Pinball extends Level {
     super({ actorPosition: params.actorPosition });
 
     const {
+      paddles,
       resourceConfig,
     } = levelConfig;
 
     this.buildMap(resourceConfig);
+
+    paddles.forEach((paddle) => {
+      const paddleObject = new Paddle({
+        direction: paddle.direction as keyof typeof DirectionShift,
+        position: Vector2.fromPoint(paddle.location, 16)
+      });
+      this.addChild(paddleObject);
+    });
+
 
     const hero = new Hero(params.actorPosition);
     this.addChild(hero);
