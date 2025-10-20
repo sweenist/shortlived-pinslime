@@ -88,7 +88,7 @@ export class Pinball extends Level {
     paddles.forEach((paddle) => {
       const paddleObject = new Paddle({
         direction: paddle.direction as keyof typeof DirectionShift,
-        position: Vector2.fromPoint(paddle.location, 16)
+        position: new Vector2(gridCells(paddle.location.x), gridCells(paddle.location.y))
       });
       this.addChild(paddleObject);
     });

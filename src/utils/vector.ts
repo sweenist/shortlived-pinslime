@@ -31,8 +31,8 @@ export class Vector2 implements Vector2Interface {
     return new Vector2(0, 0);
   }
 
-  public static fromPoint(point: { x: number; y: number }, shift: number = 1): Vector2 {
-    return new Vector2(point.x * shift, point.y * shift);
+  public static fromPoint(point: { x: number; y: number }): Vector2 {
+    return new Vector2(point.x, point.y);
   }
 
   /*
