@@ -1,7 +1,5 @@
 import { Hero } from '../actors/Hero';
-import { Npc } from '../actors/Npc';
 import { fadeIn, fadeOut } from '../constants';
-import { SpriteTextBox } from '../objects/TextBox/SpriteTextBox';
 import type { fader } from '../types';
 import { Vector2 } from '../utils/vector';
 import { Camera } from './Camera';
@@ -9,7 +7,6 @@ import { gameEvents } from '../events/Events';
 import { GameInput } from './GameInput';
 import { GameObject } from './GameObject';
 import { Level } from './Level';
-import { storyFlags } from './StoryFlags';
 import { signals } from '../events/eventConstants';
 
 export interface MainGameParams {
