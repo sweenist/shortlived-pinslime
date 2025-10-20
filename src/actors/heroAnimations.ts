@@ -1,12 +1,4 @@
-export type frameConfiguration = {
-  time: number;
-  frame: number;
-};
-
-export type animationConfiguration = {
-  duration: number;
-  frames: frameConfiguration[];
-};
+import type { animationConfiguration, frameConfiguration } from "../types/animationTypes";
 
 export const makeAnimation = (rootFrame: number, duration: number, frameCount: number): animationConfiguration => {
   const frames: frameConfiguration[] = []

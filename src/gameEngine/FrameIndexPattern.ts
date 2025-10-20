@@ -1,4 +1,4 @@
-import type { animationConfiguration } from '../actors/heroAnimations';
+import type { animationConfiguration } from "../types/animationTypes";
 
 export class FrameIndexPattern {
   animationConfiguration: animationConfiguration;
