@@ -21,9 +21,12 @@ export class FrameIndexPattern {
     throw `Time is before keyframe ${this.currentTime} < ${this.animationConfiguration.frames[0].time}`;
   }
 
-  step(delta: number) {
+  step(delta: number): boolean {
     this.currentTime += delta
-    if (this.currentTime >= this.duration)
+    const wrapped = this.currentTime >= this.duration;
+    if (wrapped) {
       this.currentTime = 0;
+    }
+    return wrapped;
   }
 }

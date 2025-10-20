@@ -5,10 +5,10 @@ import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
 import { isSpaceFree } from '../utils/grid';
-import { toTitleCase } from '../utils/stringUtils';
 import { Vector2 } from '../utils/vector';
 import {
   DEATH,
+  EXPIRED,
   IDLE_START,
   MOVE_DOWN,
   MOVE_LEFT,
@@ -21,6 +21,7 @@ import type { ItemEventMetaData } from '../types/eventTypes';
 import type { Main } from '../gameEngine/Main';
 import type { Direction } from '../types';
 import { signals } from '../events/eventConstants';
+import { GameState } from '../game/GameState';
 
 type Shadows = {
   umbra?: Sprite | null,
@@ -30,26 +31,29 @@ type Shadows = {
 export class Hero extends GameObject {
   facingDirection: Direction;
   destinationPosition: Vector2;
+  state: GameState;
   body: Sprite;
   deathThroes: Sprite;
-  deathTime: number = 1700;
   speed: number;
   shadows: Shadows = {};
   trails: { [key: string]: Sprite };
   itemPickupTime: number = 0;
   itemPickupShell?: GameObject;
   isLocked: boolean = false;
-  isDead: boolean = false;
+
+  debugExpired: number = 0;
 
   constructor(position: Vector2, speed: number = 4) {
     super(position);
 
+    this.state = new GameState();
     this.speed = speed;
+
     this.body = new Sprite({
       resource: resources.images.hero,
       frameSize: new Vector2(16, 16),
       frameColumns: 6,
-      frameRows: 4,
+      frameRows: 6,
       frameIndex: 1,
       position: new Vector2(0, -1),
       animations: new Animations({
@@ -58,6 +62,7 @@ export class Hero extends GameObject {
         moveUp: new FrameIndexPattern(MOVE_UP),
         moveLeft: new FrameIndexPattern(MOVE_LEFT),
         moveRight: new FrameIndexPattern(MOVE_RIGHT),
+        expired: new FrameIndexPattern(EXPIRED),
       }),
     });
 
@@ -78,7 +83,6 @@ export class Hero extends GameObject {
 
     this.facingDirection = RIGHT;
     this.destinationPosition = this.position.duplicate();
-
   }
 
   ready(): void {
@@ -86,24 +90,28 @@ export class Hero extends GameObject {
       this.onItemCollect(value)
     );
 
-    gameEvents.on(signals.levelChanging, this, () => {
-      this.isLocked = true;
-      this.destinationPosition = this.position.duplicate();
-      this.body.animations?.play(
-        'stand'.concat(toTitleCase(this.facingDirection))
-      );
+    gameEvents.on<string>(signals.stateChanged, this, (value) => {
+      if (value === 'expired') {
+        this.clearShadows();
+      }
+      else if (value === 'dead') {
+        this.addChild(this.deathThroes);
+        this.clearShadows()
+      }
+      else if (value === 'gameover') {
+        this.removeChild(this.deathThroes);
+        this.body.isVisible = false;
+        this.isLocked = true;
+      }
     });
   }
 
   step(deltaTime: number, root: Main) {
     if (this.itemPickupTime > 0) {
       this.processOnItemPickup(deltaTime);
-      return;
     }
 
-    if (this.isDead) {
-      this.deathTime -= deltaTime;
-    }
+    this.state.step(deltaTime);
 
     const { input } = root;
     if (input.getActionJustPressed('Space') && !this.isLocked) {
@@ -122,8 +130,7 @@ export class Hero extends GameObject {
 
     if (input.getActionJustPressed('KeyM')) {
       this.body.isVisible = !this.body.isVisible;
-      this.isDead = true;
-      this.deathTime = 1700;
+      this.state.kill();
       this.addChild(this.deathThroes);
     }
 
@@ -139,8 +146,15 @@ export class Hero extends GameObject {
   tryMove(root: Main) {
     if (this.isLocked || root.isFading) return;
 
-    if (this.isDead) {
+    if (this.state.isDead) {
       this.playDeath();
+      return;
+    }
+
+    if (this.state.isExpired) {
+      this.body.animations?.playOnce('expired', () => {
+        this.body.isVisible = false;
+      });
       return;
     }
 
@@ -312,9 +326,19 @@ export class Hero extends GameObject {
     };
   }
 
+  clearShadows() {
+    if (this.shadows.penumbra) {
+      this.removeChild(this.shadows.penumbra);
+      this.shadows.penumbra = null;
+    }
+    if (this.shadows.umbra) {
+      this.removeChild(this.shadows.umbra);
+      this.shadows.umbra = null;
+    }
+  }
+
   playDeath() {
-    if (this.deathTime <= 0) {
-      this.isDead = false;
+    if (!this.state.isDead) {
       this.removeChild(this.deathThroes);
       return;
     }

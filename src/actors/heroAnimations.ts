@@ -12,8 +12,9 @@ export const makeAnimation = (rootFrame: number, duration: number, frameCount: n
   const frames: frameConfiguration[] = []
   const rate = duration / frameCount;
   let accumulatedTime = 0;
+  const upperBound = rootFrame + frameCount;
 
-  for (let i = rootFrame; i < frameCount; i++) {
+  for (let i = rootFrame; i < upperBound; i++) {
     frames.push({
       time: accumulatedTime,
       frame: i
@@ -47,6 +48,7 @@ export const MOVE_DOWN = makeMovementFrames(10);
 export const MOVE_LEFT = makeMovementFrames(12);
 
 export const DEATH = makeAnimation(7, 1700, 47);
+export const EXPIRED = makeAnimation(25, 1500, 8);
 
 export const IDLE_START: animationConfiguration = {
   duration: 5000,

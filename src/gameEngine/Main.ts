@@ -47,32 +47,6 @@ export class Main extends GameObject {
       console.info(`Loading ${newLevel?.constructor.name ?? 'Error'}`);
     });
 
-    gameEvents.on<GameObject>(signals.heroInteraction, this, (interaction) => {
-      if (interaction instanceof Npc) {
-        const content = interaction.getContent();
-        if (content === null) return;
-
-        if (content.addFlag) {
-          console.info('Add Flag:', content.addFlag);
-          storyFlags.add(content.addFlag);
-          storyFlags.enumerate();
-        }
-
-        const textBox = new SpriteTextBox(content!);
-        this.addChild(textBox);
-
-        const textBoxId = gameEvents.on(
-          signals.endTextInteraction,
-          this,
-          () => {
-            textBox.destroy();
-            gameEvents.off(textBoxId);
-          }
-        );
-        gameEvents.emit(signals.startTextInteraction);
-      }
-    });
-
     this.input.consolate = () => {
       this.debug(0);
       // inventory.debug(1);
