@@ -22,6 +22,7 @@ import type { Main } from '../gameEngine/Main';
 import type { deflectionCoefficient, Direction } from '../types';
 import { signals } from '../events/eventConstants';
 import type { Ramp } from '../objects/Obstacles/Ramp';
+import type { Paddle } from '../objects/Paddle/Paddle';
 
 type Shadows = {
   umbra?: Sprite | null,
@@ -33,6 +34,7 @@ export class Slime extends GameObject {
   destinationPosition: Vector2;
   body: Sprite;
   deathThroes: Sprite;
+  paddle: Paddle | null | undefined;
   speed: number;
   shadows: Shadows = {};
   trails: { [key: string]: Sprite };
@@ -126,7 +128,6 @@ export class Slime extends GameObject {
     }
 
     const { state } = root;
-    state.step(deltaTime);
 
     const { input } = root;
     if (input.getActionJustPressed('Space') && !this.isLocked) {
@@ -142,8 +143,8 @@ export class Slime extends GameObject {
     const distance = moveTowards(this.position, this.destinationPosition, this.speed);
     const hasArrived = distance < 1;
 
-    if (this.isTurning) {
-      console.info("step: now facing", this.facingDirection, this.position);
+    if (this.paddle && this.paddle.isActivated) {
+      console.info("Paddle is active", this.paddle.deflection, this.paddle.activationTime);
     }
     if (hasArrived) {
       this.tryMove(root);
@@ -229,20 +230,27 @@ export class Slime extends GameObject {
 
     const destination = new Vector2(nextX, nextY);
 
-    const isObstruction = this.parent?.children.find((child) => {
-      return child.isSolid && child.position.equals(destination);
+    const destinationTile = this.parent?.children.filter((child) => {
+      return child.position.equals(destination);
     });
-    const isRamp = this.parent?.children.find((child) => {
-      return child.constructor.name === 'Ramp' && child.position.equals(destination);
-    }) as Ramp | undefined;
+    const isObstruction = destinationTile?.some(tile => tile.isSolid);
+    const ramp = destinationTile?.find((tile) => tile.constructor.name === 'Ramp') as Ramp | undefined;
+    const paddle = destinationTile?.find((tile) => tile.constructor.name === 'Paddle') as Paddle | undefined;
 
     if (isObstruction) {
       state.kill();
       return;
     }
-    if (isRamp) {
-      console.info('found Ramp', isRamp);
-      this.turn(isRamp.deflection);
+    if (ramp) {
+      console.info('found Ramp', ramp);
+      this.turn(ramp.deflection);
+    }
+    if (paddle) {
+      console.info('found paddle', paddle);
+
+    }
+    else if (this.paddle) {
+      this.paddle = null;
     }
 
     this.destinationPosition = destination;

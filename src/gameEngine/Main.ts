@@ -64,6 +64,7 @@ export class Main extends GameObject {
 
   stepEntry(deltaTime: number, root: Main): void {
     super.stepEntry(deltaTime, root);
+    this.state.step(deltaTime);
 
     if (this.input.getActionJustPressed('KeyG')) {
       if (this.isDesaturating) {
