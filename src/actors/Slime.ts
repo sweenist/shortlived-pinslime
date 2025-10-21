@@ -127,8 +127,6 @@ export class Slime extends GameObject {
       this.processOnItemPickup(deltaTime);
     }
 
-    const { state } = root;
-
     const { input } = root;
     if (input.getActionJustPressed('Space') && !this.isLocked) {
       const interactablePosition = this.parent?.children.find((c) => {
@@ -143,8 +141,11 @@ export class Slime extends GameObject {
     const distance = moveTowards(this.position, this.destinationPosition, this.speed);
     const hasArrived = distance < 1;
 
-    if (this.paddle && this.paddle.isActivated) {
-      console.info("Paddle is active", this.paddle.deflection, this.paddle.activationTime);
+    if (this.paddle) {
+      console.info("SLime haz paddle: ", this.paddle)
+      if (this.paddle.isActivated) {
+        console.info("Paddle is active", this.paddle.deflection, this.paddle.activationTime);
+      }
     }
     if (hasArrived) {
       this.tryMove(root);
@@ -247,9 +248,8 @@ export class Slime extends GameObject {
     }
     if (paddle) {
       console.info('found paddle', paddle);
-
-    }
-    else if (this.paddle) {
+      this.paddle = paddle;
+    } else if (this.paddle) {
       this.paddle = null;
     }
 
