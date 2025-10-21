@@ -1,6 +1,6 @@
 import { Animations } from '../gameEngine/Animations';
 import { FrameIndexPattern } from '../gameEngine/FrameIndexPattern';
-import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, STATE_PLAYING, UP } from '../constants';
+import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, UP } from '../constants';
 import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
@@ -164,7 +164,7 @@ export class Slime extends GameObject {
         this.removeChild(this.shadows.umbra);
         this.shadows.umbra = null;
       }
-      return;
+      // return;
     }
 
     let nextX = this.destinationPosition.x;
