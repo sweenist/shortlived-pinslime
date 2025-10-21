@@ -4,7 +4,6 @@ import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INI
 import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
-import { isSpaceFree } from '../utils/grid';
 import { Vector2 } from '../utils/vector';
 import {
   DEATH,
@@ -154,7 +153,7 @@ export class Slime extends GameObject {
       return;
     }
 
-    const { input, level } = root;
+    const { input } = root;
 
     if (!input.direction) {
       if (this.shadows.penumbra) {

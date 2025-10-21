@@ -15,7 +15,6 @@ import { FrameIndexPattern } from '../../gameEngine/FrameIndexPattern';
 import { gameEvents } from "../../events/Events";
 import { signals } from "../../events/eventConstants";
 import type { animationConfiguration } from "../../types/animationTypes";
-import { STATE_PLAYING } from "../../constants";
 
 const offsets: Record<keyof typeof DirectionShift, Vector2> = {
   N_E: new Vector2(0, 0),
