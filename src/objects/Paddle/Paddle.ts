@@ -15,6 +15,7 @@ import { FrameIndexPattern } from '../../gameEngine/FrameIndexPattern';
 import { gameEvents } from "../../events/Events";
 import { signals } from "../../events/eventConstants";
 import type { animationConfiguration } from "../../types/animationTypes";
+import { STATE_PLAYING } from "../../constants";
 
 const offsets: Record<keyof typeof DirectionShift, Vector2> = {
   N_E: new Vector2(0, 0),
@@ -89,7 +90,7 @@ export class Paddle extends GameObject {
   step(_deltaTime: number, root?: Main): void {
     const { state, input } = root!;
 
-    if (state.current === 'playing')
+    if (state.current === STATE_PLAYING)
       if (input.getActionJustPressed('Space')) {
         console.info(this.name, this.sprite.animations)
         this.sprite.animations?.playOnce('flap', () => {

@@ -1,6 +1,6 @@
 import { Animations } from '../gameEngine/Animations';
 import { FrameIndexPattern } from '../gameEngine/FrameIndexPattern';
-import { DOWN, LEFT, RIGHT, UP } from '../constants';
+import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, UP } from '../constants';
 import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
@@ -88,14 +88,17 @@ export class Slime extends GameObject {
     );
 
     gameEvents.on<string>(signals.stateChanged, this, (value) => {
-      if (value === 'expired') {
+      if (value === STATE_INITIAL) {
+        this.body.animations?.play('idle');
+      }
+      else if (value === STATE_EXPIRED) {
         this.clearShadows();
       }
-      else if (value === 'dead') {
+      else if (value === STATE_DEAD) {
         this.addChild(this.deathThroes);
         this.clearShadows()
       }
-      else if (value === 'gameover') {
+      else if (value === STATE_GAMEOVER) {
         this.removeChild(this.deathThroes);
         this.body.isVisible = false;
         this.isLocked = true;

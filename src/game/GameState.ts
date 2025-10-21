@@ -1,3 +1,4 @@
+import { STATE_DEAD, STATE_EXPIRED, STATE_NAMES } from "../constants";
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 
@@ -11,18 +12,17 @@ export class GameState {
     dead: 1700,
     gameover: 65535,
   };
-  private readonly _stateNames = ['initial', 'launching', 'playing', 'expired', 'dead', 'gameover'];
-
+  private readonly _stateNames = STATE_NAMES
   constructor() {
     this._index = 0;
   }
 
   public get isExpired(): boolean {
-    return this.current === 'expired';
+    return this.current === STATE_EXPIRED;
   }
 
   public get isDead(): boolean {
-    return this.current === 'dead';
+    return this.current === STATE_DEAD;
   }
 
   public get current(): string {
