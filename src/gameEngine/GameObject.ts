@@ -1,6 +1,7 @@
 import { Vector2 } from '../utils/vector';
 import { gameEvents } from '../events/Events';
 import type { Main } from './Main';
+import type { DrawLayers } from '../types';
 
 export class GameObject {
   children: GameObject[] = [];
@@ -9,7 +10,7 @@ export class GameObject {
   isReady: boolean = false;
   isSolid: boolean = false;
   name?: string;
-  drawLayer: 'DEFAULT' | 'GROUND' | 'SKY' | 'USER_INTERFACE' = 'DEFAULT';
+  drawLayer: DrawLayers = 'DEFAULT';
 
   constructor(position?: Vector2) {
     this.position = position ?? Vector2.Zero();

@@ -1,8 +1,146 @@
 {
-  "paddles": [{
-    "direction": "S_W",
-    "location": {"x": 6, "y": 7}
-  }],
+  "mapConfig": {
+    "W0": { "resourceName": "walls", "frameIndex": 0 },
+    "W1": { "resourceName": "walls", "frameIndex": 1 },
+    "W2": { "resourceName": "walls", "frameIndex": 2 },
+    "W3": { "resourceName": "walls", "frameIndex": 3 },
+    "W4": { "resourceName": "walls", "frameIndex": 6 },
+    "W5": { "resourceName": "walls", "frameIndex": 7 },
+    "W6": { "resourceName": "walls", "frameIndex": 8 },
+    "W7": { "resourceName": "walls", "frameIndex": 9 },
+    "W8": { "resourceName": "walls", "frameIndex": 12 },
+    "W9": { "resourceName": "walls", "frameIndex": 13 },
+    "WA": { "resourceName": "walls", "frameIndex": 14 },
+    "WB": { "resourceName": "walls", "frameIndex": 15 },
+    "WC": { "resourceName": "walls", "frameIndex": 18 },
+    "WD": { "resourceName": "walls", "frameIndex": 19 },
+    "WE": { "resourceName": "walls", "frameIndex": 20 },
+    "WF": { "resourceName": "walls", "frameIndex": 21 },
+    "BL": { "resourceName": "walls", "frameIndex": 10, "isSolid": false },
+    "R0": {
+      "resourceName": "walls",
+      "frameIndex": 27,
+      "isSolid": false,
+      "deflection": -1
+    },
+    "R1": {
+      "resourceName": "walls",
+      "frameIndex": 28,
+      "isSolid": false,
+      "deflection": 1
+    },
+    "R2": {
+      "resourceName": "walls",
+      "frameIndex": 33,
+      "isSolid": false,
+      "deflection": 1
+    },
+    "R3": {
+      "resourceName": "walls",
+      "frameIndex": 34,
+      "isSolid": false,
+      "deflection": -1
+    },
+    "RA": { "resourceName": "walls", "frameIndex": 25 },
+    "RB": { "resourceName": "walls", "frameIndex": 26 },
+    "RC": { "resourceName": "walls", "frameIndex": 31 },
+    "RD": { "resourceName": "walls", "frameIndex": 32 },
+    "RP": {
+      "resourceName": "walls",
+      "frameIndex": 37,
+      "isSolid": false,
+      "deflection": -1
+    },
+    "RQ": {
+      "resourceName": "walls",
+      "frameIndex": 38,
+      "isSolid": false,
+      "deflection": 1
+    },
+    "RR": {
+      "resourceName": "walls",
+      "frameIndex": 43,
+      "isSolid": false,
+      "deflection": 1
+    },
+    "RS": {
+      "resourceName": "walls",
+      "frameIndex": 44,
+      "isSolid": false,
+      "deflection": -1
+    },
+    "RT": {
+      "resourceName": "walls",
+      "frameIndex": 48,
+      "isSolid": false,
+      "deflection": -1
+    },
+    "RU": {
+      "resourceName": "walls",
+      "frameIndex": 49,
+      "isSolid": false,
+      "deflection": 1
+    },
+    "RV": {
+      "resourceName": "walls",
+      "frameIndex": 50,
+      "isSolid": false,
+      "deflection": 1
+    },
+    "RW": {
+      "resourceName": "walls",
+      "frameIndex": 51,
+      "isSolid": false,
+      "deflection": -1
+    },
+    "00": { "resourceName": "walls", "frameIndex": 4, "isSolid": false },
+    "E0": { "resourceName": "walls", "frameIndex": 39 },
+    "EN": { "resourceName": "walls", "frameIndex": 40 },
+    "E1": { "resourceName": "walls", "frameIndex": 41 },
+    "E2": { "resourceName": "walls", "frameIndex": 23 },
+    "EE": { "resourceName": "walls", "frameIndex": 29 },
+    "E3": { "resourceName": "walls", "frameIndex": 35 },
+    "E4": { "resourceName": "walls", "frameIndex": 45 },
+    "ES": { "resourceName": "walls", "frameIndex": 46 },
+    "E5": { "resourceName": "walls", "frameIndex": 47 },
+    "E6": { "resourceName": "walls", "frameIndex": 5 },
+    "EW": { "resourceName": "walls", "frameIndex": 11 },
+    "E7": { "resourceName": "walls", "frameIndex": 17 },
+    "WW": { "resourceName": "walls", "frameIndex": 24 },
+    "WX": { "resourceName": "walls", "frameIndex": 30 },
+    "WY": { "resourceName": "walls", "frameIndex": 42 },
+    "WZ": { "resourceName": "walls", "frameIndex": 36 }
+  },
+  "paddles": [
+    {
+      "direction": "S_W",
+      "location": { "x": 6, "y": 7 }
+    },
+    {
+      "direction": "E_N",
+      "location": { "x": 1, "y": 6 }
+    },
+    {
+      "direction": "E_N",
+      "location": { "x": 4, "y": 6 }
+    },
+    {
+      "direction": "N_W",
+      "location": { "x": 10, "y": 5 }
+    },
+    {
+      "direction": "N_E",
+      "location": { "x": 10, "y": 6 }
+    },
+    {
+      "direction": "S_W",
+      "location": { "x": 9, "y": 5 }
+    },
+    {
+      "direction": "S_E",
+      "location": { "x": 9, "y": 7 }
+    }
+  ],
   "resourceConfig": [
     {
       "name": "walls",
@@ -11,7 +149,8 @@
         "columns": 6,
         "rows": 9
       }
-    },{
+    },
+    {
       "name": "paddles",
       "frameConfig": {
         "size": { "x": 16, "y": 16 },

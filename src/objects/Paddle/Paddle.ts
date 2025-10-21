@@ -12,21 +12,18 @@ import {
   W_N_PADDLE_FLAP, W_S_PADDLE_FLAP, S_E_PADDLE_FLAP, S_W_PADDLE_FLAP
 } from './paddleAnimations';
 import { FrameIndexPattern } from '../../gameEngine/FrameIndexPattern';
+import { gameEvents } from "../../events/Events";
+import { signals } from "../../events/eventConstants";
 
 const offsets: Record<keyof typeof DirectionShift, Vector2> = {
-  N_E: new Vector2(0, -4),
-  N_W: new Vector2(0, -4),
-  S_E: new Vector2(0, 4),
-  S_W: new Vector2(0, 4),
-  E_N: new Vector2(-4, 0),
-  E_S: new Vector2(-4, 0),
-  W_N: new Vector2(4, 0),
-  W_S: new Vector2(4, 0),
-}
-
-export interface PaddleParams {
-  position: Vector2;
-  direction: keyof typeof DirectionShift;
+  N_E: new Vector2(0, 0),
+  N_W: new Vector2(0, 0),
+  S_E: new Vector2(5, -1),
+  S_W: new Vector2(5, 1),
+  E_N: new Vector2(-5, -1),
+  E_S: new Vector2(-5, -1),
+  W_N: new Vector2(0, 0),
+  W_S: new Vector2(0, 0),
 }
 
 export const restPatterns: Record<keyof typeof DirectionShift, FrameIndexPattern> = {
@@ -51,11 +48,18 @@ export const flapPatterns: Record<keyof typeof DirectionShift, FrameIndexPattern
   S_W: new FrameIndexPattern(S_W_PADDLE_FLAP),
 };
 
+export interface PaddleParams {
+  position: Vector2;
+  direction: keyof typeof DirectionShift;
+}
+
 export class Paddle extends GameObject {
   sprite: Sprite;
 
   constructor(params: PaddleParams) {
     super(params.position);
+    this.name = `${params.direction}-${params.position}`
+    this.drawLayer = 'SKY';
 
     this.sprite = new Sprite({
       resource: resources.images['paddles'],
@@ -68,9 +72,19 @@ export class Paddle extends GameObject {
         flap: flapPatterns[params.direction],
       })
     });
+
+    this.addChild(this.sprite)
+  }
+
+  ready(): void {
+    gameEvents.on(signals.heroPosition, this, (value: Vector2) => {
+      if (value.prettyClose(this.position)) {
+        console.info(`${this.name} is close to hero at ${value}`)
+      }
+    })
   }
 
   step(_deltaTime: number, _root?: Main): void {
-    // this.sprite.animations?.play('rest');
+    this.sprite.animations?.play('rest');
   }
 }
