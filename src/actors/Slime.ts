@@ -150,7 +150,7 @@ export class Slime extends GameObject {
     if (this.isLocked || root.isFading) return;
 
     const { state } = root;
-    if (state.current !== STATE_PLAYING) {
+    if (!state.isPlaying) {
       return;
     }
 
@@ -165,8 +165,6 @@ export class Slime extends GameObject {
         this.removeChild(this.shadows.umbra);
         this.shadows.umbra = null;
       }
-
-      // this.body.animations?.play('idle');
       return;
     }
 

@@ -90,7 +90,7 @@ export class Paddle extends GameObject {
   step(_deltaTime: number, root?: Main): void {
     const { state, input } = root!;
 
-    if (state.current === STATE_PLAYING)
+    if (state.isPlaying)
       if (input.getActionJustPressed('Space')) {
         console.info(this.name, this.sprite.animations)
         this.sprite.animations?.playOnce('flap', () => {

@@ -25,6 +25,10 @@ export class GameState {
     return this.current === STATE_DEAD;
   }
 
+  public get isPlaying(): boolean {
+    return this.current === 'playing';
+  }
+
   public get current(): string {
     return this._stateNames[this._index];
   }
