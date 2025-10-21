@@ -145,7 +145,6 @@ export class Hero extends GameObject {
   tryMove(root: Main) {
     if (this.isLocked || root.isFading) return;
 
-
     const { state } = root;
     if (state.isDead) {
       this.deathThroes.animations?.play('death');

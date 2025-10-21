@@ -14,6 +14,7 @@ import {
 import { FrameIndexPattern } from '../../gameEngine/FrameIndexPattern';
 import { gameEvents } from "../../events/Events";
 import { signals } from "../../events/eventConstants";
+import type { animationConfiguration } from "../../types/animationTypes";
 
 const offsets: Record<keyof typeof DirectionShift, Vector2> = {
   N_E: new Vector2(0, 0),
@@ -26,26 +27,26 @@ const offsets: Record<keyof typeof DirectionShift, Vector2> = {
   W_S: new Vector2(0, 0),
 }
 
-export const restPatterns: Record<keyof typeof DirectionShift, FrameIndexPattern> = {
-  N_E: new FrameIndexPattern(N_E_PADDLE_REST),
-  N_W: new FrameIndexPattern(N_W_PADDLE_REST),
-  E_N: new FrameIndexPattern(E_N_PADDLE_REST),
-  E_S: new FrameIndexPattern(E_S_PADDLE_REST),
-  W_N: new FrameIndexPattern(W_N_PADDLE_REST),
-  W_S: new FrameIndexPattern(W_S_PADDLE_REST),
-  S_E: new FrameIndexPattern(S_E_PADDLE_REST),
-  S_W: new FrameIndexPattern(S_W_PADDLE_REST),
+export const restPatterns: Record<keyof typeof DirectionShift, animationConfiguration> = {
+  N_E: N_E_PADDLE_REST,
+  N_W: N_W_PADDLE_REST,
+  E_N: E_N_PADDLE_REST,
+  E_S: E_S_PADDLE_REST,
+  W_N: W_N_PADDLE_REST,
+  W_S: W_S_PADDLE_REST,
+  S_E: S_E_PADDLE_REST,
+  S_W: S_W_PADDLE_REST,
 };
 
-export const flapPatterns: Record<keyof typeof DirectionShift, FrameIndexPattern> = {
-  N_E: new FrameIndexPattern(N_E_PADDLE_FLAP),
-  N_W: new FrameIndexPattern(N_W_PADDLE_FLAP),
-  E_N: new FrameIndexPattern(E_N_PADDLE_FLAP),
-  E_S: new FrameIndexPattern(E_S_PADDLE_FLAP),
-  W_N: new FrameIndexPattern(W_N_PADDLE_FLAP),
-  W_S: new FrameIndexPattern(W_S_PADDLE_FLAP),
-  S_E: new FrameIndexPattern(S_E_PADDLE_FLAP),
-  S_W: new FrameIndexPattern(S_W_PADDLE_FLAP),
+export const flapPatterns: Record<keyof typeof DirectionShift, animationConfiguration> = {
+  N_E: N_E_PADDLE_FLAP,
+  N_W: N_W_PADDLE_FLAP,
+  E_N: E_N_PADDLE_FLAP,
+  E_S: E_S_PADDLE_FLAP,
+  W_N: W_N_PADDLE_FLAP,
+  W_S: W_S_PADDLE_FLAP,
+  S_E: S_E_PADDLE_FLAP,
+  S_W: S_W_PADDLE_FLAP,
 };
 
 export interface PaddleParams {
@@ -68,8 +69,8 @@ export class Paddle extends GameObject {
       frameRows: 4,
       frameSize: new Vector2(16, 16),
       animations: new Animations({
-        rest: restPatterns[params.direction],
-        flap: flapPatterns[params.direction],
+        rest: new FrameIndexPattern(restPatterns[params.direction]),
+        flap: new FrameIndexPattern(flapPatterns[params.direction]),
       })
     });
 
@@ -87,12 +88,13 @@ export class Paddle extends GameObject {
 
   step(_deltaTime: number, root?: Main): void {
     const { state, input } = root!;
+
     if (state.current === 'playing')
       if (input.getActionJustPressed('Space')) {
         console.info(this.name, this.sprite.animations)
         this.sprite.animations?.playOnce('flap', () => {
-          this.sprite.animations?.play('rest');
-        })
+          this.sprite.animations?.play('rest')
+        });
       }
   }
 }

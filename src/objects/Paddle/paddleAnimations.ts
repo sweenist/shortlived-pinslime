@@ -3,7 +3,7 @@ import { singleFrame } from "../../utils/animationBuilders";
 
 const flap = (rootFrame: number, reverse: boolean = false): animationConfiguration => {
   return {
-    duration: 450,
+    duration: 150,
     frames: [
       {
         frame: reverse ? rootFrame - 1 : rootFrame + 1,
@@ -11,23 +11,19 @@ const flap = (rootFrame: number, reverse: boolean = false): animationConfigurati
       },
       {
         frame: reverse ? rootFrame - 2 : rootFrame + 2,
-        time: 50
+        time: 17
       },
       {
         frame: reverse ? rootFrame - 3 : rootFrame + 3,
-        time: 100
+        time: 33
       },
       {
         frame: reverse ? rootFrame - 2 : rootFrame + 2,
-        time: 250
+        time: 100
       },
       {
         frame: reverse ? rootFrame - 1 : rootFrame + 1,
-        time: 325
-      },
-      {
-        frame: rootFrame,
-        time: 425
+        time: 150
       }
     ]
   }
