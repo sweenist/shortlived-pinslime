@@ -89,6 +89,7 @@ export class Paddle extends GameObject {
     const { state, input } = root!;
     if (state.current === 'playing')
       if (input.getActionJustPressed('Space')) {
+        console.info(this.name, this.sprite.animations)
         this.sprite.animations?.playOnce('flap', () => {
           this.sprite.animations?.play('rest');
         })

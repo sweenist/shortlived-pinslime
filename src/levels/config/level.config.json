@@ -125,6 +125,10 @@
       "location": { "x": 4, "y": 6 }
     },
     {
+      "direction": "E_N",
+      "location": { "x": 7, "y": 2 }
+    },
+    {
       "direction": "N_W",
       "location": { "x": 10, "y": 5 }
     },
