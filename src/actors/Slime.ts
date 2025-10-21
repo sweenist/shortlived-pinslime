@@ -1,6 +1,6 @@
 import { Animations } from '../gameEngine/Animations';
 import { FrameIndexPattern } from '../gameEngine/FrameIndexPattern';
-import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, UP } from '../constants';
+import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, STATE_PLAYING, UP } from '../constants';
 import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
@@ -100,11 +100,15 @@ export class Slime extends GameObject {
       }
       else if (value === STATE_EXPIRED) {
         this.clearShadows();
+        this.body.animations?.playOnce('expired', () => {
+          this.body.isVisible = false;
+        });
       }
       else if (value === STATE_DEAD) {
         this.clearShadows()
         this.body.isVisible = false;
         this.addChild(this.deathThroes);
+        this.deathThroes.animations?.play('death');
       }
       else if (value === STATE_GAMEOVER) {
         this.removeChild(this.deathThroes);
@@ -146,15 +150,7 @@ export class Slime extends GameObject {
     if (this.isLocked || root.isFading) return;
 
     const { state } = root;
-    if (state.isDead) {
-      this.deathThroes.animations?.play('death');
-      return;
-    }
-
-    if (state.isExpired) {
-      this.body.animations?.playOnce('expired', () => {
-        this.body.isVisible = false;
-      });
+    if (state.current !== STATE_PLAYING) {
       return;
     }
 
