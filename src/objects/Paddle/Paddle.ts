@@ -17,14 +17,14 @@ import { signals } from "../../events/eventConstants";
 import type { animationConfiguration } from "../../types/animationTypes";
 
 const offsets: Record<keyof typeof DirectionShift, Vector2> = {
-  N_E: new Vector2(0, 0),
-  N_W: new Vector2(0, 0),
-  S_E: new Vector2(5, -1),
-  S_W: new Vector2(5, 1),
-  E_N: new Vector2(-5, -1),
-  E_S: new Vector2(-5, -1),
-  W_N: new Vector2(0, 0),
-  W_S: new Vector2(0, 0),
+  N_E: new Vector2(-3, 5),
+  N_W: new Vector2(3, 5),
+  S_E: new Vector2(-3, -5),
+  S_W: new Vector2(3, -5),
+  E_N: new Vector2(-5, 3),
+  E_S: new Vector2(-5, -3),
+  W_N: new Vector2(5, -3),
+  W_S: new Vector2(5, 3),
 }
 
 export const restPatterns: Record<keyof typeof DirectionShift, animationConfiguration> = {
@@ -56,11 +56,12 @@ export interface PaddleParams {
 
 export class Paddle extends GameObject {
   sprite: Sprite;
+  isActivated: boolean = false
+  activationTime: number = 0;
 
   constructor(params: PaddleParams) {
     super(params.position);
     this.name = `${params.direction}-${params.position}`
-    this.drawLayer = 'SKY';
 
     this.sprite = new Sprite({
       resource: resources.images['paddles'],
@@ -86,15 +87,22 @@ export class Paddle extends GameObject {
     this.sprite.animations?.play('rest');
   }
 
-  step(_deltaTime: number, root?: Main): void {
+  step(deltaTime: number, root?: Main): void {
     const { state, input } = root!;
 
+    if (this.isActivated) {
+      this.activationTime -= deltaTime;
+      if (this.activationTime <= 0) this.isActivated = false;
+    }
     if (state.isPlaying)
       if (input.getActionJustPressed('Space')) {
         console.info(this.name, this.sprite.animations)
+        this.isActivated = true
+        this.activationTime = 120;
         this.sprite.animations?.playOnce('flap', () => {
           this.sprite.animations?.play('rest')
         });
       }
+
   }
 }
