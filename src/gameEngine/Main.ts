@@ -8,6 +8,7 @@ import { GameInput } from './GameInput';
 import { GameObject } from './GameObject';
 import { Level } from './Level';
 import { signals } from '../events/eventConstants';
+import { GameState } from '../game/GameState';
 
 export interface MainGameParams {
   ctx: CanvasRenderingContext2D;
@@ -19,6 +20,7 @@ export class Main extends GameObject {
   level?: Level;
   camera: Camera;
   input: GameInput;
+  state: GameState;
   //Fade Effect
   fadeAlpha: number = 0;
   fadeDirection: fader = fadeIn;
@@ -32,6 +34,7 @@ export class Main extends GameObject {
 
     this.camera = new Camera(params.ctx.canvas);
     this.input = new GameInput();
+    this.state = new GameState();
 
     this.addChild(this.camera);
   }

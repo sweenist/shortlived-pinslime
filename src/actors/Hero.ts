@@ -31,7 +31,6 @@ type Shadows = {
 export class Hero extends GameObject {
   facingDirection: Direction;
   destinationPosition: Vector2;
-  state: GameState;
   body: Sprite;
   deathThroes: Sprite;
   speed: number;
@@ -46,7 +45,6 @@ export class Hero extends GameObject {
   constructor(position: Vector2, speed: number = 4) {
     super(position);
 
-    this.state = new GameState();
     this.speed = speed;
 
     this.body = new Sprite({
@@ -111,7 +109,8 @@ export class Hero extends GameObject {
       this.processOnItemPickup(deltaTime);
     }
 
-    this.state.step(deltaTime);
+    const { state } = root;
+    state.step(deltaTime);
 
     const { input } = root;
     if (input.getActionJustPressed('Space') && !this.isLocked) {
@@ -130,7 +129,7 @@ export class Hero extends GameObject {
 
     if (input.getActionJustPressed('KeyM')) {
       this.body.isVisible = !this.body.isVisible;
-      this.state.kill();
+      state.kill();
       this.addChild(this.deathThroes);
     }
 
@@ -146,12 +145,14 @@ export class Hero extends GameObject {
   tryMove(root: Main) {
     if (this.isLocked || root.isFading) return;
 
-    if (this.state.isDead) {
-      this.playDeath();
+
+    const { state } = root;
+    if (state.isDead) {
+      this.deathThroes.animations?.play('death');
       return;
     }
 
-    if (this.state.isExpired) {
+    if (state.isExpired) {
       this.body.animations?.playOnce('expired', () => {
         this.body.isVisible = false;
       });
@@ -335,14 +336,6 @@ export class Hero extends GameObject {
       this.removeChild(this.shadows.umbra);
       this.shadows.umbra = null;
     }
-  }
-
-  playDeath() {
-    if (!this.state.isDead) {
-      this.removeChild(this.deathThroes);
-      return;
-    }
-    this.deathThroes.animations?.play('death');
   }
 
   debug(level: number) {
