@@ -1,6 +1,6 @@
 import { Animations } from '../gameEngine/Animations';
 import { FrameIndexPattern } from '../gameEngine/FrameIndexPattern';
-import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, UP } from '../constants';
+import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, UP } from '../constants';
 import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
@@ -10,6 +10,7 @@ import {
   DEATH,
   EXPIRED,
   IDLE_START,
+  LAUNCH,
   MOVE_DOWN,
   MOVE_LEFT,
   MOVE_RIGHT,
@@ -55,6 +56,7 @@ export class Slime extends GameObject {
       position: new Vector2(0, -1),
       animations: new Animations({
         idle: new FrameIndexPattern(IDLE_START),
+        launch: new FrameIndexPattern(LAUNCH),
         moveDown: new FrameIndexPattern(MOVE_DOWN),
         moveUp: new FrameIndexPattern(MOVE_UP),
         moveLeft: new FrameIndexPattern(MOVE_LEFT),
@@ -91,12 +93,18 @@ export class Slime extends GameObject {
       if (value === STATE_INITIAL) {
         this.body.animations?.play('idle');
       }
+      else if (value === STATE_LAUNCHING) {
+        this.body.animations?.playOnce('launch', () => {
+          this.body.animations?.play('moveRight');
+        });
+      }
       else if (value === STATE_EXPIRED) {
         this.clearShadows();
       }
       else if (value === STATE_DEAD) {
-        this.addChild(this.deathThroes);
         this.clearShadows()
+        this.body.isVisible = false;
+        this.addChild(this.deathThroes);
       }
       else if (value === STATE_GAMEOVER) {
         this.removeChild(this.deathThroes);
@@ -123,16 +131,6 @@ export class Slime extends GameObject {
       if (interactablePosition) {
         gameEvents.emit(signals.slimeInteraction, interactablePosition);
       }
-    }
-
-    if (input.getActionJustPressed('KeyH')) {
-      this.body.isVisible = !this.body.isVisible;
-    }
-
-    if (input.getActionJustPressed('KeyM')) {
-      this.body.isVisible = !this.body.isVisible;
-      state.kill();
-      this.addChild(this.deathThroes);
     }
 
     const distance = moveTowards(this.position, this.destinationPosition, this.speed);
@@ -172,7 +170,7 @@ export class Slime extends GameObject {
         this.shadows.umbra = null;
       }
 
-      this.body.animations?.play('idle');
+      // this.body.animations?.play('idle');
       return;
     }
 

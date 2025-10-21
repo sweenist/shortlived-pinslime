@@ -76,3 +76,32 @@ export const IDLE_START: animationConfiguration = {
     },
   ]
 };
+export const LAUNCH: animationConfiguration = {
+  duration: 1000,
+  frames: [
+    {
+      time: 0,
+      frame: 4,
+    },
+    {
+      time: 500,
+      frame: 22,
+    },
+    {
+      time: 617,
+      frame: 23,
+    },
+    {
+      time: 725,
+      frame: 24,
+    },
+    {
+      time: 875,
+      frame: 23,
+    },
+    {
+      time: 925,
+      frame: 22
+    }
+  ]
+}
