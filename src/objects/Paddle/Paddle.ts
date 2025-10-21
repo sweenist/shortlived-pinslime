@@ -81,10 +81,17 @@ export class Paddle extends GameObject {
       if (value.prettyClose(this.position)) {
         console.info(`${this.name} is close to hero at ${value}`)
       }
-    })
+    });
+    this.sprite.animations?.play('rest');
   }
 
-  step(_deltaTime: number, _root?: Main): void {
-    this.sprite.animations?.play('rest');
+  step(_deltaTime: number, root?: Main): void {
+    const { state, input } = root!;
+    if (state.current === 'playing')
+      if (input.getActionJustPressed('Space')) {
+        this.sprite.animations?.playOnce('flap', () => {
+          this.sprite.animations?.play('rest');
+        })
+      }
   }
 }
