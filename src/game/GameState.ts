@@ -1,4 +1,4 @@
-import { STATE_DEAD, STATE_EXPIRED, STATE_NAMES } from "../constants";
+import { STATE_DEAD, STATE_EXPIRED, STATE_NAMES, STATE_PLAYING } from "../constants";
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 
@@ -26,7 +26,7 @@ export class GameState {
   }
 
   public get isPlaying(): boolean {
-    return this.current === 'playing';
+    return this.current === STATE_PLAYING;
   }
 
   public get current(): string {
@@ -43,6 +43,7 @@ export class GameState {
 
   kill() {
     this._index = 4;
+    gameEvents.emit(signals.stateChanged, STATE_DEAD);
   }
 
   next() {

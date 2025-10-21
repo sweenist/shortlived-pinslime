@@ -209,7 +209,7 @@ export class Slime extends GameObject {
 
       this.body.animations?.play('moveLeft');
     }
-    if (input.direction === RIGHT) {
+    if (this.facingDirection === RIGHT) {
       nextX += gridSize;
       if (!this.shadows.umbra) {
         this.shadows.umbra = this.trails.RightUmbra
@@ -225,12 +225,14 @@ export class Slime extends GameObject {
     const destination = new Vector2(nextX, nextY);
     this.facingDirection = input.direction ?? this.facingDirection;
 
-    const isWalkable = isSpaceFree(level!.walls, destination);
     const hasActor = this.parent?.children.find((child) => {
       return child.isSolid && child.position.equals(destination);
     });
 
-    if (!isWalkable || hasActor) return;
+    if (hasActor) {
+      state.kill();
+      return;
+    }
 
     this.destinationPosition = destination;
   }
