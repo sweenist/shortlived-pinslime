@@ -14,21 +14,20 @@ import {
   MOVE_LEFT,
   MOVE_RIGHT,
   MOVE_UP,
-} from './heroAnimations';
+} from './slimeAnimations';
 import { moveTowards } from '../utils/moveUtils';
 import { gameEvents } from '../events/Events';
 import type { ItemEventMetaData } from '../types/eventTypes';
 import type { Main } from '../gameEngine/Main';
 import type { Direction } from '../types';
 import { signals } from '../events/eventConstants';
-import { GameState } from '../game/GameState';
 
 type Shadows = {
   umbra?: Sprite | null,
   penumbra?: Sprite | null
 };
 
-export class Hero extends GameObject {
+export class Slime extends GameObject {
   facingDirection: Direction;
   destinationPosition: Vector2;
   body: Sprite;
@@ -84,7 +83,7 @@ export class Hero extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on<ItemEventMetaData>(signals.heroItemCollect, this, (value) =>
+    gameEvents.on<ItemEventMetaData>(signals.slimeItemCollect, this, (value) =>
       this.onItemCollect(value)
     );
 
@@ -119,7 +118,7 @@ export class Hero extends GameObject {
       });
 
       if (interactablePosition) {
-        gameEvents.emit(signals.heroInteraction, interactablePosition);
+        gameEvents.emit(signals.slimeInteraction, interactablePosition);
       }
     }
 
@@ -139,7 +138,7 @@ export class Hero extends GameObject {
       this.tryMove(root);
     }
 
-    gameEvents.emit(signals.heroPosition, this.position);
+    gameEvents.emit(signals.slimePosition, this.position);
   }
 
   tryMove(root: Main) {

@@ -78,7 +78,7 @@ export class Paddle extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on(signals.heroPosition, this, (value: Vector2) => {
+    gameEvents.on(signals.slimePosition, this, (value: Vector2) => {
       if (value.prettyClose(this.position)) {
         console.info(`${this.name} is close to hero at ${value}`)
       }

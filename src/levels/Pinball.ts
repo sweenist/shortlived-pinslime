@@ -1,4 +1,4 @@
-import { Hero } from '../actors/Hero';
+import { Slime } from '../actors/Slime';
 import {
   Level,
   type LevelParams,
@@ -44,7 +44,7 @@ export class Pinball extends Level {
     });
 
 
-    const hero = new Hero(params.actorPosition);
+    const hero = new Slime(params.actorPosition);
     this.addChild(hero);
   }
 

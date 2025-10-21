@@ -19,7 +19,7 @@ export class Item extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on(signals.heroPosition, this, (value: Vector2) => {
+    gameEvents.on(signals.slimePosition, this, (value: Vector2) => {
       const heroPosition = value as Vector2;
 
       if (heroPosition.prettyClose(this.position)) {
@@ -30,7 +30,7 @@ export class Item extends GameObject {
 
   onPlayerCollide() {
     this.destroy();
-    gameEvents.emit<ItemEventMetaData>(signals.heroItemCollect, {
+    gameEvents.emit<ItemEventMetaData>(signals.slimeItemCollect, {
       image: resources.images.rod,
       position: this.position,
     });

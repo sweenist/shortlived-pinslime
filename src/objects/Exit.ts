@@ -18,7 +18,7 @@ export class Exit extends GameObject {
 
   ready(): void {
     this.exitId = gameEvents.on(
-      signals.heroPosition,
+      signals.slimePosition,
       this,
       (value: Vector2) => {
         const heroPosition = value as Vector2;

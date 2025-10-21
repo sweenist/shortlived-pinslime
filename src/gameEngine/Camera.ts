@@ -23,7 +23,7 @@ export class Camera extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on<Vector2>(signals.heroPosition, this, (value) => {
+    gameEvents.on<Vector2>(signals.slimePosition, this, (value) => {
       if (!value) return;
 
       this.centerPositionOnTarget(value);

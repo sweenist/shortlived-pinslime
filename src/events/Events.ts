@@ -36,7 +36,7 @@ class Events {
   emit<T>(eventName: string, value: T | null = null) {
     this.subscriptions.forEach((sub) => {
       if (sub.eventName === eventName) {
-        if (eventName != signals.heroPosition)
+        if (eventName != signals.slimePosition)
           console.debug(
             `emitting ${eventName} from ${sub.caller.constructor.name}`,
             sub.callback

@@ -26,7 +26,7 @@ export class Inventory extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on(signals.heroItemCollect, this, () => {
+    gameEvents.on(signals.slimeItemCollect, this, () => {
       this.nextId += 1;
       this.items.push({
         id: this.nextId,

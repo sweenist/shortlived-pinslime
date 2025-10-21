@@ -1,4 +1,4 @@
-import { Hero } from '../actors/Hero';
+import { Slime } from '../actors/Slime';
 import { fadeIn, fadeOut } from '../constants';
 import type { fader } from '../types';
 import { Vector2 } from '../utils/vector';
@@ -96,7 +96,7 @@ export class Main extends GameObject {
   drawObjects(ctx: CanvasRenderingContext2D) {
     this.children.forEach((child) => {
       if (child.drawLayer !== 'USER_INTERFACE') {
-        if (this.isDesaturating && !(child instanceof Hero)) {
+        if (this.isDesaturating && !(child instanceof Slime)) {
           ctx.save();
           ctx.filter = `saturate(${100 - this.desaturationAlpha}%)`;
           child.draw(ctx, Vector2.Zero());
