@@ -24,3 +24,4 @@ export type DialogueScenario = {
 };
 
 export type fader = -1 | 1;
+export type deflectionCoefficient = -1 | 1;

@@ -4,7 +4,7 @@ import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INI
 import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
-import { Vector2 } from '../utils/vector';
+import { CardinalVectors, Vector2 } from '../utils/vector';
 import {
   DEATH,
   EXPIRED,
@@ -19,8 +19,9 @@ import { moveTowards } from '../utils/moveUtils';
 import { gameEvents } from '../events/Events';
 import type { ItemEventMetaData } from '../types/eventTypes';
 import type { Main } from '../gameEngine/Main';
-import type { Direction } from '../types';
+import type { deflectionCoefficient, Direction } from '../types';
 import { signals } from '../events/eventConstants';
+import type { Ramp } from '../objects/Obstacles/Ramp';
 
 type Shadows = {
   umbra?: Sprite | null,
@@ -38,6 +39,7 @@ export class Slime extends GameObject {
   itemPickupTime: number = 0;
   itemPickupShell?: GameObject;
   isLocked: boolean = false;
+  isTurning: boolean = false;
 
   debugExpired: number = 0;
 
@@ -113,6 +115,7 @@ export class Slime extends GameObject {
         this.removeChild(this.deathThroes);
         this.body.isVisible = false;
         this.isLocked = true;
+        gameEvents.unsubscribe(this)
       }
     });
   }
@@ -138,6 +141,10 @@ export class Slime extends GameObject {
 
     const distance = moveTowards(this.position, this.destinationPosition, this.speed);
     const hasArrived = distance < 1;
+
+    if (this.isTurning) {
+      console.info("step: now facing", this.facingDirection, this.position);
+    }
     if (hasArrived) {
       this.tryMove(root);
     }
@@ -164,7 +171,6 @@ export class Slime extends GameObject {
         this.removeChild(this.shadows.umbra);
         this.shadows.umbra = null;
       }
-      // return;
     }
 
     let nextX = this.destinationPosition.x;
@@ -172,7 +178,7 @@ export class Slime extends GameObject {
 
     const gridSize = 16;
 
-    if (input.direction === UP) {
+    if (this.facingDirection === UP) {
       nextY -= gridSize;
       if (!this.shadows.umbra) {
         this.shadows.umbra = this.trails.UpUmbra
@@ -184,7 +190,7 @@ export class Slime extends GameObject {
 
       this.body.animations?.play('moveUp');
     }
-    if (input.direction === DOWN) {
+    if (this.facingDirection === DOWN) {
       nextY += gridSize;
       if (!this.shadows.umbra) {
         this.shadows.umbra = this.trails.DownUmbra
@@ -196,7 +202,7 @@ export class Slime extends GameObject {
 
       this.body.animations?.play('moveDown');
     }
-    if (input.direction === LEFT) {
+    if (this.facingDirection === LEFT) {
       nextX -= gridSize;
       if (!this.shadows.umbra) {
         this.shadows.umbra = this.trails.LeftUmbra
@@ -222,15 +228,21 @@ export class Slime extends GameObject {
     }
 
     const destination = new Vector2(nextX, nextY);
-    this.facingDirection = input.direction ?? this.facingDirection;
 
-    const hasActor = this.parent?.children.find((child) => {
+    const isObstruction = this.parent?.children.find((child) => {
       return child.isSolid && child.position.equals(destination);
     });
+    const isRamp = this.parent?.children.find((child) => {
+      return child.constructor.name === 'Ramp' && child.position.equals(destination);
+    }) as Ramp | undefined;
 
-    if (hasActor) {
+    if (isObstruction) {
       state.kill();
       return;
+    }
+    if (isRamp) {
+      console.info('found Ramp', isRamp);
+      this.turn(isRamp.deflection);
     }
 
     this.destinationPosition = destination;
@@ -330,6 +342,19 @@ export class Slime extends GameObject {
       this.removeChild(this.shadows.umbra);
       this.shadows.umbra = null;
     }
+  }
+
+  turn(deflection: deflectionCoefficient) {
+    const currentFacingVector = CardinalVectors[this.facingDirection];
+    let targetFacingVactor = currentFacingVector.swap();
+    targetFacingVactor = deflection === -1 ? targetFacingVactor.negate() : targetFacingVactor;
+
+    Object.keys(CardinalVectors).forEach((key) => {
+      const k = key as Direction;
+      if (CardinalVectors[k].equals(targetFacingVactor)) {
+        this.facingDirection = k;
+      }
+    })
   }
 
   debug(level: number) {

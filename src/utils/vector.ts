@@ -57,6 +57,14 @@ export class Vector2 implements Vector2Interface {
     }
   }
 
+  swap() {
+    return new Vector2(this.y, this.x);
+  }
+
+  negate() {
+    return new Vector2(-this.x, -this.y);
+  }
+
   /*
   Returns whether a comparative vector rounds to the components of the source vector.
   @param that a transient vector to compare against.
@@ -66,3 +74,10 @@ export class Vector2 implements Vector2Interface {
     return Math.round(that.x) === this.x && Math.round(that.y) === this.y;
   }
 }
+
+export const CardinalVectors: Record<Direction, Vector2> = {
+  UP: new Vector2(0, -1),
+  RIGHT: new Vector2(1, 0),
+  DOWN: new Vector2(0, 1),
+  LEFT: new Vector2(-1, 0),
+};

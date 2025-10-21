@@ -11,7 +11,8 @@ import mapContent from './config/level1.txt?raw';
 import levelConfig from './config/level.config.json';
 import Obstacle from '../objects/Obstacles/Obstacle';
 import { Paddle } from '../objects/Paddle/Paddle';
-import type { DirectionShift } from '../types';
+import type { deflectionCoefficient, DirectionShift } from '../types';
+import { Ramp } from '../objects/Obstacles/Ramp';
 
 type tileConfig = {
   resourceName: string;
@@ -63,11 +64,9 @@ export class Pinball extends Level {
         if (!fc) continue;
 
         const position = new Vector2(gridCells(x), gridCells(y));
-        const tile = new Obstacle({
+        const obstacleParams = {
           position,
           isSolid: tilecfg.isSolid ?? true,
-          drawLayer: 'GROUND',
-          deflection: tilecfg.deflection as -1 | 1 | undefined,
           content: {
             resource: resources.images[tilecfg.resourceName],
             frameColumns: fc?.frameConfig.columns,
@@ -75,7 +74,11 @@ export class Pinball extends Level {
             frameSize: Vector2.fromPoint(fc?.frameConfig.size),
             frameIndex: tilecfg.frameIndex,
           }
-        });
+        };
+
+        const tile = !!tilecfg.deflection
+          ? new Ramp({ ...obstacleParams, deflection: tilecfg.deflection as deflectionCoefficient })
+          : new Obstacle(obstacleParams);
         tile.drawLayer = 'GROUND';
 
         this.addChild(tile);
