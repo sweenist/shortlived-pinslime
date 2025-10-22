@@ -145,6 +145,12 @@
       "location": { "x": 9, "y": 7 }
     }
   ],
+  "pullknobConfig": {
+    "location": { "x": 1, "y": 8 }
+  },
+  "slimeConfig": {
+    "location": { "x": 2, "y": 8 }
+  },
   "resourceConfig": [
     {
       "name": "walls",
@@ -160,6 +166,14 @@
         "size": { "x": 16, "y": 16 },
         "columns": 4,
         "rows": 4
+      }
+    },
+    {
+      "name": "pullknob",
+      "frameConfig": {
+        "size": { "x": 80, "y": 16 },
+        "columns": 1,
+        "rows": 7
       }
     }
   ]

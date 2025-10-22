@@ -19,6 +19,7 @@ class Resources {
       textbox: 'sprites/text-box.png',
       walls: 'sprites/PingWalls.png',
       paddles: 'sprites/Paddle.png',
+      pullknob: 'sprites/PullKnob.png',
     };
 
     Object.keys(this.toLoad).forEach((key: string) => {

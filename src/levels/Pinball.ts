@@ -13,6 +13,7 @@ import Obstacle from '../objects/Obstacles/Obstacle';
 import { Paddle } from '../objects/Paddle/Paddle';
 import type { deflectionCoefficient, DirectionShift } from '../types';
 import { Ramp } from '../objects/Obstacles/Ramp';
+import { PullKnob } from '../objects/PullKnob/PullKnob';
 
 type tileConfig = {
   resourceName: string;
@@ -31,6 +32,8 @@ export class Pinball extends Level {
       paddles,
       resourceConfig,
       mapConfig,
+      pullknobConfig,
+      slimeConfig,
     } = levelConfig;
 
     this.buildMap(resourceConfig, mapConfig);
@@ -44,9 +47,13 @@ export class Pinball extends Level {
       this.addChild(paddleObject);
     });
 
+    const pullknobPosition = new Vector2(gridCells(pullknobConfig.location.x), gridCells(pullknobConfig.location.y))
+    const pullknob = new PullKnob(Vector2.fromPoint(pullknobPosition));
+    this.addChild(pullknob);
 
-    const hero = new Slime(params.actorPosition);
-    this.addChild(hero);
+    const slimePosition = new Vector2(gridCells(slimeConfig.location.x), gridCells(slimeConfig.location.y))
+    const slime = new Slime(Vector2.fromPoint(slimePosition));
+    this.addChild(slime);
   }
 
   buildMap(config: ResourceConfig[], mapConfig: { [key: string]: tileConfig }) {
