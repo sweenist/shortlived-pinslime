@@ -128,25 +128,16 @@ export class Slime extends GameObject {
     }
 
     const { input } = root;
-    if (input.getActionJustPressed('Space') && !this.isLocked) {
-      const interactablePosition = this.parent?.children.find((c) => {
-        return c.position.equals(this.position.adjacent(this.facingDirection));
-      });
-
-      if (interactablePosition) {
-        gameEvents.emit(signals.slimeInteraction, interactablePosition);
+    if (input.getActionJustPressed('Space') && this.paddle) {
+      if (this.paddle.isActivated) {
+        this.facingDirection = this.paddle.deflection;
+        this.paddle = null;
       }
     }
 
     const distance = moveTowards(this.position, this.destinationPosition, this.speed);
     const hasArrived = distance < 1;
 
-    if (this.paddle) {
-      console.info("SLime haz paddle: ", this.paddle)
-      if (this.paddle.isActivated) {
-        console.info("Paddle is active", this.paddle.deflection, this.paddle.activationTime);
-      }
-    }
     if (hasArrived) {
       this.tryMove(root);
     }
@@ -243,11 +234,9 @@ export class Slime extends GameObject {
       return;
     }
     if (ramp) {
-      console.info('found Ramp', ramp);
       this.turn(ramp.deflection);
     }
     if (paddle) {
-      console.info('found paddle', paddle);
       this.paddle = paddle;
     } else if (this.paddle) {
       this.paddle = null;

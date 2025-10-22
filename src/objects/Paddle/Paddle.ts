@@ -3,7 +3,7 @@ import { GameObject } from "../../gameEngine/GameObject";
 import type { Main } from "../../gameEngine/Main";
 import { Sprite } from "../../gameEngine/Sprite";
 import { resources } from "../../Resources";
-import type { deflectionCoefficient, DirectionShift } from "../../types";
+import type { Direction, DirectionShift } from "../../types";
 import { Vector2 } from "../../utils/vector";
 import {
   N_E_PADDLE_REST, N_W_PADDLE_REST, E_N_PADDLE_REST, E_S_PADDLE_REST,
@@ -13,23 +13,24 @@ import {
 } from './paddleAnimations';
 import { FrameIndexPattern } from '../../gameEngine/FrameIndexPattern';
 import type { animationConfiguration } from "../../types/animationTypes";
+import { DOWN, LEFT, RIGHT, UP } from "../../constants";
 
 interface PaddleConfig {
   offset: Vector2;
   rest: animationConfiguration,
   flap: animationConfiguration,
-  deflection: deflectionCoefficient
+  deflection: Direction,
 }
 
 const paddleConfiguration: Record<keyof typeof DirectionShift, PaddleConfig> = {
-  N_E: { offset: new Vector2(-3, 5), rest: N_E_PADDLE_REST, flap: N_E_PADDLE_FLAP, deflection: -1 },
-  N_W: { offset: new Vector2(3, 5), rest: N_W_PADDLE_REST, flap: N_W_PADDLE_FLAP, deflection: 1 },
-  E_N: { offset: new Vector2(-5, 3), rest: E_N_PADDLE_REST, flap: E_N_PADDLE_FLAP, deflection: -1 },
-  E_S: { offset: new Vector2(-5, -3), rest: E_S_PADDLE_REST, flap: E_S_PADDLE_FLAP, deflection: 1 },
-  W_N: { offset: new Vector2(5, -3), rest: W_N_PADDLE_REST, flap: W_N_PADDLE_FLAP, deflection: 1 },
-  W_S: { offset: new Vector2(5, 3), rest: W_S_PADDLE_REST, flap: W_S_PADDLE_FLAP, deflection: -1 },
-  S_E: { offset: new Vector2(-3, -5), rest: S_E_PADDLE_REST, flap: S_E_PADDLE_FLAP, deflection: 1 },
-  S_W: { offset: new Vector2(3, -5), rest: S_W_PADDLE_REST, flap: S_W_PADDLE_FLAP, deflection: -1 },
+  N_E: { offset: new Vector2(-3, 5), rest: N_E_PADDLE_REST, flap: N_E_PADDLE_FLAP, deflection: RIGHT },
+  N_W: { offset: new Vector2(3, 5), rest: N_W_PADDLE_REST, flap: N_W_PADDLE_FLAP, deflection: LEFT },
+  E_N: { offset: new Vector2(-5, 3), rest: E_N_PADDLE_REST, flap: E_N_PADDLE_FLAP, deflection: UP },
+  E_S: { offset: new Vector2(-5, -3), rest: E_S_PADDLE_REST, flap: E_S_PADDLE_FLAP, deflection: DOWN },
+  W_N: { offset: new Vector2(5, -3), rest: W_N_PADDLE_REST, flap: W_N_PADDLE_FLAP, deflection: UP },
+  W_S: { offset: new Vector2(5, 3), rest: W_S_PADDLE_REST, flap: W_S_PADDLE_FLAP, deflection: DOWN },
+  S_E: { offset: new Vector2(-3, -5), rest: S_E_PADDLE_REST, flap: S_E_PADDLE_FLAP, deflection: RIGHT },
+  S_W: { offset: new Vector2(3, -5), rest: S_W_PADDLE_REST, flap: S_W_PADDLE_FLAP, deflection: LEFT },
 }
 
 export interface PaddleParams {
@@ -39,7 +40,7 @@ export interface PaddleParams {
 
 export class Paddle extends GameObject {
   sprite: Sprite;
-  deflection: deflectionCoefficient;
+  deflection: Direction;
   isActivated: boolean = false
   activationTime: number = 0;
 
