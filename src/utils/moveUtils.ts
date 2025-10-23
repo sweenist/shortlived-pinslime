@@ -7,8 +7,7 @@ export function moveTowards(actorPosition: Vector2, destination: Vector2, speed:
   let distance = Math.sqrt(traverseX ** 2 + traverseY ** 2);//euclidean distance
 
   if (distance < speed) {
-    actorPosition.x = destination.x;
-    actorPosition.y = destination.y;
+    actorPosition = destination;
   }
   else {
     const normailzedX = traverseX / distance;
