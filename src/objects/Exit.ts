@@ -3,6 +3,7 @@ import { gameEvents } from '../events/Events';
 import { GameObject } from '../gameEngine/GameObject';
 import { Sprite } from '../gameEngine/Sprite';
 import { resources } from '../Resources';
+import type { Movement } from '../types';
 import { Vector2 } from '../utils/vector';
 
 export class Exit extends GameObject {
@@ -17,13 +18,13 @@ export class Exit extends GameObject {
   }
 
   ready(): void {
-    this.exitId = gameEvents.on(
+    this.exitId = gameEvents.on<Movement>(
       signals.slimePosition,
       this,
-      (value: Vector2) => {
-        const heroPosition = value as Vector2;
+      (value) => {
+        const { position: actorPosition } = value;
 
-        if (heroPosition.prettyClose(this.position)) {
+        if (actorPosition.prettyClose(this.position)) {
           gameEvents.emit(signals.sceneExit, this.name);
           gameEvents.off(this.exitId!);
         }

@@ -156,7 +156,7 @@ export class Slime extends GameObject {
       this.tryMove(root);
     }
 
-    gameEvents.emit(signals.slimePosition, this.position);
+    gameEvents.emit(signals.slimePosition, { position: this.position, direction: this.facingDirection });
   }
 
   tryMove(root: Main) {

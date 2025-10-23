@@ -1,3 +1,5 @@
+import type { Vector2 } from "./utils/vector";
+
 export type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 
 export const DirectionShift = {
@@ -25,3 +27,5 @@ export type DialogueScenario = {
 
 export type fader = -1 | 1;
 export type deflectionCoefficient = -1 | 1;
+
+export type Movement = { position: Vector2, facing: Direction };

@@ -5,6 +5,7 @@ import { Sprite } from '../../gameEngine/Sprite';
 import { resources } from '../../Resources';
 import { Vector2 } from '../../utils/vector';
 import { signals } from '../../events/eventConstants';
+import type { Movement } from '../../types';
 
 export class Item extends GameObject {
   sprite: Sprite;
@@ -19,10 +20,10 @@ export class Item extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on(signals.slimePosition, this, (value: Vector2) => {
-      const heroPosition = value as Vector2;
+    gameEvents.on<Movement>(signals.slimePosition, this, (value) => {
+      const { position: actorPosition } = value;
 
-      if (heroPosition.prettyClose(this.position)) {
+      if (actorPosition.prettyClose(this.position)) {
         this.onPlayerCollide();
       }
     });
