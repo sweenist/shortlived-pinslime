@@ -26,28 +26,32 @@ export const LAUNCHING: animationConfiguration = {
       frame: 2,
     },
     {
-      time: 500,
+      time: 750,
       frame: 3
     },
     {
-      time: 617,
+      time: 785,
       frame: 4
     },
     {
-      time: 725,
+      time: 800,
       frame: 5,
     },
     {
-      time: 875,
+      time: 820,
       frame: 6,
     },
     {
-      time: 925,
+      time: 850,
       frame: 5
     },
     {
-      time: 1050,
+      time: 940,
       frame: 4
+    },
+    {
+      time: 1000,
+      frame: 3
     }
   ]
 }

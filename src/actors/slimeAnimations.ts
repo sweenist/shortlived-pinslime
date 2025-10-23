@@ -84,23 +84,23 @@ export const LAUNCH: animationConfiguration = {
       frame: 4,
     },
     {
-      time: 617,
+      time: 785,
       frame: 22,
     },
     {
-      time: 725,
+      time: 785,
+      frame: 23,
+    },
+    {
+      time: 800,
+      frame: 24,
+    },
+    {
+      time: 820,
       frame: 23,
     },
     {
       time: 875,
-      frame: 24,
-    },
-    {
-      time: 925,
-      frame: 23,
-    },
-    {
-      time: 967,
       frame: 22
     }
   ]
