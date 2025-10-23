@@ -34,6 +34,7 @@ export class Pinball extends Level {
       mapConfig,
       pullknobConfig,
       slimeConfig,
+      shadowConfig,
     } = levelConfig;
 
     this.buildMap(resourceConfig, mapConfig);
@@ -47,11 +48,11 @@ export class Pinball extends Level {
     });
 
     const pullknobPosition = new Vector2(gridCells(pullknobConfig.location.x), gridCells(pullknobConfig.location.y))
-    const pullknob = new PullKnob(Vector2.fromPoint(pullknobPosition));
+    const pullknob = new PullKnob(pullknobPosition);
     this.addChild(pullknob);
 
     const slimePosition = new Vector2(gridCells(slimeConfig.location.x), gridCells(slimeConfig.location.y))
-    const slime = new Slime(Vector2.fromPoint(slimePosition));
+    const slime = new Slime(slimePosition, slimeConfig.speed, shadowConfig);
     this.addChild(slime);
   }
 

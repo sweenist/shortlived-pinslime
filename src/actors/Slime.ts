@@ -23,6 +23,7 @@ import type { deflectionCoefficient, Direction } from '../types';
 import { signals } from '../events/eventConstants';
 import type { Ramp } from '../objects/Obstacles/Ramp';
 import type { Paddle } from '../objects/Paddle/Paddle';
+import { AfterImage, type ShadowConfig } from './AfterImage';
 
 type Shadows = {
   umbra?: Sprite | null,
@@ -37,6 +38,7 @@ export class Slime extends GameObject {
   paddle: Paddle | null | undefined;
   speed: number;
   shadows: Shadows = {};
+  afterImage: AfterImage;
   trails: { [key: string]: Sprite };
   itemPickupTime: number = 0;
   itemPickupShell?: GameObject;
@@ -45,7 +47,7 @@ export class Slime extends GameObject {
 
   debugExpired: number = 0;
 
-  constructor(position: Vector2, speed: number = 4) {
+  constructor(position: Vector2, speed: number = 4, shadowConfig: ShadowConfig) {
     super(position);
 
     this.speed = speed;
@@ -78,6 +80,8 @@ export class Slime extends GameObject {
         { death: new FrameIndexPattern(DEATH), }
       )
     });
+
+    this.afterImage = new AfterImage(shadowConfig);
 
     this.addChild(this.body);
 

@@ -9,21 +9,25 @@ export type Shade = {
   penumbra: Sprite
 };
 
-export class AfterImage extends GameObject {
-  umbra: Sprite | null;
-  penumbra: Sprite | null;
-  afterImageCollection: { [K in Direction]: Shade };
+export type ShadowConfig = {
+  [K in Direction]: {
+    umbra: { frameIndex: number; position: { x: number; y: number } };
+    penumbra: { frameIndex: number; position: { x: number; y: number } };
+  };
+};
 
-  constructor() {
+export class AfterImage extends GameObject {
+  umbra: Sprite | null = null;
+  penumbra: Sprite | null = null;
+  afterImageCollection: { [K in Direction]: Shade } = {} as { [K in Direction]: Shade };
+
+  constructor(shadowConfig: ShadowConfig) {
     super();
 
-    this.umbra = null;
-    this.penumbra = null;
-
-    this.afterImageCollection = this.buildAfterImages();
+    this.afterImageCollection = this.buildAfterImages(shadowConfig);
   }
 
-  buildAfterImages(): { [K in Direction]: Shade } {
+  buildAfterImages(shadowConfig: ShadowConfig): { [K in Direction]: Shade } {
 
     const spriteParams = {
       resource: resources.images['slimeTrail'],
@@ -32,60 +36,24 @@ export class AfterImage extends GameObject {
       frameRows: 4,
     };
 
-    return {
-      'UP': {
-        umbra: new Sprite(
-          {
-            ...spriteParams,
-            frameIndex: 0,
-            position: new Vector2(0, 5),
-          }),
-        penumbra: new Sprite(
-          {
-            ...spriteParams,
-            frameIndex: 1,
-            position: new Vector2(0, 14),
-          })
-      }, 'RIGHT': {
-        umbra: new Sprite(
-          {
-            ...spriteParams,
-            frameIndex: 2,
-            position: new Vector2(-6, -1),
-          }),
-        penumbra: new Sprite(
-          {
-            ...spriteParams,
-            frameIndex: 3,
-            position: new Vector2(-15, -1),
-          })
-      }, 'DOWN': {
-        umbra: new Sprite(
-          {
-            ...spriteParams,
-            frameIndex: 4,
-            position: new Vector2(0, -7),
-          }),
-        penumbra: new Sprite(
-          {
-            ...spriteParams,
-            frameIndex: 5,
-            position: new Vector2(0, -16),
-          })
-      }, 'LEFT': {
-        umbra: new Sprite(
-          {
-            ...spriteParams,
-            frameIndex: 6,
-            position: new Vector2(6, -1),
-          }),
-        penumbra: new Sprite(
-          {
-            ...spriteParams,
-            frameIndex: 7,
-            position: new Vector2(15, -1),
-          })
-      }
-    };
+    const result = {} as { [K in Direction]: Shade };
+
+    (Object.keys(shadowConfig) as Direction[]).forEach((dir) => {
+      const cfg = shadowConfig[dir];
+      result[dir] = {
+        umbra: new Sprite({
+          ...spriteParams,
+          frameIndex: cfg.umbra.frameIndex,
+          position: Vector2.fromPoint(cfg.umbra.position),
+        }),
+        penumbra: new Sprite({
+          ...spriteParams,
+          frameIndex: cfg.penumbra.frameIndex,
+          position: Vector2.fromPoint(cfg.penumbra.position),
+        }),
+      };
+    });
+
+    return result;
   }
 }
