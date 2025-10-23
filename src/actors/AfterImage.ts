@@ -2,6 +2,7 @@ import { STATE_NAMES } from "../constants";
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
+import type { Main } from "../gameEngine/Main";
 import { Sprite } from "../gameEngine/Sprite";
 import { resources } from "../Resources";
 import type { Movement, Direction } from "../types";
@@ -25,6 +26,8 @@ export class AfterImage extends GameObject {
   afterImageCollection: { [K in Direction]: Shade } = {} as { [K in Direction]: Shade };
   currentFacing?: Direction
   showPenumbra: boolean = false;
+  timeToRenderUmbra: number = 0;
+  timeToRenderPenumbra: number = 0;
   isActive: boolean = false;
 
   constructor(shadowConfig: ShadowConfig) {
@@ -43,22 +46,32 @@ export class AfterImage extends GameObject {
 
     gameEvents.on<Movement>(signals.slimePosition, this, ({ direction: facing }) => {
       if (!this.isActive) return;
-      // set a timer and countdown on update
 
       if (this.currentFacing !== facing) {
+        this.timeToRenderUmbra = 67;
         this.tryRemoveChild(this.penumbra);
         this.tryRemoveChild(this.umbra);
         this.currentFacing = facing;
-        this.umbra = this.afterImageCollection[facing].umbra;
-        this.showPenumbra = false;
-        this.addChild(this.umbra);
-      }
-      else if (facing && this.currentFacing === facing && !this.showPenumbra) {
-        this.penumbra = this.afterImageCollection[this.currentFacing].penumbra;
-        this.showPenumbra = true;
-        this.addChild(this.penumbra);
       }
     });
+  }
+
+  step(deltaTime: number, _root?: Main): void {
+    if (this.timeToRenderUmbra > 0) {
+      this.timeToRenderUmbra -= deltaTime;
+      if (this.timeToRenderUmbra <= 0) {
+        this.timeToRenderPenumbra = 50;
+        this.umbra = this.afterImageCollection[this.currentFacing!].umbra
+        this.addChild(this.umbra)
+      }
+    }
+    else if (this.timeToRenderPenumbra > 0) {
+      this.timeToRenderPenumbra -= deltaTime;
+      if (this.timeToRenderPenumbra <= 0) {
+        this.penumbra = this.afterImageCollection[this.currentFacing!].penumbra;
+        this.addChild(this.penumbra);
+      }
+    }
   }
 
   clearShadows() {
