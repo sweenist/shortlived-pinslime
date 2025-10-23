@@ -16,6 +16,7 @@
     "WD": { "resourceName": "walls", "frameIndex": 19 },
     "WE": { "resourceName": "walls", "frameIndex": 20 },
     "WF": { "resourceName": "walls", "frameIndex": 21 },
+    "00": { "resourceName": "walls", "frameIndex": 4, "isSolid": false },
     "BL": { "resourceName": "walls", "frameIndex": 10, "isSolid": false },
     "R0": {
       "resourceName": "walls",
@@ -93,7 +94,6 @@
       "isSolid": false,
       "deflection": -1
     },
-    "00": { "resourceName": "walls", "frameIndex": 4, "isSolid": false },
     "E0": { "resourceName": "walls", "frameIndex": 39 },
     "EN": { "resourceName": "walls", "frameIndex": 40 },
     "E1": { "resourceName": "walls", "frameIndex": 41 },
