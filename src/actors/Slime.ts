@@ -97,6 +97,7 @@ export class Slime extends GameObject {
         this.body.animations?.play('idle');
       }
       else if (value === STATE_LAUNCHING) {
+        this.destinationPosition.x += 32;
         this.body.animations?.playOnce('launch', () => {
           this.body.animations?.play('moveRight');
         });
@@ -127,12 +128,21 @@ export class Slime extends GameObject {
       this.processOnItemPickup(deltaTime);
     }
 
-    const { input } = root;
+    const { input, state } = root;
     if (input.getActionJustPressed('Space') && this.paddle) {
       if (this.paddle.isActivated) {
         this.facingDirection = this.paddle.deflection;
         this.paddle = null;
       }
+    }
+
+    if (state.current === STATE_LAUNCHING) {
+      const inertiaStep = LAUNCH.duration - LAUNCH.frames[4].time;
+      const stateTime = state.getStepTime();
+      if (stateTime < inertiaStep) {
+        moveTowards(this.position, this.destinationPosition, this.speed)
+      }
+      return;
     }
 
     const distance = moveTowards(this.position, this.destinationPosition, this.speed);

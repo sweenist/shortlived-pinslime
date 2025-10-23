@@ -43,7 +43,6 @@ export class Pinball extends Level {
         direction: paddle.direction as keyof typeof DirectionShift,
         position: new Vector2(gridCells(paddle.location.x), gridCells(paddle.location.y))
       });
-      console.info(paddleObject)
       this.addChild(paddleObject);
     });
 

@@ -19,10 +19,10 @@ export const LAUNCHING: animationConfiguration = {
     },
     {
       frame: 1,
-      time: 250,
+      time: 125,
     },
     {
-      time: 375,
+      time: 250,
       frame: 2,
     },
     {

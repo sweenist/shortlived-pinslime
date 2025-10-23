@@ -41,6 +41,10 @@ export class GameState {
     }
   }
 
+  getStepTime(): number {
+    return this._states[this.current]
+  }
+
   kill() {
     this._index = 4;
     gameEvents.emit(signals.stateChanged, STATE_DEAD);
