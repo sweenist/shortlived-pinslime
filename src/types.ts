@@ -28,4 +28,4 @@ export type DialogueScenario = {
 export type fader = -1 | 1;
 export type deflectionCoefficient = -1 | 1;
 
-export type Movement = { position: Vector2, facing: Direction };
+export type Movement = { position: Vector2, direction: Direction };

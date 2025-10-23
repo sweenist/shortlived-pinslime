@@ -75,12 +75,19 @@ export class GameObject {
   }
 
   removeChild(gameObject: GameObject) {
-    console.debug(`Removing child ${this.constructor.name}`);
+    // console.debug(`Removing child ${this.constructor.name}`);
     gameEvents.unsubscribe(gameObject);
     this.children = this.children.filter((g) => {
       return gameObject !== g;
     });
     gameObject.parent = null;
+  }
+
+  tryRemoveChild(gameObject?: GameObject | null): boolean {
+    if (gameObject) {
+      this.removeChild(gameObject);
+    }
+    return !!gameObject;
   }
 
   debug(level: number) {

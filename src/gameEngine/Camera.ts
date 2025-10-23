@@ -3,7 +3,7 @@ import { GameObject } from './GameObject';
 import { Vector2 } from '../utils/vector';
 import { Level } from './Level';
 import { signals } from '../events/eventConstants';
-import type { Direction, Movement } from '../types';
+import type { Movement } from '../types';
 
 export class Camera extends GameObject {
   canvas: HTMLCanvasElement;
@@ -24,10 +24,8 @@ export class Camera extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on<Movement>(signals.slimePosition, this, (value) => {
-      if (!value) return;
-
-      this.centerPositionOnTarget(value.position);
+    gameEvents.on<Movement>(signals.slimePosition, this, ({ position }) => {
+      this.centerPositionOnTarget(position);
     });
 
     gameEvents.on<Level>(signals.levelChanged, this, (level) => {

@@ -21,9 +21,7 @@ export class Exit extends GameObject {
     this.exitId = gameEvents.on<Movement>(
       signals.slimePosition,
       this,
-      (value) => {
-        const { position: actorPosition } = value;
-
+      ({ position: actorPosition }) => {
         if (actorPosition.prettyClose(this.position)) {
           gameEvents.emit(signals.sceneExit, this.name);
           gameEvents.off(this.exitId!);
