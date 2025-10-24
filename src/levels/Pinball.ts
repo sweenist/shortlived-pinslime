@@ -14,6 +14,7 @@ import { Paddle } from '../objects/Paddle/Paddle';
 import type { deflectionCoefficient, DirectionShift } from '../types';
 import { Ramp } from '../objects/Obstacles/Ramp';
 import { PullKnob } from '../objects/PullKnob/PullKnob';
+import { Sprite } from '../gameEngine/Sprite';
 
 type tileConfig = {
   resourceName: string;
@@ -27,6 +28,11 @@ export class Pinball extends Level {
 
   constructor(params: LevelParams) {
     super({ actorPosition: params.actorPosition });
+
+    this.background = new Sprite({
+      resource: resources.images['levelBackground'],
+      frameSize: new Vector2(480, 320)
+    });
 
     const {
       paddles,

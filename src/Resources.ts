@@ -20,6 +20,7 @@ class Resources {
       walls: 'sprites/PingWalls.png',
       paddles: 'sprites/Paddle.png',
       pullknob: 'sprites/PullKnob.png',
+      levelBackground: 'sprites/CircuitBoard.png',
     };
 
     Object.keys(this.toLoad).forEach((key: string) => {
