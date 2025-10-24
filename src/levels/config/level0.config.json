@@ -116,42 +116,42 @@
   "paddles": [
     {
       "direction": "S_W",
-      "location": { "x": 6, "y": 7 }
+      "location": { "x": 11, "y": 12 }
     },
     {
       "direction": "E_N",
-      "location": { "x": 1, "y": 6 }
+      "location": { "x": 6, "y": 11 }
     },
     {
       "direction": "E_N",
-      "location": { "x": 4, "y": 6 }
+      "location": { "x": 9, "y": 11 }
     },
     {
       "direction": "E_N",
-      "location": { "x": 7, "y": 2 }
+      "location": { "x": 12, "y": 7 }
     },
     {
       "direction": "N_W",
-      "location": { "x": 10, "y": 5 }
+      "location": { "x": 15, "y": 10 }
     },
     {
       "direction": "N_E",
-      "location": { "x": 10, "y": 6 }
+      "location": { "x": 15, "y": 11 }
     },
     {
       "direction": "S_W",
-      "location": { "x": 9, "y": 5 }
+      "location": { "x": 14, "y": 10 }
     },
     {
       "direction": "S_E",
-      "location": { "x": 9, "y": 7 }
+      "location": { "x": 14, "y": 12 }
     }
   ],
   "pullknobConfig": {
-    "location": { "x": 1, "y": 8 }
+    "location": { "x": 7, "y": 26 }
   },
   "slimeConfig": {
-    "location": { "x": 2, "y": 8 },
+    "location": { "x": 8, "y": 26 },
     "speed": 4
   },
   "shadowConfig": {

@@ -7,8 +7,8 @@ import {
 import { resources } from '../Resources';
 import { gridCells } from '../utils/grid';
 import { Vector2 } from '../utils/vector';
-import mapContent from './config/level1.txt?raw';
-import levelConfig from './config/level.config.json';
+import mapContent from './config/level0.txt?raw';
+import levelConfig from './config/level0.config.json';
 import Obstacle from '../objects/Obstacles/Obstacle';
 import { Paddle } from '../objects/Paddle/Paddle';
 import type { deflectionCoefficient, DirectionShift } from '../types';
@@ -68,11 +68,13 @@ export class Pinball extends Level {
     const rows = lines.length;
 
     this.mapAddresses = lines.flatMap((s) => s.split(','));
+    console.info(`Map is ${columns} x ${rows}`)
 
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < columns; x++) {
         const mapTile = this.mapAddresses[y * columns + x];
         const tilecfg = mapConfig[mapTile];
+        if (tilecfg?.resourceName === undefined) console.info("Bad tile:", x, y, tilecfg, mapTile)
         const fc = config.find((c) => c.name === tilecfg.resourceName);
         if (!fc) continue;
 
