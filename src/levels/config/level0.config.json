@@ -148,10 +148,10 @@
     }
   ],
   "pullknobConfig": {
-    "location": { "x": 7, "y": 26 }
+    "location": { "x": 6, "y": 26 }
   },
   "slimeConfig": {
-    "location": { "x": 8, "y": 26 },
+    "location": { "x": 7, "y": 26 },
     "speed": 4
   },
   "shadowConfig": {
