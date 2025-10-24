@@ -35,6 +35,7 @@ export class Level extends GameObject {
   background?: Sprite;
   walls: Set<string> = new Set<string>();
   actorPosition: Vector2;
+  mapSize?: Vector2
 
   constructor(params: LevelParams, config?: LevelConfig) {
     super();

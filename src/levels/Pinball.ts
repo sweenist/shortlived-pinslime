@@ -69,6 +69,8 @@ export class Pinball extends Level {
 
     this.mapAddresses = lines.flatMap((s) => s.split(','));
     console.info(`Map is ${columns} x ${rows}`)
+    this.mapSize = new Vector2(columns * 16, rows * 16)
+    console.info(this.mapSize)
 
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < columns; x++) {
