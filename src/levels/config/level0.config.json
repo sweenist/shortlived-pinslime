@@ -24,25 +24,29 @@
       "resourceName": "walls",
       "frameIndex": 27,
       "isSolid": false,
-      "deflection": -1
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
     },
     "R1": {
       "resourceName": "walls",
       "frameIndex": 28,
       "isSolid": false,
-      "deflection": 1
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
     },
     "R2": {
       "resourceName": "walls",
       "frameIndex": 33,
       "isSolid": false,
-      "deflection": 1
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
     },
     "R3": {
       "resourceName": "walls",
       "frameIndex": 34,
       "isSolid": false,
-      "deflection": -1
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
     },
     "RA": { "resourceName": "walls", "frameIndex": 25 },
     "RB": { "resourceName": "walls", "frameIndex": 26 },
@@ -52,49 +56,57 @@
       "resourceName": "walls",
       "frameIndex": 37,
       "isSolid": false,
-      "deflection": -1
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
     },
     "RQ": {
       "resourceName": "walls",
       "frameIndex": 38,
       "isSolid": false,
-      "deflection": 1
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
     },
     "RR": {
       "resourceName": "walls",
       "frameIndex": 43,
       "isSolid": false,
-      "deflection": 1
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
     },
     "RS": {
       "resourceName": "walls",
       "frameIndex": 44,
       "isSolid": false,
-      "deflection": -1
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
     },
     "RT": {
       "resourceName": "walls",
       "frameIndex": 48,
       "isSolid": false,
-      "deflection": -1
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
     },
     "RU": {
       "resourceName": "walls",
       "frameIndex": 49,
       "isSolid": false,
-      "deflection": 1
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
     },
     "RV": {
       "resourceName": "walls",
       "frameIndex": 50,
       "isSolid": false,
-      "deflection": 1
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
     },
     "RW": {
       "resourceName": "walls",
       "frameIndex": 51,
       "isSolid": false,
-      "deflection": -1
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
     },
     "E0": { "resourceName": "walls", "frameIndex": 39 },
     "EN": { "resourceName": "walls", "frameIndex": 40 },

@@ -198,7 +198,7 @@ export class Slime extends GameObject {
       return;
     }
     if (ramp) {
-      this.turn(ramp.deflection);
+      this.turn(ramp, () => state.kill());
     }
     if (paddle) {
       this.paddle = paddle;
@@ -234,10 +234,15 @@ export class Slime extends GameObject {
     this.addChild(this.itemPickupShell);
   }
 
-  turn(deflection: deflectionCoefficient) {
+  turn(ramp: Ramp, kill: () => void) {
+    if (!ramp.canTurn(this.facingDirection)) {
+      console.info(`Did not find ${this.facingDirection} in`, ramp.approaches)
+      kill();
+    }
+
     const currentFacingVector = CardinalVectors[this.facingDirection];
     let targetFacingVactor = currentFacingVector.swap();
-    targetFacingVactor = deflection === -1 ? targetFacingVactor.negate() : targetFacingVactor;
+    targetFacingVactor = ramp.deflection === -1 ? targetFacingVactor.negate() : targetFacingVactor;
 
     Object.keys(CardinalVectors).forEach((key) => {
       const k = key as Direction;

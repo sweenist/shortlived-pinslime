@@ -11,7 +11,7 @@ import mapContent from './config/level0.txt?raw';
 import levelConfig from './config/level0.config.json';
 import Obstacle from '../objects/Obstacles/Obstacle';
 import { Paddle } from '../objects/Paddle/Paddle';
-import type { deflectionCoefficient, DirectionShift } from '../types';
+import type { deflectionCoefficient, Direction, DirectionShift } from '../types';
 import { Ramp } from '../objects/Obstacles/Ramp';
 import { PullKnob } from '../objects/PullKnob/PullKnob';
 import { Sprite } from '../gameEngine/Sprite';
@@ -20,6 +20,7 @@ type tileConfig = {
   resourceName: string;
   frameIndex: number;
   deflection?: number;
+  approaches?: string[];
   isSolid?: boolean;
 };
 
@@ -94,7 +95,11 @@ export class Pinball extends Level {
         };
 
         const tile = !!tilecfg.deflection
-          ? new Ramp({ ...obstacleParams, deflection: tilecfg.deflection as deflectionCoefficient })
+          ? new Ramp({
+            ...obstacleParams,
+            deflection: tilecfg.deflection as deflectionCoefficient,
+            approaches: tilecfg.approaches as Direction[]
+          })
           : new Obstacle(obstacleParams);
         tile.drawLayer = 'GROUND';
 
