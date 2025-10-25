@@ -31,6 +31,8 @@ type MapConfig = {
   height: number;
 }
 
+type PaddleLocations = Partial<Record<keyof typeof DirectionShift, Array<{ x: number, y: number }>>>
+
 const TILE_HEIGHT = 16 as const;
 const TILE_WIDTH = 16 as const
 
@@ -56,12 +58,14 @@ export class Pinball extends Level {
 
     this.buildMap(resourceConfig, tileConfig);
 
-    paddles.forEach((paddle) => {
-      const paddleObject = new Paddle({
-        direction: paddle.direction as keyof typeof DirectionShift,
-        position: new Vector2(gridCells(paddle.location.x), gridCells(paddle.location.y))
+    Object.entries(paddles as unknown as PaddleLocations).forEach(([direction, locations]) => {
+      locations.forEach((location: { x: number; y: number }) => {
+        const paddleObject = new Paddle({
+          direction: direction as keyof typeof DirectionShift,
+          position: new Vector2(gridCells(location.x), gridCells(location.y))
+        });
+        this.addChild(paddleObject);
       });
-      this.addChild(paddleObject);
     });
 
     const pullknobPosition = new Vector2(gridCells(pullknobConfig.location.x), gridCells(pullknobConfig.location.y))
