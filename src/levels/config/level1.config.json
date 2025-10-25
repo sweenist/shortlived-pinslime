@@ -1,0 +1,273 @@
+{
+  "tileConfig": {
+    "1": { "resourceName": "walls", "frameIndex": 0 },
+    "2": { "resourceName": "walls", "frameIndex": 1 },
+    "3": { "resourceName": "walls", "frameIndex": 2 },
+    "4": { "resourceName": "walls", "frameIndex": 3 },
+    "5": { "resourceName": "walls", "frameIndex": 4, "isSolid": false },
+    "6": { "resourceName": "walls", "frameIndex": 5 },
+    "7": { "resourceName": "walls", "frameIndex": 6 },
+    "8": { "resourceName": "walls", "frameIndex": 7 },
+    "9": { "resourceName": "walls", "frameIndex": 8 },
+    "10": { "resourceName": "walls", "frameIndex": 9 },
+    "11": { "resourceName": "walls", "frameIndex": 10, "isSolid": false },
+    "12": { "resourceName": "walls", "frameIndex": 11 },
+    "13": { "resourceName": "walls", "frameIndex": 12 },
+    "14": { "resourceName": "walls", "frameIndex": 13 },
+    "15": { "resourceName": "walls", "frameIndex": 14 },
+    "16": { "resourceName": "walls", "frameIndex": 15 },
+    "17": { "resourceName": "walls", "frameIndex": 16, "isSolid": false },
+    "18": { "resourceName": "walls", "frameIndex": 17 },
+    "19": { "resourceName": "walls", "frameIndex": 18 },
+    "20": { "resourceName": "walls", "frameIndex": 19 },
+    "21": { "resourceName": "walls", "frameIndex": 20 },
+    "22": { "resourceName": "walls", "frameIndex": 21 },
+    "23": { "resourceName": "walls", "frameIndex": 22, "isSolid": false },
+    "24": { "resourceName": "walls", "frameIndex": 23 },
+    "25": { "resourceName": "walls", "frameIndex": 24 },
+    "27": { "resourceName": "walls", "frameIndex": 26 },
+    "28": { "resourceName": "walls", "frameIndex": 27 },
+    "29": { "resourceName": "walls", "frameIndex": 28 },
+    "30": { "resourceName": "walls", "frameIndex": 29 },
+    "31": { "resourceName": "walls", "frameIndex": 30 },
+    "34": { "resourceName": "walls", "frameIndex": 33 },
+    "35": { "resourceName": "walls", "frameIndex": 34 },
+    "36": { "resourceName": "walls", "frameIndex": 35 },
+    "37": { "resourceName": "walls", "frameIndex": 36 },
+    "40": { "resourceName": "walls", "frameIndex": 39 },
+    "41": { "resourceName": "walls", "frameIndex": 40 },
+    "42": { "resourceName": "walls", "frameIndex": 41 },
+    "43": { "resourceName": "walls", "frameIndex": 42 },
+    "46": { "resourceName": "walls", "frameIndex": 45 },
+    "47": { "resourceName": "walls", "frameIndex": 46 },
+    "48": { "resourceName": "walls", "frameIndex": 47 },
+    "55": {
+      "resourceName": "ramps",
+      "frameIndex": 0,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "56": { "resourceName": "ramps", "frameIndex": 1 },
+    "57": { "resourceName": "ramps", "frameIndex": 2 },
+    "58": {
+      "resourceName": "ramps",
+      "frameIndex": 3,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "59": {
+      "resourceName": "ramps",
+      "frameIndex": 4,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "60": {
+      "resourceName": "ramps",
+      "frameIndex": 5,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "61": { "resourceName": "ramps", "frameIndex": 6 },
+    "62": {
+      "resourceName": "ramps",
+      "frameIndex": 7,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "63": {
+      "resourceName": "ramps",
+      "frameIndex": 8,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "64": { "resourceName": "ramps", "frameIndex": 9 },
+    "65": {
+      "resourceName": "ramps",
+      "frameIndex": 10,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "66": {
+      "resourceName": "ramps",
+      "frameIndex": 11,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "67": { "resourceName": "ramps", "frameIndex": 12 },
+    "68": {
+      "resourceName": "ramps",
+      "frameIndex": 13,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "69": {
+      "resourceName": "ramps",
+      "frameIndex": 14,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "70": { "resourceName": "ramps", "frameIndex": 15 },
+    "71": {
+      "resourceName": "ramps",
+      "frameIndex": 16,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "72": {
+      "resourceName": "ramps",
+      "frameIndex": 17,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "73": {
+      "resourceName": "ramps",
+      "frameIndex": 18,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "74": { "resourceName": "ramps", "frameIndex": 19 },
+    "75": { "resourceName": "ramps", "frameIndex": 20 },
+    "76": {
+      "resourceName": "ramps",
+      "frameIndex": 21,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "77": {
+      "resourceName": "ramps",
+      "frameIndex": 22,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "78": {
+      "resourceName": "ramps",
+      "frameIndex": 23,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "79": { "resourceName": "ramps", "frameIndex": 24 },
+    "80": { "resourceName": "ramps", "frameIndex": 25 },
+    "81": { "resourceName": "ramps", "frameIndex": 26 },
+    "82": { "resourceName": "ramps", "frameIndex": 27 },
+    "83": { "resourceName": "ramps", "frameIndex": 28 },
+    "84": { "resourceName": "ramps", "frameIndex": 29 },
+    "85": { "resourceName": "ramps", "frameIndex": 30 },
+    "86": { "resourceName": "ramps", "frameIndex": 31 },
+    "87": { "resourceName": "ramps", "frameIndex": 32 },
+    "88": { "resourceName": "ramps", "frameIndex": 33 },
+    "89": { "resourceName": "ramps", "frameIndex": 34 },
+    "90": { "resourceName": "ramps", "frameIndex": 35 },
+    "104": { "resourceName": "ramps", "frameIndex": 49 }
+  },
+  "paddles": [
+    {
+      "direction": "S_W",
+      "location": { "x": 11, "y": 12 }
+    },
+    {
+      "direction": "E_N",
+      "location": { "x": 6, "y": 11 }
+    },
+    {
+      "direction": "E_N",
+      "location": { "x": 9, "y": 11 }
+    },
+    {
+      "direction": "E_N",
+      "location": { "x": 12, "y": 7 }
+    },
+    {
+      "direction": "N_W",
+      "location": { "x": 15, "y": 10 }
+    },
+    {
+      "direction": "N_E",
+      "location": { "x": 15, "y": 11 }
+    },
+    {
+      "direction": "S_W",
+      "location": { "x": 14, "y": 10 }
+    },
+    {
+      "direction": "S_E",
+      "location": { "x": 14, "y": 12 }
+    }
+  ],
+  "pullknobConfig": {
+    "location": { "x": 6, "y": 25 }
+  },
+  "slimeConfig": {
+    "location": { "x": 7, "y": 25 },
+    "speed": 4
+  },
+  "shadowConfig": {
+    "UP": {
+      "umbra": { "frameIndex": 0, "position": { "x": 0, "y": 5 } },
+      "penumbra": { "frameIndex": 1, "position": { "x": 0, "y": 14 } }
+    },
+    "RIGHT": {
+      "umbra": { "frameIndex": 2, "position": { "x": -6, "y": -1 } },
+      "penumbra": { "frameIndex": 3, "position": { "x": -15, "y": -1 } }
+    },
+    "DOWN": {
+      "umbra": { "frameIndex": 4, "position": { "x": 0, "y": -7 } },
+      "penumbra": { "frameIndex": 5, "position": { "x": 0, "y": -16 } }
+    },
+    "LEFT": {
+      "umbra": { "frameIndex": 6, "position": { "x": 6, "y": -1 } },
+      "penumbra": { "frameIndex": 7, "position": { "x": 15, "y": -1 } }
+    }
+  },
+  "resourceConfig": [
+    {
+      "name": "walls",
+      "startIndex": 1,
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 6,
+        "rows": 9
+      }
+    },
+    {
+      "name": "ramps",
+      "startIndex": 55,
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 6,
+        "rows": 10
+      }
+    },
+    {
+      "name": "paddles",
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 4,
+        "rows": 4
+      }
+    },
+    {
+      "name": "pullknob",
+      "frameConfig": {
+        "size": { "x": 80, "y": 16 },
+        "columns": 1,
+        "rows": 7
+      }
+    }
+  ]
+}

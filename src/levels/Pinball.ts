@@ -7,8 +7,6 @@ import {
 import { resources } from '../Resources';
 import { gridCells } from '../utils/grid';
 import { Vector2 } from '../utils/vector';
-import mapContent from './config/level0.txt?raw';
-import levelConfig from './config/level0.config.json';
 import Obstacle from '../objects/Obstacles/Obstacle';
 import { Paddle } from '../objects/Paddle/Paddle';
 import type { deflectionCoefficient, Direction, DirectionShift } from '../types';
@@ -16,13 +14,25 @@ import { Ramp } from '../objects/Obstacles/Ramp';
 import { PullKnob } from '../objects/PullKnob/PullKnob';
 import { Sprite } from '../gameEngine/Sprite';
 
-type tileConfig = {
+import levelConfig from './config/level1.config.json';
+import tiledMap from './config/level1.map.json';
+
+type TileConfig = {
   resourceName: string;
   frameIndex: number;
   deflection?: number;
   approaches?: string[];
   isSolid?: boolean;
 };
+
+type MapConfig = {
+  data: number[];
+  width: number;
+  height: number;
+}
+
+const TILE_HEIGHT = 16 as const;
+const TILE_WIDTH = 16 as const
 
 export class Pinball extends Level {
   mapAddresses: string[] = [];
@@ -38,13 +48,13 @@ export class Pinball extends Level {
     const {
       paddles,
       resourceConfig,
-      mapConfig,
+      tileConfig,
       pullknobConfig,
       slimeConfig,
       shadowConfig,
     } = levelConfig;
 
-    this.buildMap(resourceConfig, mapConfig);
+    this.buildMap(resourceConfig, tileConfig);
 
     paddles.forEach((paddle) => {
       const paddleObject = new Paddle({
@@ -63,23 +73,33 @@ export class Pinball extends Level {
     this.addChild(slime);
   }
 
-  buildMap(config: ResourceConfig[], mapConfig: { [key: string]: tileConfig }) {
-    const lines = mapContent.split('\n');
-    const columns = lines[0].split(',').length;
-    const rows = lines.length;
+  buildMap(resourceConfigs: ResourceConfig[], tileConfig: { [key: number]: TileConfig }) {
+    const { data, width, height } = tiledMap.layers[0] as MapConfig;
 
-    this.mapAddresses = lines.flatMap((s) => s.split(','));
-    console.info(`Map is ${columns} x ${rows}`)
-    this.mapSize = new Vector2(columns * 16, rows * 16)
-    console.info(this.mapSize)
+    this.mapSize = new Vector2(width * TILE_WIDTH, height * TILE_HEIGHT);
 
-    for (let y = 0; y < rows; y++) {
-      for (let x = 0; x < columns; x++) {
-        const mapTile = this.mapAddresses[y * columns + x];
-        const tilecfg = mapConfig[mapTile];
-        if (tilecfg?.resourceName === undefined) console.info("Bad tile:", x, y, tilecfg, mapTile)
-        const fc = config.find((c) => c.name === tilecfg.resourceName);
-        if (!fc) continue;
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        const tileId = data[y * width + x];
+        if (tileId === 0) continue; // Skip empty tiles
+
+        // Find the resource config that contains this tile ID
+        const resourceConfig = resourceConfigs.find(({ startIndex, frameConfig }) => {
+          startIndex = startIndex || 0;
+          const endIndex = startIndex + (frameConfig.columns * frameConfig.rows);
+          return tileId >= startIndex && tileId < endIndex;
+        });
+
+        if (!resourceConfig) {
+          console.warn("No resource config for tile:", tileId);
+          continue;
+        }
+
+        const tilecfg = tileConfig[tileId];
+        if (!tilecfg) {
+          console.warn("No tile config for ID:", tileId);
+          continue;
+        }
 
         const position = new Vector2(gridCells(x), gridCells(y));
         const obstacleParams = {
@@ -87,10 +107,10 @@ export class Pinball extends Level {
           isSolid: tilecfg.isSolid ?? true,
           content: {
             resource: resources.images[tilecfg.resourceName],
-            frameColumns: fc?.frameConfig.columns,
-            frameRows: fc?.frameConfig.rows,
-            frameSize: Vector2.fromPoint(fc?.frameConfig.size),
-            frameIndex: tilecfg.frameIndex,
+            frameColumns: resourceConfig.frameConfig.columns,
+            frameRows: resourceConfig.frameConfig.rows,
+            frameSize: Vector2.fromPoint(resourceConfig.frameConfig.size),
+            frameIndex: tilecfg.frameIndex
           }
         };
 
