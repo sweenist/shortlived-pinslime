@@ -17,10 +17,10 @@ class Resources {
       slimeDeath: 'sprites/death-spritesheet.png',
       shadow: 'sprites/shadow.png',
       textbox: 'sprites/text-box.png',
-      walls: 'sprites/PingWalls-v2.png',
+      walls: 'sprites/PingWalls.png',
       paddles: 'sprites/Paddle.png',
       pullknob: 'sprites/PullKnob.png',
-      ramps: 'sprites/Ramps-v2.png',
+      ramps: 'sprites/Ramps.png',
       levelBackground: 'sprites/CircuitBoard.png',
     };
 
