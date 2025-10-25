@@ -19,7 +19,7 @@ import { moveTowards } from '../utils/moveUtils';
 import { gameEvents } from '../events/Events';
 import type { ItemEventMetaData } from '../types/eventTypes';
 import type { Main } from '../gameEngine/Main';
-import type { deflectionCoefficient, Direction, Movement } from '../types';
+import type { Direction, Movement } from '../types';
 import { signals } from '../events/eventConstants';
 import type { Ramp } from '../objects/Obstacles/Ramp';
 import type { Paddle } from '../objects/Paddle/Paddle';

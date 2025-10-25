@@ -21,93 +21,138 @@
     "B1": { "resourceName": "walls", "frameIndex": 16, "isSolid": false },
     "B2": { "resourceName": "walls", "frameIndex": 22, "isSolid": false },
     "R0": {
-      "resourceName": "walls",
-      "frameIndex": 27,
+      "resourceName": "ramps",
+      "frameIndex": 0,
       "isSolid": false,
       "deflection": -1,
       "approaches": ["RIGHT", "DOWN"]
     },
     "R1": {
-      "resourceName": "walls",
-      "frameIndex": 28,
+      "resourceName": "ramps",
+      "frameIndex": 3,
       "isSolid": false,
       "deflection": 1,
       "approaches": ["LEFT", "DOWN"]
     },
     "R2": {
-      "resourceName": "walls",
-      "frameIndex": 33,
+      "resourceName": "ramps",
+      "frameIndex": 18,
       "isSolid": false,
       "deflection": 1,
       "approaches": ["RIGHT", "UP"]
     },
     "R3": {
-      "resourceName": "walls",
-      "frameIndex": 34,
+      "resourceName": "ramps",
+      "frameIndex": 21,
       "isSolid": false,
       "deflection": -1,
       "approaches": ["LEFT", "UP"]
     },
-    "RA": { "resourceName": "walls", "frameIndex": 25 },
-    "RB": { "resourceName": "walls", "frameIndex": 26 },
-    "RC": { "resourceName": "walls", "frameIndex": 31 },
-    "RD": { "resourceName": "walls", "frameIndex": 32 },
+    "RA": { "resourceName": "ramps", "frameIndex": 1 },
+    "RB": { "resourceName": "ramps", "frameIndex": 2 },
+    "RC": { "resourceName": "ramps", "frameIndex": 6 },
+    "RD": { "resourceName": "ramps", "frameIndex": 9 },
+    "RE": { "resourceName": "ramps", "frameIndex": 12 },
+    "RF": { "resourceName": "ramps", "frameIndex": 15 },
+    "RG": { "resourceName": "ramps", "frameIndex": 19 },
+    "RH": { "resourceName": "ramps", "frameIndex": 20 },
+    "SS": { "resourceName": "ramps", "frameIndex": 49 },
+    "RO": {
+      "resourceName": "ramps",
+      "frameIndex": 4,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
     "RP": {
-      "resourceName": "walls",
-      "frameIndex": 37,
+      "resourceName": "ramps",
+      "frameIndex": 5,
       "isSolid": false,
       "deflection": -1,
-      "approaches": ["RIGHT", "DOWN"]
+      "approaches": ["LEFT", "UP"]
     },
     "RQ": {
-      "resourceName": "walls",
-      "frameIndex": 38,
-      "isSolid": false,
-      "deflection": 1,
-      "approaches": ["LEFT", "DOWN"]
-    },
-    "RR": {
-      "resourceName": "walls",
-      "frameIndex": 43,
-      "isSolid": false,
-      "deflection": 1,
-      "approaches": ["RIGHT", "UP"]
-    },
-    "RS": {
-      "resourceName": "walls",
-      "frameIndex": 44,
-      "isSolid": false,
-      "deflection": -1,
-      "approaches": ["LEFT", "UP"]
-    },
-    "RT": {
-      "resourceName": "walls",
-      "frameIndex": 48,
+      "resourceName": "ramps",
+      "frameIndex": 10,
       "isSolid": false,
       "deflection": -1,
       "approaches": ["RIGHT", "DOWN"]
     },
-    "RU": {
-      "resourceName": "walls",
-      "frameIndex": 49,
+    "RR": {
+      "resourceName": "ramps",
+      "frameIndex": 11,
       "isSolid": false,
       "deflection": 1,
       "approaches": ["LEFT", "DOWN"]
     },
-    "RV": {
-      "resourceName": "walls",
-      "frameIndex": 50,
+    "RS": {
+      "resourceName": "ramps",
+      "frameIndex": 16,
       "isSolid": false,
       "deflection": 1,
       "approaches": ["RIGHT", "UP"]
     },
-    "RW": {
-      "resourceName": "walls",
-      "frameIndex": 51,
+    "RT": {
+      "resourceName": "ramps",
+      "frameIndex": 17,
       "isSolid": false,
       "deflection": -1,
       "approaches": ["LEFT", "UP"]
     },
+    "RU": {
+      "resourceName": "ramps",
+      "frameIndex": 22,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "RV": {
+      "resourceName": "ramps",
+      "frameIndex": 23,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "RW": {
+      "resourceName": "ramps",
+      "frameIndex": 7,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "RX": {
+      "resourceName": "ramps",
+      "frameIndex": 8,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "RY": {
+      "resourceName": "ramps",
+      "frameIndex": 13,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "RZ": {
+      "resourceName": "ramps",
+      "frameIndex": 14,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "C0": { "resourceName": "ramps", "frameIndex": 24 },
+    "C1": { "resourceName": "ramps", "frameIndex": 25 },
+    "C2": { "resourceName": "ramps", "frameIndex": 30 },
+    "C3": { "resourceName": "ramps", "frameIndex": 31 },
+    "CA": { "resourceName": "ramps", "frameIndex": 27 },
+    "CB": { "resourceName": "ramps", "frameIndex": 28 },
+    "CC": { "resourceName": "ramps", "frameIndex": 29 },
+    "CD": { "resourceName": "ramps", "frameIndex": 35 },
+    "CE": { "resourceName": "ramps", "frameIndex": 33 },
+    "CF": { "resourceName": "ramps", "frameIndex": 34 },
+    "CG": { "resourceName": "ramps", "frameIndex": 26 },
+    "CH": { "resourceName": "ramps", "frameIndex": 32 },
     "E0": { "resourceName": "walls", "frameIndex": 39 },
     "EN": { "resourceName": "walls", "frameIndex": 40 },
     "E1": { "resourceName": "walls", "frameIndex": 41 },
@@ -123,7 +168,11 @@
     "WW": { "resourceName": "walls", "frameIndex": 24 },
     "WX": { "resourceName": "walls", "frameIndex": 30 },
     "WY": { "resourceName": "walls", "frameIndex": 42 },
-    "WZ": { "resourceName": "walls", "frameIndex": 36 }
+    "WZ": { "resourceName": "walls", "frameIndex": 36 },
+    "T0": { "resourceName": "walls", "frameIndex": 27 },
+    "T1": { "resourceName": "walls", "frameIndex": 28 },
+    "T2": { "resourceName": "walls", "frameIndex": 33 },
+    "T3": { "resourceName": "walls", "frameIndex": 34 }
   },
   "paddles": [
     {
@@ -191,6 +240,14 @@
         "size": { "x": 16, "y": 16 },
         "columns": 6,
         "rows": 9
+      }
+    },
+    {
+      "name": "ramps",
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 6,
+        "rows": 10
       }
     },
     {
