@@ -9,4 +9,5 @@ export const signals = {
   stateChanged: 'GAME_STATE_CHANGE',
   startTextInteraction: 'START_TEXT_INTERACTION',
   endTextInteraction: 'END_TEXT_INTERACTION',
+  arrowMovement: 'ARROW_MOVEMENT',
 };

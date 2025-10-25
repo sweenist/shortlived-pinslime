@@ -23,6 +23,10 @@ export class Vector2 implements Vector2Interface {
     return new Vector2(this.x + addend.x, this.y + addend.y);
   }
 
+  multiply(multiplicand: number) {
+    return new Vector2(this.x * multiplicand, this.y * multiplicand);
+  }
+
   public toString(): string {
     return `x: ${this.x}, y: ${this.y}`;
   }

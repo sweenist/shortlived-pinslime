@@ -148,7 +148,8 @@ export class Slime extends GameObject {
       this.tryMove(root);
     }
 
-    gameEvents.emit(signals.slimePosition, { position: this.position, direction: this.facingDirection } as Movement);
+    if (state.current !== STATE_GAMEOVER)
+      gameEvents.emit(signals.slimePosition, { position: this.position, direction: this.facingDirection } as Movement);
   }
 
   tryMove(root: Main) {

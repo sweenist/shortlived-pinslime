@@ -12,6 +12,7 @@ export class GameState {
     dead: 1700,
     gameover: 65535,
   };
+
   private readonly _stateNames = STATE_NAMES
   constructor() {
     this._index = 0;

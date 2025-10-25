@@ -1,9 +1,9 @@
 import { gameEvents } from '../events/Events';
 import { GameObject } from './GameObject';
-import { Vector2 } from '../utils/vector';
+import { CardinalVectors, Vector2 } from '../utils/vector';
 import { Level } from './Level';
 import { signals } from '../events/eventConstants';
-import type { Movement } from '../types';
+import type { Movement, Direction } from '../types';
 import type { Main } from './Main';
 
 export class Camera extends GameObject {
@@ -11,6 +11,8 @@ export class Camera extends GameObject {
   canvasWidth: number;
   canvasHeight: number;
   halfActor = 8;
+  halfWidth: number;
+  halfHeight: number;
   clampToMap: boolean
 
   constructor(canvas: HTMLCanvasElement, clampToMap: boolean) {
@@ -18,10 +20,15 @@ export class Camera extends GameObject {
     this.canvas = canvas;
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
+    this.halfWidth = -this.halfActor + this.canvasWidth / 2;
+    this.halfHeight = -this.halfActor + this.canvasHeight / 2;
 
     this.canvas.addEventListener('resize', () => {
       this.canvasWidth = canvas.width;
       this.canvasHeight = canvas.height;
+      this.halfWidth = -this.halfActor + this.canvasWidth / 2;
+      this.halfHeight = -this.halfActor + this.canvasHeight / 2;
+
     });
 
     this.clampToMap = clampToMap;
@@ -35,13 +42,17 @@ export class Camera extends GameObject {
     gameEvents.on<Level>(signals.levelChanged, this, (level) => {
       this.centerPositionOnTarget(level.actorPosition);
     });
+
+    gameEvents.on<Direction>(signals.arrowMovement, this, (value) => {
+      this.position = this.position.add(CardinalVectors[value].negate().multiply(16));
+      console.info("camera location:", this.position)
+      const crosshair = new Vector2(-(this.position.x - this.halfWidth), -(this.position.y - this.halfHeight));
+      console.info("Crosshair Location:", crosshair);
+    })
   }
 
   centerPositionOnTarget(target: Vector2) {
-    const halfWidth = -this.halfActor + this.canvasWidth / 2;
-    const halfHeight = -this.halfActor + this.canvasHeight / 2;
-
-    this.position = new Vector2(-target.x + halfWidth, -target.y + halfHeight);
+    this.position = new Vector2(-target.x + this.halfWidth, -target.y + this.halfHeight);
     if (this.clampToMap) this.clamp()
 
   }

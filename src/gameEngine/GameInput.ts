@@ -1,4 +1,6 @@
 import { UP, DOWN, LEFT, RIGHT } from '../constants';
+import { signals } from '../events/eventConstants';
+import { gameEvents } from '../events/Events';
 import type { Direction } from '../types';
 
 export class GameInput {
@@ -65,6 +67,7 @@ export class GameInput {
     if (this.directions.indexOf(direction) === -1) {
       this.directions.unshift(direction);
     }
+    gameEvents.emit(signals.arrowMovement, direction);
   }
 
   onArrowReleased(direction: Direction) {
