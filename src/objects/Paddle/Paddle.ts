@@ -13,7 +13,7 @@ import {
 } from './paddleAnimations';
 import { FrameIndexPattern } from '../../gameEngine/FrameIndexPattern';
 import type { animationConfiguration } from "../../types/animationTypes";
-import { DOWN, LEFT, RIGHT, UP } from "../../constants";
+import { DOWN, LEFT, RIGHT, STATE_GAMEOVER, UP } from "../../constants";
 
 interface PaddleConfig {
   offset: Vector2;
@@ -78,7 +78,7 @@ export class Paddle extends GameObject {
       if (this.activationTime <= 0) this.isActivated = false;
     }
 
-    if (state.isPlaying)
+    if (state.isPlaying || state.current === STATE_GAMEOVER)
       if (input.getActionJustPressed('Space')) {
         this.isActivated = true
         this.activationTime = 180;

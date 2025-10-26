@@ -37,6 +37,8 @@ export class Slime extends GameObject {
   itemPickupShell?: GameObject;
   isLocked: boolean = false;
   isTurning: boolean = false;
+  gizmo: Sprite;
+  isLevelBuilding: boolean = true;
 
   debugExpired: number = 0;
 
@@ -61,6 +63,12 @@ export class Slime extends GameObject {
         moveRight: new FrameIndexPattern(MOVE_RIGHT),
         expired: new FrameIndexPattern(EXPIRED),
       }),
+    });
+
+    this.gizmo = new Sprite({
+      resource: resources.images['gizmo'],
+      frameSize: new Vector2(16, 16),
+      position: Vector2.Zero()
     });
 
     this.deathThroes = new Sprite({
@@ -115,6 +123,14 @@ export class Slime extends GameObject {
         this.body.isVisible = false;
         this.isLocked = true;
         gameEvents.unsubscribe(this)
+        if (this.isLevelBuilding) {
+          this.addChild(this.gizmo);
+          gameEvents.on<Direction>(signals.arrowMovement, this, (value) => {
+            this.position = this.position.add(CardinalVectors[value].multiply(16));
+            this.destinationPosition = this.position;
+            gameEvents.emit(signals.slimePosition, { position: this.position });
+          });
+        }
       }
     });
   }

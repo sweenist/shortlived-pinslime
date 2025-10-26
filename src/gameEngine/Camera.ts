@@ -1,9 +1,9 @@
 import { gameEvents } from '../events/Events';
 import { GameObject } from './GameObject';
-import { CardinalVectors, Vector2 } from '../utils/vector';
+import { Vector2 } from '../utils/vector';
 import { Level } from './Level';
 import { signals } from '../events/eventConstants';
-import type { Movement, Direction } from '../types';
+import type { Movement } from '../types';
 import type { Main } from './Main';
 
 export class Camera extends GameObject {
@@ -42,13 +42,6 @@ export class Camera extends GameObject {
     gameEvents.on<Level>(signals.levelChanged, this, (level) => {
       this.centerPositionOnTarget(level.actorPosition);
     });
-
-    gameEvents.on<Direction>(signals.arrowMovement, this, (value) => {
-      this.position = this.position.add(CardinalVectors[value].negate().multiply(16));
-      console.info("camera location:", this.position)
-      const crosshair = new Vector2(-(this.position.x - this.halfWidth), -(this.position.y - this.halfHeight));
-      console.info("Crosshair Location:", crosshair);
-    })
   }
 
   centerPositionOnTarget(target: Vector2) {
