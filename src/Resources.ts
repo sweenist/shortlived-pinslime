@@ -11,17 +11,21 @@ class Resources {
   constructor() {
     this.images = {};
     this.toLoad = {
+      //font
       fontWhite: 'sprites/ArcadeFont.png',
+      //large images
+      levelBackground: 'sprites/CircuitBoard.png',
+      //sprites
+      gizmo: 'sprites/gizmo.png',
       hero: 'sprites/PinSlime.png',
-      slimeTrail: 'sprites/SlimeTrail.png',
-      slimeDeath: 'sprites/death-spritesheet.png',
-      shadow: 'sprites/shadow.png',
-      textbox: 'sprites/text-box.png',
-      walls: 'sprites/PingWalls.png',
       paddles: 'sprites/Paddle.png',
       pullknob: 'sprites/PullKnob.png',
       ramps: 'sprites/Ramps.png',
-      levelBackground: 'sprites/CircuitBoard.png',
+      shadow: 'sprites/shadow.png',
+      slimeTrail: 'sprites/SlimeTrail.png',
+      slimeDeath: 'sprites/death-spritesheet.png',
+      textbox: 'sprites/text-box.png',
+      walls: 'sprites/PingWalls.png',
     };
 
     Object.keys(this.toLoad).forEach((key: string) => {
