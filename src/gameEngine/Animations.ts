@@ -11,7 +11,11 @@ export class Animations {
   }
 
   get frame() {
-    return this.patterns[this.activeKey].frame
+    return this.patterns[this.activeKey].frame;
+  }
+
+  get offset() {
+    return this.patterns[this.activeKey].offset;
   }
 
   play(key: string, startAtTime: number = 0) {

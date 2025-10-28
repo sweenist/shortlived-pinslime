@@ -21,6 +21,16 @@ export class FrameIndexPattern {
     throw `Time is before keyframe ${this.currentTime} < ${this.animationConfiguration.frames[0].time}`;
   }
 
+  get offset() {
+    const { frames } = this.animationConfiguration;
+    for (let i = frames.length - 1; i >= 0; i--) {
+      if (this.currentTime >= frames[i].time) {
+        return frames[i].offset;
+      }
+    }
+    throw `Offset is before keyframe ${this.currentTime} < ${this.animationConfiguration.frames[0].time}`;
+  }
+
   step(delta: number): boolean {
     this.currentTime += delta
     const wrapped = this.currentTime >= this.duration;

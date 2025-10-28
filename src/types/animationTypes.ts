@@ -1,6 +1,9 @@
+import type { Vector2 } from "../utils/vector";
+
 export type frameConfiguration = {
   time: number;
   frame: number;
+  offset?: Vector2;
 };
 
 export type animationConfiguration = {

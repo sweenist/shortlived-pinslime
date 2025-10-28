@@ -38,7 +38,7 @@ export class Slime extends GameObject {
   isLocked: boolean = false;
   isTurning: boolean = false;
   gizmo: Sprite;
-  isLevelBuilding: boolean = true;
+  isLevelBuilding: boolean = false;
 
   debugExpired: number = 0;
 

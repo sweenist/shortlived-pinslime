@@ -56,8 +56,13 @@ export class Sprite extends GameObject {
 
   step(deltaTime: number) {
     if (!this.animations) return;
+
     this.animations?.step(deltaTime);
     this.frameIndex = this.animations?.frame;
+    if (this.animations?.offset) {
+      console.info(`Shifting ${this.name} by ${this.animations.offset}`)
+      this.position = this.position.add(this.animations?.offset);
+    }
   }
 
   draw(
