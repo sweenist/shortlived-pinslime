@@ -1,5 +1,5 @@
 import { Animations } from '../gameEngine/Animations';
-import { FrameIndexPattern } from '../gameEngine/FrameIndexPattern';
+import { FrameIndexPattern } from '../gameEngine/animations/FrameIndexPattern';
 import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, UP } from '../constants';
 import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';

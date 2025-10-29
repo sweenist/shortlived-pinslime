@@ -1,4 +1,4 @@
-import { FrameIndexPattern } from "@src/gameEngine/FrameIndexPattern";
+import { FrameIndexPattern } from "@src/gameEngine/animations/FrameIndexPattern";
 import { describe, expect, it } from "vitest";
 
 describe('FrameIndexPattern', () => {
@@ -66,6 +66,4 @@ describe('FrameIndexPattern', () => {
 
     expect(() => target.frame).throws('Time is before keyframe')
   });
-
-
 });

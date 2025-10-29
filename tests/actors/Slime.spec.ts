@@ -1,14 +1,15 @@
 import { Slime } from '@src/actors/Slime';
 import { RIGHT } from '@src/constants';
 import { Vector2 } from '@src/utils/vector';
+import { mockShadowConfig } from 'tests/mocks/slimeMocks';
 import { describe, expect, it } from 'vitest';
 
 describe('Slime', () => {
   it('should be created with defaults', () => {
-    const target = new Slime(new Vector2(24, 42));
+    const target = new Slime(new Vector2(24, 42), 4, mockShadowConfig);
 
     expect(target.position).toStrictEqual(new Vector2(24, 42));
-    expect(target.shadows).toBeDefined();
+    expect(target.afterImage).toBeDefined();
     expect(target.body).toBeDefined();
     expect(target.facingDirection).toBe(RIGHT);
     expect(target.children).toHaveLength(1);

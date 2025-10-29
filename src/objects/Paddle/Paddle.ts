@@ -11,7 +11,7 @@ import {
   N_E_PADDLE_FLAP, N_W_PADDLE_FLAP, E_N_PADDLE_FLAP, E_S_PADDLE_FLAP,
   W_N_PADDLE_FLAP, W_S_PADDLE_FLAP, S_E_PADDLE_FLAP, S_W_PADDLE_FLAP
 } from './paddleAnimations';
-import { FrameIndexPattern } from '../../gameEngine/FrameIndexPattern';
+import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
 import type { animationConfiguration } from "../../types/animationTypes";
 import { DOWN, LEFT, RIGHT, STATE_GAMEOVER, UP } from "../../constants";
 
