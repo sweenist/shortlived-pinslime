@@ -33,11 +33,12 @@ export class OffsetIndexPattern {
 
   step(delta: number): boolean {
     const { frames: offsets } = this.animationConfiguration;
+
     const previousFrame = this.getOffsetMatchingTime(offsets)
     this.currentTime += delta;
     const nextFrame = this.getOffsetMatchingTime(offsets);
+
     this.isInTransition = previousFrame !== nextFrame;
-    if (this.isInTransition) console.info(`OffsetIndexPattern is in transition at time ${this.currentTime}`);
 
     const wrapped = this.currentTime >= this.duration;
     if (wrapped) {
