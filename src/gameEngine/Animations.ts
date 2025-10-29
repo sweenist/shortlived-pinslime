@@ -16,11 +16,7 @@ export class Animations {
   }
 
   get frame() {
-    const pattern = this.currentPattern;
-    if (pattern instanceof FrameIndexPattern) {
-      return pattern.frame;
-    }
-    throw new Error(`Current pattern ${this.activeKey} does not support frame animation`);
+    return this.currentPattern.frame;
   }
 
   get offset() {

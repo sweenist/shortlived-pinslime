@@ -107,7 +107,6 @@ export class Sprite extends GameObject {
   tryAdjustOffset() {
     const pattern = this.animations?.currentPattern;
     if (pattern instanceof OffsetIndexPattern && pattern.isInTransition) {
-      console.info(`Shifting ${this.name} by ${pattern.offset}`)
       this.position = this.position.add(pattern.offset);
     }
   }

@@ -16,17 +16,28 @@ export class OffsetIndexPattern {
     this.isInTransition = this.animationConfiguration.frames.some((frame) => frame.time === this.currentTime);
   }
 
+  get frame() {
+    const { frames } = this.animationConfiguration;
+    for (let i = frames.length - 1; i >= 0; i--) {
+      if (this.currentTime >= frames[i].time) {
+        return frames[i].frame;
+      }
+    }
+    throw `Time is before keyframe ${this.currentTime} < ${this.animationConfiguration.frames[0].time}`;
+  }
+
   get offset() {
     const { frames: offsets } = this.animationConfiguration;
-    return this.getFrameMatchingTime(offsets)
+    return this.getOffsetMatchingTime(offsets)
   }
 
   step(delta: number): boolean {
     const { frames: offsets } = this.animationConfiguration;
-    const previousFrame = this.getFrameMatchingTime(offsets)
+    const previousFrame = this.getOffsetMatchingTime(offsets)
     this.currentTime += delta;
-    const nextFrame = this.getFrameMatchingTime(offsets);
+    const nextFrame = this.getOffsetMatchingTime(offsets);
     this.isInTransition = previousFrame !== nextFrame;
+    if (this.isInTransition) console.info(`OffsetIndexPattern is in transition at time ${this.currentTime}`);
 
     const wrapped = this.currentTime >= this.duration;
     if (wrapped) {
@@ -35,7 +46,7 @@ export class OffsetIndexPattern {
     return wrapped;
   }
 
-  getFrameMatchingTime(offsets: offsetConfiguration[]) {
+  getOffsetMatchingTime(offsets: offsetConfiguration[]) {
     for (let i = offsets.length - 1; i >= 0; i--) {
       if (this.currentTime >= offsets[i].time) {
         return offsets[i].offset;

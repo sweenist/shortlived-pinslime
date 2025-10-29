@@ -1,6 +1,7 @@
 import { STATE_LAUNCHING } from "../../constants";
 import { Animations } from "../../gameEngine/Animations";
 import { FrameIndexPattern } from "../../gameEngine/animations/FrameIndexPattern";
+import { OffsetIndexPattern } from "../../gameEngine/animations/OffsetIndexPattern";
 import { GameObject } from "../../gameEngine/GameObject";
 import type { Main } from "../../gameEngine/Main";
 import { Sprite } from "../../gameEngine/Sprite";
@@ -37,7 +38,7 @@ export class PullKnob extends GameObject {
       frameSize: new Vector2(16, 32),
       animations: new Animations({
         idle: new FrameIndexPattern(IDLE),
-        launching: new FrameIndexPattern(KNOB_LAUNCHING),
+        launching: new OffsetIndexPattern(KNOB_LAUNCHING),
       })
     });
 
