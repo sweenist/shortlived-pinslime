@@ -2,6 +2,7 @@ import { Animations } from './Animations';
 import { GameObject } from './GameObject';
 import type { ImageResource } from '../Resources';
 import { Vector2 } from '../utils/vector';
+import { OffsetIndexPattern } from './animations/OffsetIndexPattern';
 
 export interface SpriteParams {
   resource: ImageResource;
@@ -59,10 +60,7 @@ export class Sprite extends GameObject {
 
     this.animations?.step(deltaTime);
     this.frameIndex = this.animations?.frame;
-    if (this.animations?.offset) {
-      console.info(`Shifting ${this.name} by ${this.animations.offset}`)
-      this.position = this.position.add(this.animations?.offset);
-    }
+    this.tryAdjustOffset();
   }
 
   draw(
@@ -104,5 +102,13 @@ export class Sprite extends GameObject {
         frameSizeX * this.scale,
         frameSizeY * this.scale
       );
+  }
+
+  tryAdjustOffset() {
+    const pattern = this.animations?.currentPattern;
+    if (pattern instanceof OffsetIndexPattern && pattern.isInTransition) {
+      console.info(`Shifting ${this.name} by ${pattern.offset}`)
+      this.position = this.position.add(pattern.offset);
+    }
   }
 }

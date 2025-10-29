@@ -6,6 +6,7 @@ export const makeMovementFrames = (
 ): animationConfiguration => {
   return {
     duration: 900,
+    type: 'frame',
     frames: [
       {
         time: 0,
@@ -29,6 +30,7 @@ export const EXPIRED = makeAnimation(25, 1500, 8);
 
 export const IDLE_START: animationConfiguration = {
   duration: 5000,
+  type: 'frame',
   frames: [
     {
       time: 0,
@@ -78,6 +80,7 @@ export const IDLE_START: animationConfiguration = {
 };
 export const LAUNCH: animationConfiguration = {
   duration: 1000,
+  type: 'frame',
   frames: [
     {
       time: 0,

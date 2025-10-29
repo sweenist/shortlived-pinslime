@@ -5,10 +5,11 @@ describe('FrameIndexPattern', () => {
   it('should return the active frame after initialization', () => {
     const target = new FrameIndexPattern({
       duration: 200,
+      type: 'frame',
       frames: [
-        { frame: 1, time: 0 },
-        { frame: 2, time: 100 },
-        { frame: 3, time: 150 },
+        { type: 'frame', frame: 1, time: 0 },
+        { type: 'frame', frame: 2, time: 100 },
+        { type: 'frame', frame: 3, time: 150 },
       ]
     });
 
@@ -18,10 +19,11 @@ describe('FrameIndexPattern', () => {
   it('should return the next frame after step passed frame time', () => {
     const target = new FrameIndexPattern({
       duration: 200,
+      type: 'frame',
       frames: [
-        { frame: 1, time: 0 },
-        { frame: 2, time: 100 },
-        { frame: 3, time: 150 },
+        { type: 'frame', frame: 1, time: 0 },
+        { type: 'frame', frame: 2, time: 100 },
+        { type: 'frame', frame: 3, time: 150 },
       ]
     });
 
@@ -40,10 +42,11 @@ describe('FrameIndexPattern', () => {
   it('should return the first frame after stepping over time threshold', () => {
     const target = new FrameIndexPattern({
       duration: 200,
+      type: 'frame',
       frames: [
-        { frame: 1, time: 0 },
-        { frame: 2, time: 100 },
-        { frame: 3, time: 150 },
+        { type: 'frame', frame: 1, time: 0 },
+        { type: 'frame', frame: 2, time: 100 },
+        { type: 'frame', frame: 3, time: 150 },
       ]
     });
 
@@ -57,10 +60,11 @@ describe('FrameIndexPattern', () => {
   it('should throw when current time is less than defined minimum threshold', () => {
     const target = new FrameIndexPattern({
       duration: 200,
+      type: 'frame',
       frames: [
-        { frame: 1, time: 1 },
-        { frame: 2, time: 100 },
-        { frame: 3, time: 150 },
+        { type: 'frame', frame: 1, time: 1 },
+        { type: 'frame', frame: 2, time: 100 },
+        { type: 'frame', frame: 3, time: 150 },
       ]
     });
 

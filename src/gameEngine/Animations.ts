@@ -1,21 +1,34 @@
-import type { FrameIndexPattern } from './animations/FrameIndexPattern';
+import { FrameIndexPattern } from './animations/FrameIndexPattern';
+import { OffsetIndexPattern } from './animations/OffsetIndexPattern';
 
 export class Animations {
-  patterns: { [key: string]: FrameIndexPattern }
+  patterns: { [key: string]: FrameIndexPattern | OffsetIndexPattern }
   activeKey: string;
   private playOnceCallback?: () => void;
 
-  constructor(patterns: { [key: string]: FrameIndexPattern }) {
+  constructor(patterns: { [key: string]: FrameIndexPattern | OffsetIndexPattern }) {
     this.patterns = patterns;
     this.activeKey = Object.keys(this.patterns)[0];
   }
 
+  get currentPattern() {
+    return this.patterns[this.activeKey];
+  }
+
   get frame() {
-    return this.patterns[this.activeKey].frame;
+    const pattern = this.currentPattern;
+    if (pattern instanceof FrameIndexPattern) {
+      return pattern.frame;
+    }
+    throw new Error(`Current pattern ${this.activeKey} does not support frame animation`);
   }
 
   get offset() {
-    return this.patterns[this.activeKey].offset;
+    const pattern = this.currentPattern;
+    if (pattern instanceof OffsetIndexPattern) {
+      return pattern.offset;
+    }
+    throw new Error(`Current pattern ${this.activeKey} does not support offset animation`);
   }
 
   play(key: string, startAtTime: number = 0) {

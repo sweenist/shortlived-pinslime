@@ -4,6 +4,7 @@ import { singleFrame } from "../../utils/animationBuilders";
 const flap = (rootFrame: number, reverse: boolean = false): animationConfiguration => {
   return {
     duration: 150,
+    type: 'frame',
     frames: [
       {
         frame: reverse ? rootFrame - 1 : rootFrame + 1,

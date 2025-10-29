@@ -3,6 +3,7 @@ import { Vector2 } from "../../utils/vector";
 
 export const IDLE: animationConfiguration = {
   duration: 0,
+  type: 'frame',
   frames: [
     {
       time: 0,
@@ -13,18 +14,19 @@ export const IDLE: animationConfiguration = {
 
 export const LAUNCHING: animationConfiguration = {
   duration: 1125,
+  type: 'frame',
   frames: [
     {
       frame: 3,
-      time: 0,
+      time: 0
     },
     {
       frame: 1,
-      time: 125,
+      time: 125
     },
     {
       time: 250,
-      frame: 2,
+      frame: 2
     },
     {
       time: 750,
@@ -36,11 +38,11 @@ export const LAUNCHING: animationConfiguration = {
     },
     {
       time: 800,
-      frame: 5,
+      frame: 5
     },
     {
       time: 820,
-      frame: 6,
+      frame: 6
     },
     {
       time: 850,
@@ -59,6 +61,7 @@ export const LAUNCHING: animationConfiguration = {
 
 export const KNOB_LAUNCHING: animationConfiguration = {
   duration: 1125,
+  type: 'offset',
   frames: [
     {
       frame: 0,
