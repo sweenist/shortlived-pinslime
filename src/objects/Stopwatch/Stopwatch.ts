@@ -1,6 +1,8 @@
+import { STATE_TITLE } from "../../constants";
 import { Animations } from "../../gameEngine/Animations";
 import { FrameIndexPattern } from "../../gameEngine/animations/FrameIndexPattern";
 import { GameObject } from "../../gameEngine/GameObject";
+import type { Main } from "../../gameEngine/Main";
 import { Sprite } from "../../gameEngine/Sprite";
 import { resources } from "../../Resources";
 import { Vector2 } from "../../utils/vector";
@@ -25,5 +27,11 @@ export class Stopwatch extends GameObject {
     this.sprite.animations?.playOnce('countdown', () => {
       this.removeChild(this.sprite);
     });
+  }
+
+  step(_deltaTime: number, _root?: Main): void {
+    if (_root?.state.current === STATE_TITLE) {
+      _root.state.next();
+    }
   }
 }
