@@ -16,6 +16,7 @@ import { Sprite } from '../gameEngine/Sprite';
 
 import levelConfig from './config/level1.config.json';
 import tiledMap from './config/level1.map.json';
+import { Stopwatch } from '../objects/Stopwatch/Stopwatch';
 
 type TileConfig = {
   resourceName: string;
@@ -75,6 +76,9 @@ export class Pinball extends Level {
     const slimePosition = new Vector2(gridCells(slimeConfig.location.x), gridCells(slimeConfig.location.y))
     const slime = new Slime(slimePosition, slimeConfig.speed, shadowConfig);
     this.addChild(slime);
+
+    const stopwatch = new Stopwatch({ position: slimePosition.add(new Vector2(gridCells(-4), gridCells(-2))) });
+    this.addChild(stopwatch);
   }
 
   buildMap(resourceConfigs: ResourceConfig[], tileConfig: { [key: number]: TileConfig }) {
