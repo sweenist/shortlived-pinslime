@@ -25,6 +25,7 @@ class Resources {
       shadow: 'sprites/shadow.png',
       slimeTrail: 'sprites/SlimeTrail.png',
       slimeDeath: 'sprites/death-spritesheet.png',
+      stopwatch: 'sprites/Stopwatch.png',
       textbox: 'sprites/text-box.png',
       walls: 'sprites/PingWalls.png',
     };
