@@ -1,4 +1,5 @@
 import { GameObject } from "../gameEngine/GameObject";
+import type { Main } from "../gameEngine/Main";
 import { Sprite } from "../gameEngine/Sprite";
 import { resources } from "../Resources";
 import { Vector2 } from "../utils/vector";
@@ -15,6 +16,10 @@ export class Title extends GameObject {
     });
 
     this.addChild(this.background)
+  }
+
+  step(_deltaTime: number, _root?: Main): void {
+    // TODO: when space pressed, show level select/play
   }
 
   draw(ctx: CanvasRenderingContext2D, _position: Vector2, _debug?: boolean): void {
