@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/slicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shortlived Slime</title>
-  </head>
 
-  <body>
-    <div id="title">Shortlived Slime</div>
-    <div id="arcade">
-      <canvas id="score-canvas" width="480" height="24"></canvas>
-      <canvas id="game-canvas" width="480" height="320"></canvas>
-    </div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/slicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shortlived Slime</title>
+</head>
+
+<body>
+  <svg viewbox="0 0 480 120">
+    <defs>
+      <linearGradient id="text-gradient" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="#3a971f" />
+        <stop offset="100%" stop-color="#ffa10a" />
+      </linearGradient>
+    </defs>
+    <path id="text-curve" d="M40 100 C 32 40 448 40 440 100" fill="none" />
+    <text>
+      <textPath href="#text-curve" startOffset="50%">
+        Shortlived Slime
+      </textPath>
+    </text>
+  </svg>
+  <div id="arcade">
+    <canvas id="score-canvas" width="480" height="24"></canvas>
+    <canvas id="game-canvas" width="480" height="320"></canvas>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
