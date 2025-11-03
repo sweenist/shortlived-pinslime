@@ -1,5 +1,5 @@
 import { Slime } from '../actors/Slime';
-import { fadeIn, fadeOut } from '../constants';
+import { fadeIn, fadeOut, STATE_INITIAL } from '../constants';
 import type { fader } from '../types';
 import { Vector2 } from '../utils/vector';
 import { Camera } from './Camera';
@@ -9,6 +9,9 @@ import { GameObject } from './GameObject';
 import { Level } from './Level';
 import { signals } from '../events/eventConstants';
 import { GameState } from '../game/GameState';
+import { Title } from '../game/Title';
+import { Pinball } from '../levels/Pinball';
+import { gridCells } from '../utils/grid';
 
 export interface MainGameParams {
   ctx: CanvasRenderingContext2D;
@@ -18,6 +21,7 @@ export interface MainGameParams {
 
 export class Main extends GameObject {
   level?: Level;
+  title: Title;
   camera: Camera;
   input: GameInput;
   state: GameState;
@@ -35,8 +39,10 @@ export class Main extends GameObject {
     this.camera = new Camera(params.ctx.canvas, true);
     this.input = new GameInput();
     this.state = new GameState();
+    this.title = new Title();
 
     this.addChild(this.camera);
+    this.addChild(this.title);
   }
 
   ready(): void {
@@ -46,6 +52,13 @@ export class Main extends GameObject {
       this.startFade(() => this.setLevel(newLevel));
       console.info(`Loading ${newLevel?.constructor.name ?? 'Error'}`);
     });
+
+    gameEvents.on<string>(signals.stateChanged, this, (value) => {
+      if (value === STATE_INITIAL) {
+        this.removeChild(this.title);
+        this.setLevel(new Pinball({ actorPosition: new Vector2(gridCells(0), gridCells(8)) }));
+      }
+    })
 
     this.input.consolate = () => {
       this.debug(0);

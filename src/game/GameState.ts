@@ -4,7 +4,8 @@ import { gameEvents } from "../events/Events";
 
 export class GameState {
   private _index: number;
-  private _states: { [key: string]: number } = {
+  private _states: { [key: string]: number | null } = {
+    title: null,
     initial: 3000,
     launching: 1000,
     playing: 20000,
@@ -35,15 +36,16 @@ export class GameState {
   }
 
   step(deltaTime: number) {
-    this._states[this.current] -= deltaTime;
-    if (this._states[this.current] <= 0) {
+    if (this._states[this.current] === null) return;
+    this._states[this.current]! -= deltaTime;
+    if (this._states[this.current]! <= 0) {
       this._index++;
       gameEvents.emit(signals.stateChanged, this.current);
     }
   }
 
   getStepTime(): number {
-    return this._states[this.current]
+    return this._states[this.current] ?? 0;
   }
 
   kill() {
@@ -55,7 +57,7 @@ export class GameState {
     this._index++;
   }
 
-  debug(): number {
+  debug(): number | null {
     return this._states[this.current]
   }
 }
