@@ -6,6 +6,7 @@ import { Vector2 } from "../utils/vector";
 
 export class Title extends GameObject {
   background: Sprite;
+  text: Sprite;
 
   constructor() {
     super()
@@ -15,7 +16,15 @@ export class Title extends GameObject {
       frameSize: new Vector2(320, 180)
     });
 
-    this.addChild(this.background)
+    this.text = new Sprite({
+      resource: resources.images['titletext'],
+      frameSize: new Vector2(384, 80),
+      scale: 0.5
+    });
+    this.text.drawLayer = "USER_INTERFACE";
+
+    this.addChild(this.background);
+    this.addChild(this.text);
   }
 
   step(_deltaTime: number, _root?: Main): void {
@@ -37,5 +46,8 @@ export class Title extends GameObject {
       offsetY = (ctx.canvas.height - drawHeight) / 2;
     }
     ctx.drawImage(this.background.resource.image, offsetX, offsetY, ctx.canvas.width, ctx.canvas.height)
+
+    const textX = Math.abs((ctx.canvas.width / 2) - (this.text.resource.image.width / 4)); // scale is 1/2
+    this.text.draw(ctx, new Vector2(textX, 0));
   }
 }

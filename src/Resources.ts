@@ -16,6 +16,7 @@ class Resources {
       //large images
       levelBackground: 'sprites/CircuitBoard.png',
       title: 'sprites/TitleScreen.png',
+      titletext: 'sprites/TitleText.png',
       //sprites
       gizmo: 'sprites/gizmo.png',
       hero: 'sprites/PinSlime.png',
