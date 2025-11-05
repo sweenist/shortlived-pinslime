@@ -1,12 +1,19 @@
+import { STATE_INITIAL } from "../constants";
+import { signals } from "../events/eventConstants";
+import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
 import type { Main } from "../gameEngine/Main";
 import { Sprite } from "../gameEngine/Sprite";
+import { Pinball } from "../levels/Pinball";
+import { OptionDialog } from "../objects/TextBox/OptionDialog";
 import { resources } from "../Resources";
+import { gridCells } from "../utils/grid";
 import { Vector2 } from "../utils/vector";
 
 export class Title extends GameObject {
   background: Sprite;
   text: Sprite;
+  optionMenu: OptionDialog;
 
   constructor() {
     super()
@@ -23,12 +30,29 @@ export class Title extends GameObject {
     });
     this.text.drawLayer = "USER_INTERFACE";
 
+    this.optionMenu = new OptionDialog({ canvasId: '#options-canvas', options: { 1: 'Play' } })
+
     this.addChild(this.background);
     this.addChild(this.text);
+    this.addChild(this.optionMenu);
   }
 
-  step(_deltaTime: number, _root?: Main): void {
-    // TODO: when space pressed, show level select/play
+  step(_deltaTime: number, root?: Main): void {
+    const { input, state } = root!;
+
+    if (input.getActionJustPressed('Space')) {
+      state.set(STATE_INITIAL);
+      gameEvents.unsubscribe(this)
+      this.hideOptions();
+      // use activeOption form this.options
+      gameEvents.emit(signals.levelChanging, new Pinball({ actorPosition: new Vector2(gridCells(0), gridCells(8)) }));
+
+    }
+  }
+
+  hideOptions() {
+    const optionDiv = document.getElementById('options');
+    optionDiv?.classList.add('hidden');
   }
 
   draw(ctx: CanvasRenderingContext2D, _position: Vector2, _debug?: boolean): void {

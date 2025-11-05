@@ -48,17 +48,9 @@ export class Main extends GameObject {
   ready(): void {
 
     gameEvents.on<Level>(signals.levelChanging, this, (newLevel) => {
-      console.info(`Leaving ${this.level?.constructor.name ?? 'None'}`);
+      this.title.destroy();
       this.startFade(() => this.setLevel(newLevel));
-      console.info(`Loading ${newLevel?.constructor.name ?? 'Error'}`);
     });
-
-    gameEvents.on<string>(signals.stateChanged, this, (value) => {
-      if (value === STATE_INITIAL) {
-        this.removeChild(this.title);
-        this.setLevel(new Pinball({ actorPosition: new Vector2(gridCells(0), gridCells(8)) }));
-      }
-    })
 
     this.input.consolate = () => {
       this.debug(0);

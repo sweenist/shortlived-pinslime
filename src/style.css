@@ -36,10 +36,6 @@ body {
   border-image-width: 8px;
   z-index: 2;
   animation: growheight 800ms ease-out 750ms forwards;
-
-  canvas {
-    width: inherit;
-  }
 }
 
 @keyframes growheight {
@@ -58,4 +54,10 @@ body {
   visibility: collapse;
   background-color: #090909;
   vertical-align: top;
+}
+
+.hidden {
+  visibility: hidden;
+  height: 0;
+  width: 0;
 }

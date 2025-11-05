@@ -48,6 +48,15 @@ export class GameState {
     return this._states[this.current] ?? 0;
   }
 
+  set(state: string) {
+    const index = STATE_NAMES.findIndex((s) => s === state);
+    if (index > -1 && index !== this._index) {
+      this._index = index;
+      gameEvents.emit(signals.stateChanged, this.current);
+    }
+
+  }
+
   kill() {
     this._index = 4;
     gameEvents.emit(signals.stateChanged, STATE_DEAD);

@@ -18,12 +18,13 @@ type SpriteFontProps = {
   }[];
 };
 
-export class SpriteTextBox extends GameObject {
+export class OptionDialog extends GameObject {
   options: { [key: number]: string };
   optionWords: SpriteFontProps[][];
   showingIndex: number = 0;
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
+  activeOption: number = 1;
 
   constructor(options: LevelOptions) {
     super();
@@ -80,7 +81,7 @@ export class SpriteTextBox extends GameObject {
     this.drawImage(this.context, positionOffset);
   }
 
-  drawImage(ctx: CanvasRenderingContext2D, position: Vector2): void {
+  drawImage(_ctx: CanvasRenderingContext2D, position: Vector2): void {
     const PADDING_LEFT = 7;
     const PADDING_TOP = 7;
     const LINE_MAX_WIDTH = 240;
@@ -106,7 +107,7 @@ export class SpriteTextBox extends GameObject {
           const widthCharOffset = cursorX - 5;
 
           const drawPosition = new Vector2(widthCharOffset, cursorY);
-          sprite.draw(ctx, drawPosition);
+          sprite.draw(this.context, drawPosition);
 
           cursorX += width + 1;
           currentShowIndex += 1;
