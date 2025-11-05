@@ -1,5 +1,5 @@
 import { Slime } from '../actors/Slime';
-import { fadeIn, fadeOut, STATE_INITIAL } from '../constants';
+import { fadeIn, fadeOut } from '../constants';
 import type { fader } from '../types';
 import { Vector2 } from '../utils/vector';
 import { Camera } from './Camera';
@@ -10,8 +10,6 @@ import { Level } from './Level';
 import { signals } from '../events/eventConstants';
 import { GameState } from '../game/GameState';
 import { Title } from '../game/Title';
-import { Pinball } from '../levels/Pinball';
-import { gridCells } from '../utils/grid';
 
 export interface MainGameParams {
   ctx: CanvasRenderingContext2D;

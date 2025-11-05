@@ -1,12 +1,8 @@
-import { signals } from '../../events/eventConstants';
-import { gameEvents } from '../../events/Events';
 import { GameObject } from '../../gameEngine/GameObject';
 import type { Main } from '../../gameEngine/Main';
 import { Sprite } from '../../gameEngine/Sprite';
-import { Pinball } from '../../levels/Pinball';
 import { resources } from '../../Resources';
 import type { LevelOptions } from '../../types';
-import { gridCells } from '../../utils/grid';
 import { Vector2 } from '../../utils/vector';
 import { getCharacterFrame, getCharacterWidth } from './SpriteMapping';
 
@@ -25,6 +21,8 @@ export class OptionDialog extends GameObject {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
   activeOption: number = 1;
+  drawWords: boolean = false;
+  showCountdown: number;
 
   constructor(options: LevelOptions) {
     super();
@@ -36,16 +34,12 @@ export class OptionDialog extends GameObject {
     this.drawLayer = 'USER_INTERFACE';
 
     this.optionWords = this.getFontSprites();
+    this.showCountdown = 2100;
   }
 
-  step(_deltaTime: number, root?: Main): void {
-    const { input } = root!;
-    if (input.getActionJustPressed('Space')) {
-      // raise choice and load level
-      //TODO: refactor to decopuple level from menu
-      gameEvents.emit(signals.levelChanging, new Pinball({ actorPosition: new Vector2(gridCells(0), gridCells(8)) }));
-    }
-
+  step(deltaTime: number, root?: Main): void {
+    this.showCountdown -= deltaTime;
+    this.drawWords = this.showCountdown < 0;
   }
 
   private getFontSprites(): SpriteFontProps[][] {
@@ -63,7 +57,9 @@ export class OptionDialog extends GameObject {
             name: char,
             frameColumns: 13,
             frameRows: 5,
+            frameSize: new Vector2(8, 8),
             frameIndex: getCharacterFrame(char),
+            scale: 2
           }),
         };
       });
@@ -74,11 +70,13 @@ export class OptionDialog extends GameObject {
     }));
   }
 
-  draw(_ctx: CanvasRenderingContext2D, position: Vector2): void {
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  draw(ctx: CanvasRenderingContext2D, position: Vector2): void {
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    const positionOffset = position.add(this.position);
-    this.drawImage(this.context, positionOffset);
+    if (this.drawWords) {
+      const positionOffset = position.add(this.position);
+      this.drawImage(ctx, positionOffset);
+    }
   }
 
   drawImage(_ctx: CanvasRenderingContext2D, position: Vector2): void {
@@ -92,7 +90,7 @@ export class OptionDialog extends GameObject {
     let currentShowIndex = 0;
 
     for (let index = 0; index < this.optionWords.length; index++) {
-
+      cursorY += LINE_VERTICAL_HEIGHT;
 
       this.optionWords[index].forEach((word) => {
         const spaceRemaining = position.x + LINE_MAX_WIDTH - cursorX;
@@ -101,15 +99,13 @@ export class OptionDialog extends GameObject {
           cursorX = position.x + PADDING_LEFT;
         }
         word.chars.forEach((char) => {
-          if (currentShowIndex > this.showingIndex) return;
-
           const { width, sprite } = char;
           const widthCharOffset = cursorX - 5;
 
           const drawPosition = new Vector2(widthCharOffset, cursorY);
           sprite.draw(this.context, drawPosition);
 
-          cursorX += width + 1;
+          cursorX += width * sprite.scale + 1;
           currentShowIndex += 1;
         });
 

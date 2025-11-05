@@ -73,5 +73,6 @@ export class Title extends GameObject {
 
     const textX = Math.abs((ctx.canvas.width / 2) - (this.text.resource.image.width / 4)); // scale is 1/2
     this.text.draw(ctx, new Vector2(textX, 0));
+    this.optionMenu.draw(this.optionMenu.context, new Vector2(gridCells(3), 0));
   }
 }
