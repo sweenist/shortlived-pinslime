@@ -30,9 +30,25 @@ body {
 #options {
   grid-row: 2;
   grid-column: 2;
-  border: 2px solid #e1e1e1;
-  border-radius: 8px;
+  height: 0px;
+  border-image-source: url('sprites/FrameBlue.png');
+  border-image-slice: 8 8 8 8 fill;
+  border-image-width: 8px;
   z-index: 2;
+  animation: growheight 800ms ease-out 750ms forwards;
+
+  canvas {
+    width: inherit;
+  }
+}
+
+@keyframes growheight {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
 }
 
 #score-canvas {
