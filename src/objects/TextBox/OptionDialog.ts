@@ -29,6 +29,7 @@ export class OptionDialog extends GameObject {
 
     this.canvas = document.querySelector<HTMLCanvasElement>(options.canvasId)!;
     this.context = this.canvas.getContext('2d')!;
+    this.context.imageSmoothingEnabled = false;
     this.options = options.options
 
     this.drawLayer = 'USER_INTERFACE';
@@ -37,7 +38,7 @@ export class OptionDialog extends GameObject {
     this.showCountdown = 2100;
   }
 
-  step(deltaTime: number, root?: Main): void {
+  step(deltaTime: number, _root?: Main): void {
     this.showCountdown -= deltaTime;
     this.drawWords = this.showCountdown < 0;
   }
@@ -59,7 +60,7 @@ export class OptionDialog extends GameObject {
             frameRows: 5,
             frameSize: new Vector2(8, 8),
             frameIndex: getCharacterFrame(char),
-            scale: 2
+            scale: 3
           }),
         };
       });
