@@ -16,12 +16,11 @@ body {
   display: grid;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 32px;
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: 2fr 1fr 1fr;
+  grid-template-rows: 3fr 1fr 2fr;
   border: 2px solid #e1e1e1;
   max-width: 1280px;
-  height: 100dvh;
+  height: 80dvh;
 }
 
 #game-canvas {

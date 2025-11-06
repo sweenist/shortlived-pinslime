@@ -45,8 +45,8 @@ export class OptionDialog extends GameObject {
   }
 
   private resizeDialog() {
-    this.canvas.width = this.canvas.parentElement?.offsetWidth ?? this.canvas.width;
-    this.canvas.height = this.canvas.parentElement?.clientHeight ?? this.canvas.height;
+    this.canvas.width = Math.floor(this.canvas.parentElement?.offsetWidth ?? this.canvas.width);
+    this.canvas.height = Math.floor(this.canvas.parentElement?.clientHeight ?? this.canvas.height);
     this.draw(this.context, this.position);
   }
 
