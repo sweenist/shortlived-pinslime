@@ -28,6 +28,7 @@ export class OptionDialog extends GameObject {
     super();
 
     this.canvas = document.querySelector<HTMLCanvasElement>(options.canvasId)!;
+    this.canvas.parentElement?.addEventListener('resize', this.resizeDialog)
     this.context = this.canvas.getContext('2d')!;
     this.context.imageSmoothingEnabled = false;
     this.options = options.options
@@ -41,6 +42,12 @@ export class OptionDialog extends GameObject {
   step(deltaTime: number, _root?: Main): void {
     this.showCountdown -= deltaTime;
     this.drawWords = this.showCountdown < 0;
+  }
+
+  private resizeDialog() {
+    this.canvas.width = this.canvas.parentElement?.offsetWidth ?? this.canvas.width;
+    this.canvas.height = this.canvas.parentElement?.clientHeight ?? this.canvas.height;
+    this.draw(this.context, this.position);
   }
 
   private getFontSprites(): SpriteFontProps[][] {
