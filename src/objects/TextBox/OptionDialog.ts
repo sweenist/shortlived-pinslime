@@ -1,8 +1,12 @@
+import { Animations } from '../../gameEngine/Animations';
+import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
 import { GameObject } from '../../gameEngine/GameObject';
 import type { Main } from '../../gameEngine/Main';
 import { Sprite } from '../../gameEngine/Sprite';
 import { resources } from '../../Resources';
 import type { LevelOptions } from '../../types';
+import type { animationConfiguration } from '../../types/animationTypes';
+import { gridCells } from '../../utils/grid';
 import { Vector2 } from '../../utils/vector';
 import { getCharacterFrame, getCharacterWidth } from './SpriteMapping';
 
@@ -14,9 +18,19 @@ type SpriteFontProps = {
   }[];
 };
 
+const cursorAnimation: animationConfiguration = {
+  duration: 250,
+  type: 'frame',
+  frames: [
+    { frame: 0, time: 200 },
+    { frame: 1, time: 250 }
+  ]
+}
+
 export class OptionDialog extends GameObject {
   options: { [key: number]: string };
   optionWords: SpriteFontProps[][];
+  cursor: Sprite;
   showingIndex: number = 0;
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
@@ -37,6 +51,14 @@ export class OptionDialog extends GameObject {
 
     this.optionWords = this.getFontSprites();
     this.showCountdown = 2100;
+    this.cursor = new Sprite({
+      resource: resources.images['cursor'],
+      frameColumns: 2,
+      frameSize: new Vector2(8, 8),
+      scale: 3,
+      position: new Vector2(gridCells(1), gridCells(1) + 3),
+      animations: new Animations({ default: new FrameIndexPattern(cursorAnimation) })
+    });
   }
 
   step(deltaTime: number, _root?: Main): void {
@@ -84,6 +106,8 @@ export class OptionDialog extends GameObject {
     if (this.drawWords) {
       const positionOffset = position.add(this.position);
       this.drawImage(ctx, positionOffset);
+      this.cursor.animations?.play('default');
+      // this.cursor.draw(ctx, Vector2.Zero());
     }
   }
 

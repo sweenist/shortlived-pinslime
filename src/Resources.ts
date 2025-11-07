@@ -13,6 +13,7 @@ class Resources {
     this.toLoad = {
       //font
       fontWhite: 'sprites/ArcadeFont.png',
+      cursor: 'sprites/Cursor.png',
       //large images
       levelBackground: 'sprites/CircuitBoard.png',
       title: 'sprites/TitleScreen.png',
