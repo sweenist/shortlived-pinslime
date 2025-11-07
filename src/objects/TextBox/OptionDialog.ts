@@ -19,11 +19,11 @@ type SpriteFontProps = {
 };
 
 const cursorAnimation: animationConfiguration = {
-  duration: 250,
+  duration: 1000,
   type: 'frame',
   frames: [
-    { frame: 0, time: 200 },
-    { frame: 1, time: 250 }
+    { frame: 0, time: 0 },
+    { frame: 1, time: 625 }
   ]
 }
 
@@ -33,7 +33,6 @@ export class OptionDialog extends GameObject {
   cursor: Sprite;
   showingIndex: number = 0;
   canvas: HTMLCanvasElement;
-  context: CanvasRenderingContext2D;
   activeOption: number = 1;
   drawWords: boolean = false;
   showCountdown: number;
@@ -43,10 +42,7 @@ export class OptionDialog extends GameObject {
 
     this.canvas = document.querySelector<HTMLCanvasElement>(options.canvasId)!;
     this.canvas.parentElement?.addEventListener('resize', this.resizeDialog)
-    this.context = this.canvas.getContext('2d')!;
-    this.context.imageSmoothingEnabled = false;
     this.options = options.options
-
     this.drawLayer = 'USER_INTERFACE';
 
     this.optionWords = this.getFontSprites();
@@ -57,11 +53,18 @@ export class OptionDialog extends GameObject {
       frameSize: new Vector2(8, 8),
       scale: 3,
       position: new Vector2(gridCells(1), gridCells(1) + 3),
-      animations: new Animations({ default: new FrameIndexPattern(cursorAnimation) })
+      animations: new Animations({ default: new FrameIndexPattern(cursorAnimation) }),
+      drawLayer: 'USER_INTERFACE',
     });
   }
 
-  step(deltaTime: number, _root?: Main): void {
+  step(deltaTime: number, root?: Main): void {
+    if (this.showCountdown > 0 && this.showCountdown - deltaTime <= 0) {
+      this.cursor.stepEntry(deltaTime, root!);
+      this.cursor.animations?.play('default');
+      this.addChild(this.cursor);
+    }
+
     this.showCountdown -= deltaTime;
     this.drawWords = this.showCountdown < 0;
   }
@@ -69,7 +72,6 @@ export class OptionDialog extends GameObject {
   private resizeDialog() {
     this.canvas.width = Math.floor(this.canvas.parentElement?.offsetWidth ?? this.canvas.width);
     this.canvas.height = Math.floor(this.canvas.parentElement?.clientHeight ?? this.canvas.height);
-    this.draw(this.context, this.position);
   }
 
   private getFontSprites(): SpriteFontProps[][] {
@@ -101,18 +103,15 @@ export class OptionDialog extends GameObject {
   }
 
   draw(ctx: CanvasRenderingContext2D, position: Vector2): void {
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     if (this.drawWords) {
       const positionOffset = position.add(this.position);
       this.drawImage(ctx, positionOffset);
-      this.cursor.animations?.play('default');
-      // this.cursor.draw(ctx, Vector2.Zero());
+      this.cursor.draw(ctx, Vector2.Zero());
     }
   }
 
-  drawImage(_ctx: CanvasRenderingContext2D, position: Vector2): void {
-    const PADDING_LEFT = 7;
+  drawImage(ctx: CanvasRenderingContext2D, position: Vector2): void {
+    const PADDING_LEFT = 56;
     const PADDING_TOP = 7;
     const LINE_MAX_WIDTH = 240;
     const LINE_VERTICAL_HEIGHT = 14;
@@ -135,7 +134,7 @@ export class OptionDialog extends GameObject {
           const widthCharOffset = cursorX - 5;
 
           const drawPosition = new Vector2(widthCharOffset, cursorY);
-          sprite.draw(this.context, drawPosition);
+          sprite.draw(ctx, drawPosition);
 
           cursorX += width * sprite.scale + 1;
           currentShowIndex += 1;

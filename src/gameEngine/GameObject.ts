@@ -47,6 +47,16 @@ export class GameObject {
     );
   }
 
+  drawForeground(ctx: CanvasRenderingContext2D) {
+    this.children.forEach((child) => {
+      child.drawForeground(ctx);
+      if (child.drawLayer === 'USER_INTERFACE') {
+        // console.info(child.name)
+        child.draw(ctx, Vector2.Zero());
+      }
+    });
+  }
+
   getOrderedDrawSprites() {
     return [...this.children].sort((src, target) => {
       if (target.drawLayer === 'GROUND') return 1;
@@ -94,7 +104,7 @@ export class GameObject {
     const arrow = '-'.repeat(level + 1);
 
     console.debug(
-      `${arrow}> ${this.constructor.name}, position: ${this.position} Parent: ${this.parent?.constructor.name}`
+      `${arrow}> ${this.constructor.name}, position: ${this.position} Parent: ${this.parent?.constructor.name} Ready: ${this.isReady}`
     );
     this.children.forEach((child) => {
       child.debug(level + 1);

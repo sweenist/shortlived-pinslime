@@ -3,6 +3,7 @@ import { GameObject } from './GameObject';
 import type { ImageResource } from '../Resources';
 import { Vector2 } from '../utils/vector';
 import { OffsetIndexPattern } from './animations/OffsetIndexPattern';
+import type { DrawLayers } from '../types';
 
 export interface SpriteParams {
   resource: ImageResource;
@@ -14,6 +15,7 @@ export interface SpriteParams {
   scale?: number;
   position?: Vector2;
   animations?: Animations;
+  drawLayer?: DrawLayers;
 }
 
 export class Sprite extends GameObject {
@@ -37,6 +39,7 @@ export class Sprite extends GameObject {
     this.frameIndex = params.frameIndex ?? 0;
     this.scale = params.scale ?? 1;
     this.animations = params.animations;
+    this.drawLayer = params.drawLayer ?? 'DEFAULT';
 
     this.buildFrameMap();
   }

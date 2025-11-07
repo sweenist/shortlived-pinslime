@@ -3,10 +3,15 @@ import './style.css';
 import { GameLoop } from './gameEngine/GameLoop';
 import { Main } from './gameEngine/Main';
 
-const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas')!;
-const ctx = canvas.getContext('2d')!;
+const mainCanvas = document.querySelector<HTMLCanvasElement>('#game-canvas')!;
+const mainContext = mainCanvas.getContext('2d')!;
 
-const mainScene = new Main({ ctx });
+const menuCanvas = document.querySelector<HTMLCanvasElement>('#options-canvas')!;
+const menuContext = menuCanvas.getContext('2d')!;
+menuContext.imageSmoothingEnabled = false;
+
+
+const mainScene = new Main({ ctx: mainContext });
 
 const update = (deltaTime: number) => {
   mainScene.stepEntry(deltaTime, mainScene);
@@ -14,17 +19,18 @@ const update = (deltaTime: number) => {
 };
 
 const draw = () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+  menuContext.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
 
-  mainScene.drawBackground(ctx);
-  ctx.save();
+  mainScene.drawBackground(mainContext);
+  mainContext.save();
 
-  ctx.translate(mainScene.camera.position.x, mainScene.camera.position.y);
-  mainScene.drawObjects(ctx);
+  mainContext.translate(mainScene.camera.position.x, mainScene.camera.position.y);
+  mainScene.drawObjects(mainContext);
 
-  ctx.restore();
+  mainContext.restore();
 
-  mainScene.drawForeground(ctx);
+  mainScene.drawForeground(menuContext);
 };
 
 const gameLoop = new GameLoop(update, draw);

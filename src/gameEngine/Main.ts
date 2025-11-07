@@ -113,11 +113,7 @@ export class Main extends GameObject {
   }
 
   drawForeground(ctx: CanvasRenderingContext2D) {
-    this.children.forEach((child) => {
-      if (child.drawLayer === 'USER_INTERFACE') {
-        child.draw(ctx, Vector2.Zero());
-      }
-    });
+    super.drawForeground(ctx);
 
     if (this.isFading) {
       ctx.save();
