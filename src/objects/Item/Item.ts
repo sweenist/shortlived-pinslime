@@ -7,8 +7,11 @@ import { Vector2 } from '../../utils/vector';
 import { signals } from '../../events/eventConstants';
 import type { Movement } from '../../types';
 import type { Main } from '../../gameEngine/Main';
+import { Animations } from '../../gameEngine/Animations';
+import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
+import { DEFAULT, RESPAWN } from './itemAnimations';
 
-const RESPAWN: number = 3500 as const;
+const RESPAWN_TIME: number = 4000 as const;
 
 interface ItemParams {
   pointValue: number,
@@ -28,7 +31,13 @@ export class Item extends GameObject {
 
     this.sprite = new Sprite({
       resource: resources.images[params.image],
-      frameSize: new Vector2(16, 16)
+      frameSize: new Vector2(16, 16),
+      frameColumns: 2,
+      frameRows: 3,
+      animations: new Animations({
+        default: new FrameIndexPattern(DEFAULT),
+        respawn: new FrameIndexPattern(RESPAWN)
+      }),
     });
 
     this.addChild(this.sprite);
@@ -43,20 +52,21 @@ export class Item extends GameObject {
         this.setRespawn();
       }
     });
+    this.sprite.animations?.play('default');
   }
 
   step(deltaTime: number, _root?: Main): void {
     if (this.respawnCooldown > 0) {
       this.respawnCooldown -= deltaTime;
       if (this.respawnCooldown <= 0) {
-        this.addChild(this.sprite);
+        this.sprite.animations?.play('default');
       }
     }
   }
 
   setRespawn() {
-    this.removeChild(this.sprite);
-    this.respawnCooldown = RESPAWN;
+    this.respawnCooldown = RESPAWN_TIME;
+    this.sprite.animations?.play('respawn');
   }
 
   onPlayerCollide() {
