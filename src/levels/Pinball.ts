@@ -18,6 +18,9 @@ import levelConfig from './config/level1.config.json';
 import tiledMap from './config/level1.map.json';
 import { Stopwatch } from '../objects/Stopwatch/Stopwatch';
 import { Item } from '../objects/Item/Item';
+import type { ItemEventMetaData } from '../types/eventTypes';
+import { signals } from '../events/eventConstants';
+import { gameEvents } from '../events/Events';
 
 type TileConfig = {
   resourceName: string;
@@ -46,6 +49,7 @@ const TILE_WIDTH = 16 as const
 
 export class Pinball extends Level {
   mapAddresses: string[] = [];
+  score: number = 0;
 
   constructor(params: LevelParams) {
     super({ actorPosition: params.actorPosition });
@@ -96,6 +100,12 @@ export class Pinball extends Level {
 
     const stopwatch = new Stopwatch({ position: slimePosition.add(new Vector2(gridCells(-4), gridCells(-2))) });
     this.addChild(stopwatch);
+  }
+
+  ready(): void {
+    gameEvents.on<ItemEventMetaData>(signals.slimeItemCollect, this, ({ points }) => {
+      this.score += points ?? 0;
+    });
   }
 
   buildMap(resourceConfigs: ResourceConfig[], tileConfig: { [key: number]: TileConfig }) {

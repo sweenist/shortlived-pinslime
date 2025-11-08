@@ -23,14 +23,16 @@ export class Item extends GameObject {
   sprite: Sprite;
   pointValue: number;
   respawnCooldown: number = 0;
+  imageName: string;
 
   constructor(params: ItemParams) {
     super(params.position);
 
     this.pointValue = params.pointValue;
+    this.imageName = params.image;
 
     this.sprite = new Sprite({
-      resource: resources.images[params.image],
+      resource: resources.images[this.imageName],
       frameSize: new Vector2(16, 16),
       frameColumns: 2,
       frameRows: 3,
@@ -60,6 +62,7 @@ export class Item extends GameObject {
       this.respawnCooldown -= deltaTime;
       if (this.respawnCooldown <= 0) {
         this.sprite.animations?.play('default');
+        this.respawnCooldown = 0;
       }
     }
   }
@@ -70,9 +73,9 @@ export class Item extends GameObject {
   }
 
   onPlayerCollide() {
-    if (this.respawnCooldown > 0)
+    if (this.respawnCooldown == 0)
       gameEvents.emit<ItemEventMetaData>(signals.slimeItemCollect, {
-        image: resources.images.rod,
+        image: resources.images[this.imageName],
         position: this.position,
         points: this.pointValue,
       });

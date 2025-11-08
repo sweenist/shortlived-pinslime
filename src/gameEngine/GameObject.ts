@@ -104,7 +104,7 @@ export class GameObject {
     const arrow = '-'.repeat(level + 1);
 
     console.debug(
-      `${arrow}> ${this.constructor.name}, position: ${this.position} Parent: ${this.parent?.constructor.name} Ready: ${this.isReady}`
+      `${arrow}> ${this.constructor.name}, position: ${this.position} Parent: ${this.parent?.constructor.name} Name: ${this.name ?? ''} Ready: ${this.isReady}`
     );
     this.children.forEach((child) => {
       child.debug(level + 1);

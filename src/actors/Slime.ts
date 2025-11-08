@@ -25,7 +25,7 @@ import type { Ramp } from '../objects/Obstacles/Ramp';
 import type { Paddle } from '../objects/Paddle/Paddle';
 import { AfterImage, type ShadowConfig } from './AfterImage';
 
-const itemShiftStep = new Vector2(0, -2);
+const itemShiftStep = new Vector2(0, -1);
 
 export class Slime extends GameObject {
   facingDirection: Direction;
@@ -110,12 +110,14 @@ export class Slime extends GameObject {
       }
       else if (value === STATE_EXPIRED) {
         this.afterImage.clearShadows();
+        this.itemPickupShell?.destroy();
         this.body.animations?.playOnce('expired', () => {
           this.body.isVisible = false;
         });
       }
       else if (value === STATE_DEAD) {
         this.afterImage.clearShadows()
+        this.itemPickupShell?.destroy();
         this.body.isVisible = false;
         this.addChild(this.deathThroes);
         this.deathThroes.animations?.play('death');
@@ -240,8 +242,7 @@ export class Slime extends GameObject {
   }
 
   onItemCollect(value: ItemEventMetaData) {
-    const { position, image } = value;
-    this.position = position.duplicate();
+    const { image } = value;
 
     this.itemPickupTime = 750;
 
@@ -249,9 +250,13 @@ export class Slime extends GameObject {
     this.itemPickupShell.addChild(
       new Sprite({
         resource: image,
+        frameSize: new Vector2(16, 16),
         position: new Vector2(0, -18),
+        name: 'item'
       })
     );
+
+    this.itemPickupShell.name = 'shell';
     this.addChild(this.itemPickupShell);
   }
 
