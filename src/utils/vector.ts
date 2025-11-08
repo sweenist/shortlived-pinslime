@@ -1,5 +1,6 @@
 import { DOWN, LEFT, RIGHT, UP } from '../constants';
-import type { Direction } from '../types';
+import type { Direction, point } from '../types';
+import { gridCells } from './grid';
 
 export interface Vector2Interface {
   x: number;
@@ -35,8 +36,12 @@ export class Vector2 implements Vector2Interface {
     return new Vector2(0, 0);
   }
 
-  public static fromPoint(point: { x: number; y: number }): Vector2 {
+  public static fromPoint(point: point): Vector2 {
     return new Vector2(point.x, point.y);
+  }
+
+  public static fromGridPoint(point: point): Vector2 {
+    return new Vector2(gridCells(point.x), gridCells(point.y));
   }
 
   /*

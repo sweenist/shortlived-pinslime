@@ -4,4 +4,5 @@ import type { Vector2 } from '../utils/vector';
 export type ItemEventMetaData = {
   image: ImageResource;
   position: Vector2;
+  points?: number;
 };

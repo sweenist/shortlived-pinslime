@@ -31,6 +31,8 @@ class Resources {
       stopwatch: 'sprites/Stopwatch.png',
       textbox: 'sprites/text-box.png',
       walls: 'sprites/PingWalls.png',
+      //Items
+      grape: 'sprites/Grape.png',
     };
 
     Object.keys(this.toLoad).forEach((key: string) => {

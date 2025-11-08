@@ -34,3 +34,5 @@ export type fader = -1 | 1;
 export type deflectionCoefficient = -1 | 1;
 
 export type Movement = { position: Vector2, direction: Direction };
+
+export type point = { x: number, y: number };

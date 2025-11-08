@@ -241,6 +241,9 @@
     "location": { "x": 7, "y": 25 },
     "speed": 4
   },
+  "itemConfig": [
+    { "location": { "x": 8, "y": 18 }, "image": "grape", "pointValue": 250 }
+  ],
   "shadowConfig": {
     "UP": {
       "umbra": { "frameIndex": 0, "position": { "x": 0, "y": 5 } },

@@ -25,6 +25,8 @@ import type { Ramp } from '../objects/Obstacles/Ramp';
 import type { Paddle } from '../objects/Paddle/Paddle';
 import { AfterImage, type ShadowConfig } from './AfterImage';
 
+const itemShiftStep = new Vector2(0, -2);
+
 export class Slime extends GameObject {
   facingDirection: Direction;
   destinationPosition: Vector2;
@@ -228,7 +230,9 @@ export class Slime extends GameObject {
 
   processOnItemPickup(delta: number) {
     this.itemPickupTime -= delta;
-    this.body.animations?.play('pickUpDown');
+    this.itemPickupShell?.children.forEach((child) => {
+      child.position = child.position.add(itemShiftStep);
+    })
 
     if (this.itemPickupTime <= 0) {
       this.itemPickupShell?.destroy();

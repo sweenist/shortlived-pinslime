@@ -9,7 +9,7 @@ import { gridCells } from '../utils/grid';
 import { Vector2 } from '../utils/vector';
 import Obstacle from '../objects/Obstacles/Obstacle';
 import { Paddle } from '../objects/Paddle/Paddle';
-import type { deflectionCoefficient, Direction, DirectionShift } from '../types';
+import type { deflectionCoefficient, Direction, DirectionShift, point } from '../types';
 import { Ramp } from '../objects/Obstacles/Ramp';
 import { PullKnob } from '../objects/PullKnob/PullKnob';
 import { Sprite } from '../gameEngine/Sprite';
@@ -17,6 +17,7 @@ import { Sprite } from '../gameEngine/Sprite';
 import levelConfig from './config/level1.config.json';
 import tiledMap from './config/level1.map.json';
 import { Stopwatch } from '../objects/Stopwatch/Stopwatch';
+import { Item } from '../objects/Item/Item';
 
 type TileConfig = {
   resourceName: string;
@@ -30,9 +31,15 @@ type MapConfig = {
   data: number[];
   width: number;
   height: number;
-}
+};
 
-type PaddleLocations = Partial<Record<keyof typeof DirectionShift, Array<{ x: number, y: number }>>>
+type ItemConfig = {
+  location: point,
+  image: string,
+  pointValue: number,
+};
+
+type PaddleLocations = Partial<Record<keyof typeof DirectionShift, Array<point>>>
 
 const TILE_HEIGHT = 16 as const;
 const TILE_WIDTH = 16 as const
@@ -55,6 +62,7 @@ export class Pinball extends Level {
       pullknobConfig,
       slimeConfig,
       shadowConfig,
+      itemConfig,
     } = levelConfig;
 
     this.buildMap(resourceConfig, tileConfig);
@@ -68,6 +76,15 @@ export class Pinball extends Level {
         this.addChild(paddleObject);
       });
     });
+
+    itemConfig.forEach((item: ItemConfig) => {
+      const collectible = new Item({
+        position: Vector2.fromGridPoint(item.location),
+        image: item.image,
+        pointValue: item.pointValue
+      });
+      this.addChild(collectible);
+    })
 
     const pullknobPosition = new Vector2(gridCells(pullknobConfig.location.x), gridCells(pullknobConfig.location.y))
     const pullknob = new PullKnob(pullknobPosition);
