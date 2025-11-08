@@ -243,7 +243,7 @@ export class Slime extends GameObject {
     const { position, image } = value;
     this.position = position.duplicate();
 
-    this.itemPickupTime = 50;
+    this.itemPickupTime = 750;
 
     this.itemPickupShell = new GameObject();
     this.itemPickupShell.addChild(

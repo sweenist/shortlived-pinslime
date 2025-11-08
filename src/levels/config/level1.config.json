@@ -242,7 +242,8 @@
     "speed": 4
   },
   "itemConfig": [
-    { "location": { "x": 8, "y": 18 }, "image": "grape", "pointValue": 250 }
+    { "location": { "x": 8, "y": 18 }, "image": "grape", "pointValue": 250 },
+    { "location": { "x": 10, "y": 7 }, "image": "grape", "pointValue": 250 }
   ],
   "shadowConfig": {
     "UP": {
