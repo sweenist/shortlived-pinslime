@@ -236,7 +236,7 @@ export class Slime extends GameObject {
     const itemSprites = this.itemPickupShell?.children.filter((child) => child.name === 'item');
     itemSprites?.forEach((item) => {
       item.position = item.position.add(itemShiftStep);
-    })
+    });
 
     if (this.itemPickupTime <= 0) {
       this.itemPickupShell?.destroy();

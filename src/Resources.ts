@@ -33,6 +33,7 @@ class Resources {
       walls: 'sprites/PingWalls.png',
       //Items
       grape: 'sprites/Grape.png',
+      orange: 'sprites/Orange.png',
     };
 
     Object.keys(this.toLoad).forEach((key: string) => {
