@@ -13,7 +13,7 @@ const frameMap = new Map<string, number>();
   'nopqrstuvwxyz',
   'ABCDEFGHIJKLM',
   'NOPQRSTUVWXYZ',
-  '0123456789!?.',
+  '1234567890!?.',
 ]
   .join('')
   .split('')

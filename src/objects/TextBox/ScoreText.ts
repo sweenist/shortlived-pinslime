@@ -1,0 +1,62 @@
+import { GameObject } from '../../gameEngine/GameObject';
+import { Sprite } from '../../gameEngine/Sprite';
+import { resources } from '../../Resources';
+import { Vector2 } from '../../utils/vector';
+import { getCharacterFrame, getCharacterWidth } from './SpriteMapping';
+
+type CharacterSprites = {
+  width: number;
+  sprite: Sprite;
+};
+
+export class ScoreText extends GameObject {
+  drawWords: boolean = false;
+  scoreChars: CharacterSprites[];
+
+  constructor(params: { position: Vector2, score: string }) {
+    super(params.position);
+    console.info("the SCORE:", params.score);
+
+    this.scoreChars = this.getNumberSprites(params.score)
+  }
+
+  private getNumberSprites(score: string): CharacterSprites[] {
+    return score.split('').map((char) => {
+      const charWidth = getCharacterWidth(char);
+
+      return {
+        width: charWidth,
+        sprite: new Sprite({
+          resource: resources.images.fontWhite,
+          name: char,
+          frameColumns: 13,
+          frameRows: 5,
+          frameSize: new Vector2(8, 8),
+          frameIndex: getCharacterFrame(char),
+        }),
+      };
+    });
+  };
+
+  draw(ctx: CanvasRenderingContext2D, position: Vector2): void {
+    const positionOffset = position.add(this.position);
+    this.drawImage(ctx, positionOffset);
+  }
+
+  drawImage(ctx: CanvasRenderingContext2D, position: Vector2): void {
+
+    let cursorX = position.x;
+    let currentShowIndex = 0;
+
+    this.scoreChars.forEach((char) => {
+      const { width, sprite } = char;
+      const widthCharOffset = cursorX - 5;
+
+      const drawPosition = new Vector2(widthCharOffset, position.y);
+      sprite.draw(ctx, drawPosition);
+
+      cursorX += width * sprite.scale + 1;
+      currentShowIndex += 1;
+    });
+  }
+}

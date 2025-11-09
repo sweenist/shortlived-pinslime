@@ -24,6 +24,7 @@ import { signals } from '../events/eventConstants';
 import type { Ramp } from '../objects/Obstacles/Ramp';
 import type { Paddle } from '../objects/Paddle/Paddle';
 import { AfterImage, type ShadowConfig } from './AfterImage';
+import { ScoreText } from '../objects/TextBox/ScoreText';
 
 const itemShiftStep = new Vector2(0, -1);
 
@@ -242,11 +243,12 @@ export class Slime extends GameObject {
   }
 
   onItemCollect(value: ItemEventMetaData) {
-    const { image } = value;
+    const { image, points } = value;
 
     this.itemPickupTime = 750;
 
     this.itemPickupShell = new GameObject();
+    const scoreSpriteText = new ScoreText({ position: new Vector2(20, -12), score: `${points}` });
     this.itemPickupShell.addChild(
       new Sprite({
         resource: image,
@@ -255,6 +257,7 @@ export class Slime extends GameObject {
         name: 'item'
       })
     );
+    this.itemPickupShell.addChild(scoreSpriteText);
 
     this.itemPickupShell.name = 'shell';
     this.addChild(this.itemPickupShell);
