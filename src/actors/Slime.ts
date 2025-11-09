@@ -233,8 +233,9 @@ export class Slime extends GameObject {
 
   processOnItemPickup(delta: number) {
     this.itemPickupTime -= delta;
-    this.itemPickupShell?.children.forEach((child) => {
-      child.position = child.position.add(itemShiftStep);
+    const itemSprites = this.itemPickupShell?.children.filter((child) => child.name === 'item');
+    itemSprites?.forEach((item) => {
+      item.position = item.position.add(itemShiftStep);
     })
 
     if (this.itemPickupTime <= 0) {
