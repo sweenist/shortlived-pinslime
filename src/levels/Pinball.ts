@@ -20,6 +20,7 @@ import { Item } from '../objects/Item/Item';
 import type { ItemEventMetaData } from '../types/eventTypes';
 import { signals } from '../events/eventConstants';
 import { gameEvents } from '../events/Events';
+import type { LevelConfiguration } from './configurationManager';
 
 const TILE_HEIGHT = 16 as const;
 const TILE_WIDTH = 16 as const
@@ -28,7 +29,7 @@ export class Pinball extends Level {
   mapAddresses: string[] = [];
   score: number = 0;
 
-  constructor(params: LevelParams) {
+  constructor(params: LevelParams & { levelConfig: LevelConfiguration }) {
     super({ actorPosition: params.actorPosition });
 
     this.background = new Sprite({

@@ -4,6 +4,7 @@ import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
 import type { Main } from "../gameEngine/Main";
 import { Sprite } from "../gameEngine/Sprite";
+import { configurationManager } from "../levels/configurationManager";
 import { Pinball } from "../levels/Pinball";
 import { OptionDialog } from "../objects/TextBox/OptionDialog";
 import { resources } from "../Resources";
@@ -44,7 +45,7 @@ export class Title extends GameObject {
       gameEvents.unsubscribe(this)
       this.hideOptions();
       // use activeOption form this.options
-      gameEvents.emit(signals.levelChanging, new Pinball({ actorPosition: new Vector2(gridCells(0), gridCells(8)) }));
+      gameEvents.emit(signals.levelChanging, new Pinball({ actorPosition: new Vector2(gridCells(0), gridCells(8)), levelConfig: configurationManager[0] }));
 
     }
   }
