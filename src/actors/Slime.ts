@@ -23,7 +23,7 @@ import type { Direction, Movement } from '../types';
 import { signals } from '../events/eventConstants';
 import type { Ramp } from '../objects/Obstacles/Ramp';
 import type { Paddle } from '../objects/Paddle/Paddle';
-import { AfterImage, type ShadowConfig } from './AfterImage';
+import { AfterImage } from './AfterImage';
 import { ScoreText } from '../objects/TextBox/ScoreText';
 
 const itemShiftStep = new Vector2(0, -1);
@@ -45,7 +45,7 @@ export class Slime extends GameObject {
 
   debugExpired: number = 0;
 
-  constructor(position: Vector2, speed: number = 4, shadowConfig: ShadowConfig) {
+  constructor(position: Vector2, speed: number = 4) {
     super(position);
 
     this.speed = speed;
@@ -85,7 +85,7 @@ export class Slime extends GameObject {
       )
     });
 
-    this.afterImage = new AfterImage(shadowConfig);
+    this.afterImage = new AfterImage();
 
     this.addChild(this.body);
     this.addChild(this.afterImage);

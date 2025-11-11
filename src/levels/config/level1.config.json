@@ -246,24 +246,6 @@
     { "location": { "x": 8, "y": 18 }, "image": "grape", "pointValue": 250 },
     { "location": { "x": 10, "y": 7 }, "image": "grape", "pointValue": 250 }
   ],
-  "shadowConfig": {
-    "UP": {
-      "umbra": { "frameIndex": 0, "position": { "x": 0, "y": 5 } },
-      "penumbra": { "frameIndex": 1, "position": { "x": 0, "y": 14 } }
-    },
-    "RIGHT": {
-      "umbra": { "frameIndex": 2, "position": { "x": -6, "y": -1 } },
-      "penumbra": { "frameIndex": 3, "position": { "x": -15, "y": -1 } }
-    },
-    "DOWN": {
-      "umbra": { "frameIndex": 4, "position": { "x": 0, "y": -7 } },
-      "penumbra": { "frameIndex": 5, "position": { "x": 0, "y": -16 } }
-    },
-    "LEFT": {
-      "umbra": { "frameIndex": 6, "position": { "x": 6, "y": -1 } },
-      "penumbra": { "frameIndex": 7, "position": { "x": 15, "y": -1 } }
-    }
-  },
   "resourceConfig": [
     {
       "name": "walls",

@@ -20,6 +20,26 @@ export type ShadowConfig = {
   };
 };
 
+const SHADOW_CONFIG =
+  {
+    UP: {
+      umbra: { frameIndex: 0, position: { x: 0, y: 5 } },
+      penumbra: { frameIndex: 1, position: { x: 0, y: 14 } }
+    },
+    RIGHT: {
+      umbra: { frameIndex: 2, position: { x: -6, y: -1 } },
+      penumbra: { frameIndex: 3, position: { x: -15, y: -1 } }
+    },
+    DOWN: {
+      umbra: { frameIndex: 4, position: { x: 0, y: -7 } },
+      penumbra: { frameIndex: 5, position: { x: 0, y: -16 } }
+    },
+    LEFT: {
+      umbra: { frameIndex: 6, position: { x: 6, y: -1 } },
+      penumbra: { frameIndex: 7, position: { x: 15, y: -1 } }
+    }
+  } as const;
+
 export class AfterImage extends GameObject {
   umbra: Sprite | null = null;
   penumbra: Sprite | null = null;
@@ -30,10 +50,10 @@ export class AfterImage extends GameObject {
   timeToRenderPenumbra: number = 0;
   isActive: boolean = false;
 
-  constructor(shadowConfig: ShadowConfig) {
+  constructor() {
     super();
 
-    this.afterImageCollection = this.buildAfterImages(shadowConfig);
+    this.afterImageCollection = this.buildAfterImages();
   }
 
   ready() {
@@ -82,7 +102,7 @@ export class AfterImage extends GameObject {
     this.penumbra = null;
   }
 
-  private buildAfterImages(shadowConfig: ShadowConfig): { [K in Direction]: Shade } {
+  private buildAfterImages(): { [K in Direction]: Shade } {
 
     const spriteParams = {
       resource: resources.images['slimeTrail'],
@@ -93,8 +113,8 @@ export class AfterImage extends GameObject {
 
     const result = {} as { [K in Direction]: Shade };
 
-    (Object.keys(shadowConfig) as Direction[]).forEach((dir) => {
-      const cfg = shadowConfig[dir];
+    (Object.keys(SHADOW_CONFIG) as Direction[]).forEach((dir) => {
+      const cfg = SHADOW_CONFIG[dir];
       result[dir] = {
         umbra: new Sprite({
           ...spriteParams,

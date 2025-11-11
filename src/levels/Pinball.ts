@@ -9,7 +9,7 @@ import { gridCells } from '../utils/grid';
 import { Vector2 } from '../utils/vector';
 import Obstacle from '../objects/Obstacles/Obstacle';
 import { Paddle } from '../objects/Paddle/Paddle';
-import type { deflectionCoefficient, Direction, DirectionShift, ItemConfig, MapConfig, PaddleLocations, point, TileConfig } from '../types';
+import type { deflectionCoefficient, Direction, DirectionShift, ItemConfig, MapConfig, PaddleLocations, TileConfig } from '../types';
 import { Ramp } from '../objects/Obstacles/Ramp';
 import { PullKnob } from '../objects/PullKnob/PullKnob';
 import { Sprite } from '../gameEngine/Sprite';
@@ -42,7 +42,6 @@ export class Pinball extends Level {
       tileConfig,
       pullknobConfig,
       slimeConfig,
-      shadowConfig,
       itemConfig,
     } = levelConfig;
 
@@ -72,7 +71,7 @@ export class Pinball extends Level {
     this.addChild(pullknob);
 
     const slimePosition = new Vector2(gridCells(slimeConfig.location.x), gridCells(slimeConfig.location.y))
-    const slime = new Slime(slimePosition, slimeConfig.speed, shadowConfig);
+    const slime = new Slime(slimePosition, slimeConfig.speed);
     this.addChild(slime);
 
     const stopwatch = new Stopwatch({ position: slimePosition.add(new Vector2(gridCells(-4), gridCells(-2))) });
