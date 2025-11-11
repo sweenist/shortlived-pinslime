@@ -29,7 +29,7 @@ export class Title extends GameObject {
       scale: 0.5,
     });
 
-    this.optionMenu = new OptionDialog({ canvasId: '#options-canvas', options: { 1: 'Play' } })
+    this.optionMenu = new OptionDialog({ canvasId: '#options-canvas', options: { 0: 'Play' } })
 
     this.addChild(this.background);
     this.addChild(this.text);

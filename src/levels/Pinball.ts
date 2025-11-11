@@ -9,40 +9,17 @@ import { gridCells } from '../utils/grid';
 import { Vector2 } from '../utils/vector';
 import Obstacle from '../objects/Obstacles/Obstacle';
 import { Paddle } from '../objects/Paddle/Paddle';
-import type { deflectionCoefficient, Direction, DirectionShift, point } from '../types';
+import type { deflectionCoefficient, Direction, DirectionShift, ItemConfig, MapConfig, PaddleLocations, point, TileConfig } from '../types';
 import { Ramp } from '../objects/Obstacles/Ramp';
 import { PullKnob } from '../objects/PullKnob/PullKnob';
 import { Sprite } from '../gameEngine/Sprite';
-
-import levelConfig from './config/level1.config.json';
-import tiledMap from './config/level1.map.json';
+import levelConfig from './config/level0.config.json';
+import tiledMap from './config/level0.map.json';
 import { Stopwatch } from '../objects/Stopwatch/Stopwatch';
 import { Item } from '../objects/Item/Item';
 import type { ItemEventMetaData } from '../types/eventTypes';
 import { signals } from '../events/eventConstants';
 import { gameEvents } from '../events/Events';
-
-type TileConfig = {
-  resourceName: string;
-  frameIndex: number;
-  deflection?: number;
-  approaches?: string[];
-  isSolid?: boolean;
-};
-
-type MapConfig = {
-  data: number[];
-  width: number;
-  height: number;
-};
-
-type ItemConfig = {
-  location: point,
-  image: string,
-  pointValue: number,
-};
-
-type PaddleLocations = Partial<Record<keyof typeof DirectionShift, Array<point>>>
 
 const TILE_HEIGHT = 16 as const;
 const TILE_WIDTH = 16 as const
@@ -148,7 +125,6 @@ export class Pinball extends Level {
             frameIndex: tilecfg.frameIndex
           }
         };
-
         const tile = !!tilecfg.deflection
           ? new Ramp({
             ...obstacleParams,

@@ -36,3 +36,27 @@ export type deflectionCoefficient = -1 | 1;
 export type Movement = { position: Vector2, direction: Direction };
 
 export type point = { x: number, y: number };
+
+
+export type TileConfig = {
+  resourceName: string;
+  frameIndex: number;
+  deflection?: number;
+  approaches?: string[];
+  isSolid?: boolean;
+};
+
+export type MapConfig = {
+  data: number[];
+  width: number;
+  height: number;
+};
+
+export type ItemConfig = {
+  location: point,
+  image: string,
+  pointValue: number,
+};
+
+export type PaddleLocations = Partial<Record<keyof typeof DirectionShift, Array<point>>>
+
