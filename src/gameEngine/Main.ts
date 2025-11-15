@@ -44,7 +44,6 @@ export class Main extends GameObject {
   }
 
   ready(): void {
-
     gameEvents.on<Level>(signals.levelChanging, this, (newLevel) => {
       this.title.destroy();
       this.startFade(() => this.setLevel(newLevel));
@@ -52,7 +51,6 @@ export class Main extends GameObject {
 
     this.input.consolate = () => {
       this.debug(0);
-      // inventory.debug(1);
     };
   }
 
