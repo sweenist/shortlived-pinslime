@@ -36,6 +36,7 @@ export class Title extends GameObject {
         0: {
           text: 'Play',
           action: () => {
+            console.info('Initializing level 0');
             gameState.set(STATE_INITIAL);
             gameEvents.emit(signals.levelChanging, new Pinball({ actorPosition: new Vector2(gridCells(0), gridCells(8)), levelConfig: configurationManager[0] }))
           }

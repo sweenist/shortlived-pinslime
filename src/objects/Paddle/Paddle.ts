@@ -14,6 +14,7 @@ import {
 import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
 import type { animationConfiguration } from "../../types/animationTypes";
 import { DOWN, LEFT, RIGHT, STATE_GAMEOVER, UP } from "../../constants";
+import { gameState } from "../../game/GameState";
 
 interface PaddleConfig {
   offset: Vector2;
@@ -71,14 +72,14 @@ export class Paddle extends GameObject {
   }
 
   step(deltaTime: number, root?: Main): void {
-    const { state, input } = root!;
+    const { input } = root!;
 
     if (this.isActivated) {
       this.activationTime -= deltaTime;
       if (this.activationTime <= 0) this.isActivated = false;
     }
 
-    if (state.isPlaying || state.current === STATE_GAMEOVER)
+    if (gameState.isPlaying || gameState.current === STATE_GAMEOVER)
       if (input.getActionJustPressed('Space')) {
         this.isActivated = true
         this.activationTime = 180;

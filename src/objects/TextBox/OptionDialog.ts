@@ -63,7 +63,9 @@ export class OptionDialog extends GameObject {
       this.cursor.stepEntry(deltaTime, root!);
       this.cursor.animations?.play('default');
       this.addChild(this.cursor);
+    }
 
+    if (this.showCountdown <= 0) {
       const { input } = root!;
       if (input.getActionJustPressed('Space')) {
         this.hide();
