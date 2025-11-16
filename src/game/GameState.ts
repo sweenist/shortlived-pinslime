@@ -2,7 +2,7 @@ import { STATE_DEAD, STATE_EXPIRED, STATE_NAMES, STATE_PLAYING } from "../consta
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 
-export class GameState {
+class GameState {
   private _index: number;
   private _states: { [key: string]: number | null } = {
     title: null,
@@ -70,3 +70,5 @@ export class GameState {
     return this._states[this.current]
   }
 }
+
+export const gameState = new GameState();

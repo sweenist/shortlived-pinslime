@@ -25,10 +25,15 @@ export type DialogueScenario = {
   portraitFrame?: number;
 };
 
+export type OptionActions = {
+  text: string,
+  action: () => void,
+};
+
 export type LevelOptions = {
   canvasId: string;
-  options: { [key: number]: string };
-}
+  options: { [key: number]: OptionActions };
+};
 
 export type fader = -1 | 1;
 export type deflectionCoefficient = -1 | 1;

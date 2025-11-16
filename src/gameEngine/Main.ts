@@ -8,7 +8,7 @@ import { GameInput } from './GameInput';
 import { GameObject } from './GameObject';
 import { Level } from './Level';
 import { signals } from '../events/eventConstants';
-import { GameState } from '../game/GameState';
+import { gameState } from '../game/GameState';
 import { Title } from '../game/Title';
 
 export interface MainGameParams {
@@ -19,10 +19,9 @@ export interface MainGameParams {
 
 export class Main extends GameObject {
   level?: Level;
-  title: Title;
+  title?: Title;
   camera: Camera;
   input: GameInput;
-  state: GameState;
   //Fade Effect
   fadeAlpha: number = 0;
   fadeDirection: fader = fadeIn;
@@ -36,7 +35,6 @@ export class Main extends GameObject {
 
     this.camera = new Camera(params.ctx.canvas, true);
     this.input = new GameInput();
-    this.state = new GameState();
     this.title = new Title();
 
     this.addChild(this.camera);
@@ -44,9 +42,14 @@ export class Main extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on<Level>(signals.levelChanging, this, (newLevel) => {
-      this.title.destroy();
-      this.startFade(() => this.setLevel(newLevel));
+    gameEvents.on<Level | Title>(signals.levelChanging, this, (newLevel) => {
+      if (newLevel instanceof Level) {
+        this.title?.destroy();
+        this.startFade(() => this.setLevel(newLevel));
+      } else if (newLevel instanceof Title) {
+        this.level?.destroy();
+        this.title = newLevel;
+      }
     });
 
     this.input.consolate = () => {
@@ -65,7 +68,7 @@ export class Main extends GameObject {
 
   stepEntry(deltaTime: number, root: Main): void {
     super.stepEntry(deltaTime, root);
-    this.state.step(deltaTime);
+    gameState.step(deltaTime);
 
     if (this.input.getActionJustPressed('KeyG')) {
       if (this.isDesaturating) {

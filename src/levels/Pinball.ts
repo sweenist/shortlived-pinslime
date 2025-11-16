@@ -21,6 +21,10 @@ import type { ItemEventMetaData } from '../types/eventTypes';
 import { signals } from '../events/eventConstants';
 import { gameEvents } from '../events/Events';
 import type { LevelConfiguration } from './configurationManager';
+import { OptionDialog } from '../objects/TextBox/OptionDialog';
+import { STATE_GAMEOVER, STATE_INITIAL, STATE_TITLE } from '../constants';
+import { gameState } from '../game/GameState';
+import { Title } from '../game/Title';
 
 const TILE_HEIGHT = 16 as const;
 const TILE_WIDTH = 16 as const
@@ -28,6 +32,7 @@ const TILE_WIDTH = 16 as const
 export class Pinball extends Level {
   mapAddresses: string[] = [];
   score: number = 0;
+  optionsMenu: OptionDialog | undefined;
 
   constructor(params: LevelParams & { levelConfig: LevelConfiguration }) {
     super({ actorPosition: params.actorPosition });
@@ -83,6 +88,29 @@ export class Pinball extends Level {
     gameEvents.on<ItemEventMetaData>(signals.slimeItemCollect, this, ({ points }) => {
       this.score += points ?? 0;
     });
+
+    gameEvents.on<string>(signals.stateChanged, this, (value) => {
+      if (value === STATE_GAMEOVER) {
+        this.optionsMenu = new OptionDialog({
+          canvasId: '#options-canvas',
+          options: {
+            0: {
+              text: 'Retry',
+              action: () => {
+                gameState.set(STATE_INITIAL);
+              }
+            },
+            1: {
+              text: 'Quit',
+              action: () => {
+                gameState.set(STATE_TITLE);
+                gameEvents.emit(signals.levelChanging, new Title())
+              }
+            }
+          }
+        });
+      }
+    })
   }
 
   buildMap(resourceConfigs: ResourceConfig[], tileConfig: { [key: number]: TileConfig }) {

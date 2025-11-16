@@ -4,7 +4,7 @@ import { GameObject } from '../../gameEngine/GameObject';
 import type { Main } from '../../gameEngine/Main';
 import { Sprite } from '../../gameEngine/Sprite';
 import { resources } from '../../Resources';
-import type { LevelOptions } from '../../types';
+import type { LevelOptions, OptionActions } from '../../types';
 import type { animationConfiguration } from '../../types/animationTypes';
 import { gridCells } from '../../utils/grid';
 import { Vector2 } from '../../utils/vector';
@@ -28,12 +28,11 @@ const cursorAnimation: animationConfiguration = {
 }
 
 export class OptionDialog extends GameObject {
-  options: { [key: number]: string };
+  options: { [key: number]: OptionActions };
   optionWords: SpriteFontProps[][];
   cursor: Sprite;
-  showingIndex: number = 0;
   canvas: HTMLCanvasElement;
-  activeOption: number = 1;
+  activeOption: number = 0;
   drawWords: boolean = false;
   showCountdown: number;
 
@@ -56,6 +55,7 @@ export class OptionDialog extends GameObject {
       animations: new Animations({ default: new FrameIndexPattern(cursorAnimation) }),
       drawLayer: 'USER_INTERFACE',
     });
+    this.show();
   }
 
   step(deltaTime: number, root?: Main): void {
@@ -63,6 +63,12 @@ export class OptionDialog extends GameObject {
       this.cursor.stepEntry(deltaTime, root!);
       this.cursor.animations?.play('default');
       this.addChild(this.cursor);
+
+      const { input } = root!;
+      if (input.getActionJustPressed('Space')) {
+        this.hide();
+        this.options[this.activeOption].action();
+      }
     }
 
     this.showCountdown -= deltaTime;
@@ -74,8 +80,17 @@ export class OptionDialog extends GameObject {
     this.canvas.height = Math.floor(this.canvas.parentElement?.clientHeight ?? this.canvas.height);
   }
 
+
+  hide() {
+    this.canvas.parentElement?.classList.add('hidden');
+  }
+
+  show() {
+    this.canvas.parentElement?.classList.remove('hidden');
+  }
+
   private getFontSprites(): SpriteFontProps[][] {
-    const message = Object.values(this.options)
+    const message = Object.values(this.options).map((m) => m.text);
     return message.map((m) => m.split(' ').map((word) => {
       let wordWidth = 0;
       const chars = word.split('').map((char) => {

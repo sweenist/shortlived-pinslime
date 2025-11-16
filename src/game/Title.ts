@@ -2,7 +2,6 @@ import { STATE_INITIAL } from "../constants";
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
-import type { Main } from "../gameEngine/Main";
 import { Sprite } from "../gameEngine/Sprite";
 import { configurationManager } from "../levels/configurationManager";
 import { Pinball } from "../levels/Pinball";
@@ -10,6 +9,7 @@ import { OptionDialog } from "../objects/TextBox/OptionDialog";
 import { resources } from "../Resources";
 import { gridCells } from "../utils/grid";
 import { Vector2 } from "../utils/vector";
+import { gameState } from "./GameState";
 
 export class Title extends GameObject {
   background: Sprite;
@@ -30,29 +30,22 @@ export class Title extends GameObject {
       scale: 0.5,
     });
 
-    this.optionMenu = new OptionDialog({ canvasId: '#options-canvas', options: { 0: 'Play' } })
+    this.optionMenu = new OptionDialog({
+      canvasId: '#options-canvas',
+      options: {
+        0: {
+          text: 'Play',
+          action: () => {
+            gameState.set(STATE_INITIAL);
+            gameEvents.emit(signals.levelChanging, new Pinball({ actorPosition: new Vector2(gridCells(0), gridCells(8)), levelConfig: configurationManager[0] }))
+          }
+        }
+      }
+    });
 
     this.addChild(this.background);
     this.addChild(this.text);
     this.addChild(this.optionMenu);
-  }
-
-  step(_deltaTime: number, root?: Main): void {
-    const { input, state } = root!;
-
-    if (input.getActionJustPressed('Space')) {
-      state.set(STATE_INITIAL);
-      gameEvents.unsubscribe(this)
-      this.hideOptions();
-      // use activeOption form this.options
-      gameEvents.emit(signals.levelChanging, new Pinball({ actorPosition: new Vector2(gridCells(0), gridCells(8)), levelConfig: configurationManager[0] }));
-
-    }
-  }
-
-  hideOptions() {
-    const optionDiv = document.getElementById('options');
-    optionDiv?.classList.add('hidden');
   }
 
   draw(ctx: CanvasRenderingContext2D, _position: Vector2, _debug?: boolean): void {
