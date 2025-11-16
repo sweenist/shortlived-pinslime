@@ -246,6 +246,7 @@ export class Slime extends GameObject {
   onItemCollect(value: ItemEventMetaData) {
     const { image, points } = value;
 
+    gameEvents.emit(signals.scoreUpdate, points);
     this.itemPickupTime = 750;
 
     this.itemPickupShell = new GameObject();

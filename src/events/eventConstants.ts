@@ -7,6 +7,7 @@ export const signals = {
   levelChanging: 'LEVEL_CHANGING',
   levelChanged: 'LEVEL_CHANGED',
   stateChanged: 'GAME_STATE_CHANGE',
+  scoreUpdate: 'SCORE_CHANGE',
   startTextInteraction: 'START_TEXT_INTERACTION',
   endTextInteraction: 'END_TEXT_INTERACTION',
   arrowMovement: 'ARROW_MOVEMENT',
