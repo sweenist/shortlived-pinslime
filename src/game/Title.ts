@@ -1,4 +1,3 @@
-import { STATE_INITIAL } from "../constants";
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
@@ -9,7 +8,6 @@ import { OptionDialog } from "../objects/TextBox/OptionDialog";
 import { resources } from "../Resources";
 import { gridCells } from "../utils/grid";
 import { Vector2 } from "../utils/vector";
-import { gameState } from "./GameState";
 
 export class Title extends GameObject {
   background: Sprite;

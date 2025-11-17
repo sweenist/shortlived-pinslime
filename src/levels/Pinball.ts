@@ -22,9 +22,12 @@ import { signals } from '../events/eventConstants';
 import { gameEvents } from '../events/Events';
 import type { LevelConfiguration } from './configurationManager';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
-import { STATE_GAMEOVER, STATE_INITIAL, STATE_NAMES, STATE_TITLE } from '../constants';
+import { STATE_DEAD, STATE_GAMEOVER, STATE_INITIAL, STATE_NAMES, STATE_TITLE } from '../constants';
 import { gameState } from '../game/GameState';
 import { Title } from '../game/Title';
+import { Animations } from '../gameEngine/Animations';
+import { FrameIndexPattern } from '../gameEngine/animations/FrameIndexPattern';
+import { DEATH } from '../actors/slimeAnimations';
 
 const TILE_HEIGHT = 16 as const;
 const TILE_WIDTH = 16 as const
@@ -33,6 +36,9 @@ export class Pinball extends Level {
   mapAddresses: string[] = [];
   score: number = 0;
   optionsMenu: OptionDialog | undefined;
+  deathThroes: Sprite;
+  slime: Slime;
+
 
   constructor(params: LevelParams & { levelConfig: LevelConfiguration }) {
     super({ actorPosition: params.actorPosition });
@@ -77,13 +83,22 @@ export class Pinball extends Level {
     this.addChild(pullknob);
 
     const slimePosition = new Vector2(gridCells(slimeConfig.location.x), gridCells(slimeConfig.location.y))
-    const slime = new Slime(slimePosition, slimeConfig.speed);
-    this.addChild(slime);
+    this.slime = new Slime(slimePosition, slimeConfig.speed);
+    this.addChild(this.slime);
 
     const stopwatch = new Stopwatch({ position: slimePosition.add(new Vector2(gridCells(-4), gridCells(-2))) });
     this.addChild(stopwatch);
 
-    gameState.set(STATE_INITIAL);
+    this.deathThroes = new Sprite({
+      resource: resources.images['slimeDeath'],
+      frameSize: new Vector2(128, 128),
+      frameColumns: 8,
+      frameRows: 7,
+      position: new Vector2(-64, -112),
+      animations: new Animations(
+        { death: new FrameIndexPattern(DEATH), }
+      )
+    });
   }
 
   ready(): void {
@@ -92,7 +107,15 @@ export class Pinball extends Level {
     });
 
     gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
+      if (value === STATE_DEAD) {
+        this.addChild(this.deathThroes);
+        this.deathThroes.animations?.playOnce('death', () => console.info('KABOOM'));
+        if (!this.slime.isLevelBuilding) {
+          this.slime.destroy();
+        }
+      }
       if (value === STATE_GAMEOVER) {
+        this.removeChild(this.deathThroes);
         this.optionsMenu = new OptionDialog({
           canvasId: '#options-canvas',
           options: {

@@ -67,6 +67,7 @@ class GameState {
   }
 
   next() {
+    console.warn(`State changing from ${this.current} to ${this._states[(this._index + 1)]}`)
     this._index++;
   }
 

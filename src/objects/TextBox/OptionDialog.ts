@@ -82,7 +82,6 @@ export class OptionDialog extends GameObject {
     this.canvas.height = Math.floor(this.canvas.parentElement?.clientHeight ?? this.canvas.height);
   }
 
-
   hide() {
     this.canvas.parentElement?.classList.add('hidden');
   }

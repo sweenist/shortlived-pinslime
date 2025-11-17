@@ -49,6 +49,7 @@ export class Main extends GameObject {
       } else if (newLevel instanceof Title) {
         this.level?.destroy();
         this.title = newLevel;
+        this.addChild(this.title);
       }
     });
 

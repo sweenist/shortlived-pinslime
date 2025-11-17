@@ -6,7 +6,6 @@ import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
 import { CardinalVectors, Vector2 } from '../utils/vector';
 import {
-  DEATH,
   EXPIRED,
   IDLE_START,
   LAUNCH,
@@ -33,7 +32,6 @@ export class Slime extends GameObject {
   facingDirection: Direction;
   destinationPosition: Vector2;
   body: Sprite;
-  deathThroes: Sprite;
   paddle: Paddle | null | undefined;
   speed: number;
   afterImage: AfterImage;
@@ -50,6 +48,7 @@ export class Slime extends GameObject {
     super(position);
 
     this.speed = speed;
+    this.name = 'slime';
 
     this.body = new Sprite({
       resource: resources.images.hero,
@@ -75,17 +74,6 @@ export class Slime extends GameObject {
       position: Vector2.Zero()
     });
 
-    this.deathThroes = new Sprite({
-      resource: resources.images['slimeDeath'],
-      frameSize: new Vector2(128, 128),
-      frameColumns: 8,
-      frameRows: 7,
-      position: new Vector2(-64, -112),
-      animations: new Animations(
-        { death: new FrameIndexPattern(DEATH), }
-      )
-    });
-
     this.afterImage = new AfterImage();
 
     this.addChild(this.body);
@@ -101,6 +89,8 @@ export class Slime extends GameObject {
     );
 
     gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
+      console.warn(`State is now ${value}`);
+
       if (value === STATE_INITIAL) {
         this.body.animations?.play('idle');
       }
@@ -121,11 +111,8 @@ export class Slime extends GameObject {
         this.afterImage.clearShadows()
         this.itemPickupShell?.destroy();
         this.body.isVisible = false;
-        this.addChild(this.deathThroes);
-        this.deathThroes.animations?.playOnce('death', () => console.info('KABOOM'));
       }
       else if (value === STATE_GAMEOVER) {
-        this.removeChild(this.deathThroes);
         this.body.isVisible = false;
         this.isLocked = true;
         gameEvents.unsubscribe(this)
