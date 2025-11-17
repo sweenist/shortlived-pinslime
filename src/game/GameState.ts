@@ -4,7 +4,7 @@ import { gameEvents } from "../events/Events";
 
 class GameState {
   private _index: number;
-  private _states: { [key: string]: number | null } = {
+  private readonly _stateDurations: { [key: string]: number | null } = {
     title: null,
     initial: 3000,
     launching: 1000,
@@ -14,9 +14,12 @@ class GameState {
     gameover: 65535,
   };
 
-  private readonly _stateNames = STATE_NAMES
+  private _remaining: number | null;
+  private readonly _stateNames = STATE_NAMES;
+
   constructor() {
     this._index = 0;
+    this._remaining = this._stateDurations[this.current] ?? null;
   }
 
   public get isExpired(): boolean {
@@ -35,44 +38,60 @@ class GameState {
     return this._stateNames[this._index];
   }
 
+  private enterIndex(index: number) {
+    this._index = index;
+    this._remaining = this._stateDurations[this.current] ?? null;
+    console.info(`State set to ${this.current}`);
+    gameEvents.emit(signals.stateChanged, this.current);
+  }
+
   step(deltaTime: number) {
-    if (this._states[this.current] === null) return;
-    this._states[this.current]! -= deltaTime;
-    if (this._states[this.current]! <= 0) {
-      this._index++;
-      console.info(`State changed to ${this.current}`);
-      gameEvents.emit(signals.stateChanged, this.current);
+    if (this._remaining === null) return;
+
+    this._remaining -= deltaTime;
+    if (this._remaining! <= 0) {
+      const nextIndex = this._index + 1;
+      if (nextIndex < this._stateNames.length) {
+        this.enterIndex(nextIndex);
+      } else {
+        this._remaining = null;
+      }
     }
   }
 
   getStepTime(): number {
-    return this._states[this.current] ?? 0;
+    return this._remaining ?? 0;
   }
 
   set(state: string) {
     const index = STATE_NAMES.findIndex((s) => s === state);
     if (index > -1 && index !== this._index) {
-      this._index = index;
-
-      console.info(`State set to ${this.current}`);
-      gameEvents.emit(signals.stateChanged, this.current);
+      this.enterIndex(index);
     }
   }
 
   kill() {
-    this._index = 5;
+    const deadIndex = STATE_NAMES.findIndex((s) => s === STATE_DEAD);
+    if (deadIndex > -1) {
+      this.enterIndex(deadIndex);
+    } else {
+      throw ("COuldn't find death index");
+    }
 
-    console.info('State will keel');
-    gameEvents.emit(signals.stateChanged, STATE_DEAD);
+    console.info("State will keel");
   }
 
   next() {
-    console.warn(`State changing from ${this.current} to ${this._states[(this._index + 1)]}`)
-    this._index++;
+    const nextIndex = this._index + 1;
+    if (nextIndex < this._stateNames.length) {
+      this.enterIndex(nextIndex);
+    } else {
+      console.warn("No next state available");
+    }
   }
 
   debug(): number | null {
-    return this._states[this.current]
+    return this._remaining;
   }
 }
 
