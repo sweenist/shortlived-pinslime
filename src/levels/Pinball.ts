@@ -109,6 +109,7 @@ export class Pinball extends Level {
     gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
       if (value === STATE_DEAD) {
         this.addChild(this.deathThroes);
+        this.deathThroes.position.add(this.slime.position);
         this.deathThroes.animations?.playOnce('death', () => console.info('KABOOM'));
         if (!this.slime.isLevelBuilding) {
           this.slime.destroy();
@@ -123,6 +124,7 @@ export class Pinball extends Level {
               text: 'Retry',
               action: () => {
                 gameState.set(STATE_INITIAL);
+
               }
             },
             1: {

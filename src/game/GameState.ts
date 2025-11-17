@@ -2,7 +2,7 @@ import { STATE_DEAD, STATE_EXPIRED, STATE_NAMES, STATE_PLAYING } from "../consta
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 
-class GameState {
+export class GameState {
   private _index: number;
   private readonly _stateDurations: { [key: string]: number | null } = {
     title: null,
