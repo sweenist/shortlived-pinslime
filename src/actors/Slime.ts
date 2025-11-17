@@ -24,7 +24,6 @@ import type { Ramp } from '../objects/Obstacles/Ramp';
 import type { Paddle } from '../objects/Paddle/Paddle';
 import { AfterImage } from './AfterImage';
 import { ScoreText } from '../objects/TextBox/ScoreText';
-import { gameState } from '../game/GameState';
 
 const itemShiftStep = new Vector2(0, -1);
 
@@ -133,7 +132,7 @@ export class Slime extends GameObject {
       this.processOnItemPickup(deltaTime);
     }
 
-    const { input } = root;
+    const { input, state } = root;
     if (input.getActionJustPressed('Space') && this.paddle) {
       if (this.paddle.isActivated) {
         this.facingDirection = this.paddle.deflection;
@@ -141,9 +140,9 @@ export class Slime extends GameObject {
       }
     }
 
-    if (gameState.current === STATE_LAUNCHING) {
+    if (state.current === STATE_LAUNCHING) {
       const inertiaStep = LAUNCH.duration - LAUNCH.frames[4].time;
-      const stateTime = gameState.getStepTime();
+      const stateTime = state.getStepTime();
       if (stateTime < inertiaStep) {
         moveTowards(this.position, this.destinationPosition, this.speed)
       }
@@ -157,14 +156,15 @@ export class Slime extends GameObject {
       this.tryMove(root);
     }
 
-    if (gameState.current !== STATE_GAMEOVER)
+    if (state.current !== STATE_GAMEOVER)
       gameEvents.emit(signals.slimePosition, { position: this.position, direction: this.facingDirection } as Movement);
   }
 
   tryMove(root: Main) {
     if (this.isLocked || root.isFading) return;
 
-    if (gameState.isPlaying) {
+    const { state } = root!;
+    if (state.isPlaying) {
       return;
     }
 
@@ -203,11 +203,11 @@ export class Slime extends GameObject {
     const paddle = destinationTile?.find((tile) => tile.constructor.name === 'Paddle') as Paddle | undefined;
 
     if (isObstruction) {
-      gameState.kill();
+      state.kill();
       return;
     }
     if (ramp) {
-      this.turn(ramp);
+      this.turn(ramp, () => state.kill());
     }
     if (paddle) {
       this.paddle = paddle;
@@ -252,10 +252,10 @@ export class Slime extends GameObject {
     this.addChild(this.itemPickupShell);
   }
 
-  turn(ramp: Ramp) {
+  turn(ramp: Ramp, kill: () => void) {
     if (!ramp.canTurn(this.facingDirection)) {
       console.info(`Did not find ${this.facingDirection} in`, ramp.approaches)
-      gameState.kill();
+      kill();
     }
 
     const currentFacingVector = CardinalVectors[this.facingDirection];

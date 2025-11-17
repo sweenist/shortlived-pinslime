@@ -22,8 +22,7 @@ import { signals } from '../events/eventConstants';
 import { gameEvents } from '../events/Events';
 import type { LevelConfiguration } from './configurationManager';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
-import { STATE_DEAD, STATE_GAMEOVER, STATE_INITIAL, STATE_NAMES, STATE_TITLE } from '../constants';
-import { gameState } from '../game/GameState';
+import { STATE_DEAD, STATE_GAMEOVER, STATE_NAMES } from '../constants';
 import { Title } from '../game/Title';
 import { Animations } from '../gameEngine/Animations';
 import { FrameIndexPattern } from '../gameEngine/animations/FrameIndexPattern';
@@ -123,14 +122,14 @@ export class Pinball extends Level {
             0: {
               text: 'Retry',
               action: () => {
-                gameState.set(STATE_INITIAL);
-
+                // gameState.set(STATE_INITIAL);
+                console.info('retry')
               }
             },
             1: {
               text: 'Quit',
               action: () => {
-                gameState.set(STATE_TITLE);
+                // gameState.set(STATE_TITLE);
                 gameEvents.emit(signals.levelChanging, new Title())
               }
             }

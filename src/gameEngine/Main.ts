@@ -8,7 +8,7 @@ import { GameInput } from './GameInput';
 import { GameObject } from './GameObject';
 import { Level } from './Level';
 import { signals } from '../events/eventConstants';
-import { gameState } from '../game/GameState';
+import { GameState } from '../game/GameState';
 import { Title } from '../game/Title';
 
 export interface MainGameParams {
@@ -22,6 +22,7 @@ export class Main extends GameObject {
   title?: Title;
   camera: Camera;
   input: GameInput;
+  state: GameState;
   //Fade Effect
   fadeAlpha: number = 0;
   fadeDirection: fader = fadeIn;
@@ -36,6 +37,7 @@ export class Main extends GameObject {
     this.camera = new Camera(params.ctx.canvas, true);
     this.input = new GameInput();
     this.title = new Title();
+    this.state = new GameState();
 
     this.addChild(this.camera);
     this.addChild(this.title);
@@ -69,7 +71,7 @@ export class Main extends GameObject {
 
   stepEntry(deltaTime: number, root: Main): void {
     super.stepEntry(deltaTime, root);
-    gameState.step(deltaTime);
+    this.state.step(deltaTime);
 
     if (this.input.getActionJustPressed('KeyG')) {
       if (this.isDesaturating) {
