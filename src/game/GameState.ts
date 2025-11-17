@@ -75,10 +75,8 @@ export class GameState {
     if (deadIndex > -1) {
       this.enterIndex(deadIndex);
     } else {
-      throw ("COuldn't find death index");
+      throw ("Couldn't find death index");
     }
-
-    console.info("State will keel");
   }
 
   next() {

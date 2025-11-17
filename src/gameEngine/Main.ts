@@ -1,5 +1,5 @@
 import { Slime } from '../actors/Slime';
-import { fadeIn, fadeOut } from '../constants';
+import { fadeIn, fadeOut, STATE_TITLE } from '../constants';
 import type { fader } from '../types';
 import { Vector2 } from '../utils/vector';
 import { Camera } from './Camera';
@@ -50,6 +50,7 @@ export class Main extends GameObject {
         this.startFade(() => this.setLevel(newLevel));
       } else if (newLevel instanceof Title) {
         this.level?.destroy();
+        this.state.set(STATE_TITLE);
         this.title = newLevel;
         this.addChild(this.title);
       }
