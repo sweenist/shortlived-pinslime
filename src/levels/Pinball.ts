@@ -22,7 +22,7 @@ import { signals } from '../events/eventConstants';
 import { gameEvents } from '../events/Events';
 import type { LevelConfiguration } from './configurationManager';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
-import { STATE_GAMEOVER, STATE_INITIAL, STATE_TITLE } from '../constants';
+import { STATE_GAMEOVER, STATE_INITIAL, STATE_NAMES, STATE_TITLE } from '../constants';
 import { gameState } from '../game/GameState';
 import { Title } from '../game/Title';
 
@@ -82,6 +82,8 @@ export class Pinball extends Level {
 
     const stopwatch = new Stopwatch({ position: slimePosition.add(new Vector2(gridCells(-4), gridCells(-2))) });
     this.addChild(stopwatch);
+
+    gameState.set(STATE_INITIAL);
   }
 
   ready(): void {
@@ -89,7 +91,7 @@ export class Pinball extends Level {
       this.score += points ?? 0;
     });
 
-    gameEvents.on<string>(signals.stateChanged, this, (value) => {
+    gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
       if (value === STATE_GAMEOVER) {
         this.optionsMenu = new OptionDialog({
           canvasId: '#options-canvas',

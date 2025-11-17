@@ -40,6 +40,7 @@ class GameState {
     this._states[this.current]! -= deltaTime;
     if (this._states[this.current]! <= 0) {
       this._index++;
+      console.info(`State changed to ${this.current}`);
       gameEvents.emit(signals.stateChanged, this.current);
     }
   }
@@ -52,13 +53,16 @@ class GameState {
     const index = STATE_NAMES.findIndex((s) => s === state);
     if (index > -1 && index !== this._index) {
       this._index = index;
+
+      console.info(`State set to ${this.current}`);
       gameEvents.emit(signals.stateChanged, this.current);
     }
-
   }
 
   kill() {
-    this._index = 4;
+    this._index = 5;
+
+    console.info('State will keel');
     gameEvents.emit(signals.stateChanged, STATE_DEAD);
   }
 

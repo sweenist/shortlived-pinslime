@@ -1,6 +1,6 @@
 import { Animations } from '../gameEngine/Animations';
 import { FrameIndexPattern } from '../gameEngine/animations/FrameIndexPattern';
-import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, UP } from '../constants';
+import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, STATE_NAMES, UP } from '../constants';
 import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
@@ -100,7 +100,7 @@ export class Slime extends GameObject {
       this.onItemCollect(value)
     );
 
-    gameEvents.on<string>(signals.stateChanged, this, (value) => {
+    gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
       if (value === STATE_INITIAL) {
         this.body.animations?.play('idle');
       }
@@ -122,7 +122,7 @@ export class Slime extends GameObject {
         this.itemPickupShell?.destroy();
         this.body.isVisible = false;
         this.addChild(this.deathThroes);
-        this.deathThroes.animations?.play('death');
+        this.deathThroes.animations?.playOnce('death', () => console.info('KABOOM'));
       }
       else if (value === STATE_GAMEOVER) {
         this.removeChild(this.deathThroes);
@@ -220,7 +220,7 @@ export class Slime extends GameObject {
       return;
     }
     if (ramp) {
-      this.turn(ramp, () => gameState.kill());
+      this.turn(ramp);
     }
     if (paddle) {
       this.paddle = paddle;
@@ -265,10 +265,10 @@ export class Slime extends GameObject {
     this.addChild(this.itemPickupShell);
   }
 
-  turn(ramp: Ramp, kill: () => void) {
+  turn(ramp: Ramp) {
     if (!ramp.canTurn(this.facingDirection)) {
       console.info(`Did not find ${this.facingDirection} in`, ramp.approaches)
-      kill();
+      gameState.kill();
     }
 
     const currentFacingVector = CardinalVectors[this.facingDirection];

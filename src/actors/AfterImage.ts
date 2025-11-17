@@ -1,4 +1,4 @@
-import { STATE_NAMES } from "../constants";
+import { STATE_NAMES, STATE_PLAYING } from "../constants";
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
@@ -58,7 +58,7 @@ export class AfterImage extends GameObject {
 
   ready() {
     gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
-      if (value === 'playing')
+      if (value === STATE_PLAYING)
         this.isActive = true;
       else
         this.isActive = false;
