@@ -164,7 +164,7 @@ export class Slime extends GameObject {
     if (this.isLocked || root.isFading) return;
 
     const { state } = root!;
-    if (state.isPlaying) {
+    if (!state.isPlaying) {
       return;
     }
 
