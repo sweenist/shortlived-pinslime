@@ -1,18 +1,11 @@
-import { signals } from "../events/eventConstants";
-import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
 import { Sprite } from "../gameEngine/Sprite";
-import { configurationManager } from "../levels/configurationManager";
-import { Pinball } from "../levels/Pinball";
-import { OptionDialog } from "../objects/TextBox/OptionDialog";
 import { resources } from "../Resources";
-import { gridCells } from "../utils/grid";
 import { Vector2 } from "../utils/vector";
 
 export class Title extends GameObject {
   background: Sprite;
   text: Sprite;
-  optionMenu: OptionDialog;
 
   constructor() {
     super()
@@ -28,22 +21,8 @@ export class Title extends GameObject {
       scale: 0.5,
     });
 
-    this.optionMenu = new OptionDialog({
-      canvasId: '#options-canvas',
-      options: {
-        0: {
-          text: 'Play',
-          action: () => {
-            console.info('Initializing level 0');
-            gameEvents.emit(signals.levelChanging, new Pinball({ actorPosition: new Vector2(gridCells(0), gridCells(8)), levelConfig: configurationManager[0] }))
-          }
-        }
-      }
-    });
-
     this.addChild(this.background);
     this.addChild(this.text);
-    this.addChild(this.optionMenu);
   }
 
   draw(ctx: CanvasRenderingContext2D, _position: Vector2, _debug?: boolean): void {

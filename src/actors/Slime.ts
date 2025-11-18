@@ -6,6 +6,7 @@ import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
 import { CardinalVectors, Vector2 } from '../utils/vector';
 import {
+  DEATH,
   EXPIRED,
   IDLE_START,
   LAUNCH,
@@ -34,6 +35,7 @@ export class Slime extends GameObject {
   paddle: Paddle | null | undefined;
   speed: number;
   afterImage: AfterImage;
+  deathThroes: Sprite;
   itemPickupTime: number = 0;
   itemPickupShell?: GameObject;
   isLocked: boolean = false;
@@ -78,6 +80,17 @@ export class Slime extends GameObject {
     this.addChild(this.body);
     this.addChild(this.afterImage);
 
+    this.deathThroes = new Sprite({
+      resource: resources.images['slimeDeath'],
+      frameSize: new Vector2(128, 128),
+      frameColumns: 8,
+      frameRows: 7,
+      position: new Vector2(-64, -112),
+      animations: new Animations(
+        { death: new FrameIndexPattern(DEATH), }
+      )
+    });
+
     this.facingDirection = RIGHT;
     this.destinationPosition = this.position.duplicate();
   }
@@ -107,9 +120,11 @@ export class Slime extends GameObject {
         });
       }
       else if (value === STATE_DEAD) {
-        this.afterImage.clearShadows()
+        this.afterImage.clearShadows();
         this.itemPickupShell?.destroy();
         this.body.isVisible = false;
+        this.addChild(this.deathThroes);
+        this.deathThroes.animations?.playOnce('death', () => this.removeChild(this.deathThroes));
       }
       else if (value === STATE_GAMEOVER) {
         this.body.isVisible = false;

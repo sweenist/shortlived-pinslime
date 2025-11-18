@@ -20,11 +20,6 @@ import { signals } from '../events/eventConstants';
 import { gameEvents } from '../events/Events';
 import type { LevelConfiguration } from './configurationManager';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
-import { STATE_DEAD, STATE_GAMEOVER, STATE_NAMES } from '../constants';
-import { Title } from '../game/Title';
-import { Animations } from '../gameEngine/Animations';
-import { FrameIndexPattern } from '../gameEngine/animations/FrameIndexPattern';
-import { DEATH } from '../actors/slimeAnimations';
 
 const TILE_HEIGHT = 16 as const;
 const TILE_WIDTH = 16 as const
@@ -87,56 +82,12 @@ export class Pinball extends Level {
 
     const stopwatch = new Stopwatch({ position: slimePosition.add(new Vector2(gridCells(-4), gridCells(-2))) });
     this.addChild(stopwatch);
-
-    this.deathThroes = new Sprite({
-      resource: resources.images['slimeDeath'],
-      frameSize: new Vector2(128, 128),
-      frameColumns: 8,
-      frameRows: 7,
-      position: new Vector2(-64, -112),
-      animations: new Animations(
-        { death: new FrameIndexPattern(DEATH), }
-      )
-    });
   }
 
   ready(): void {
     gameEvents.on<ItemEventMetaData>(signals.slimeItemCollect, this, ({ points }) => {
       this.score += points ?? 0;
     });
-
-    gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
-      if (value === STATE_DEAD) {
-        this.addChild(this.deathThroes);
-        this.deathThroes.position.add(this.slime.position);
-        this.deathThroes.animations?.playOnce('death', () => console.info('KABOOM'));
-        if (!this.slime.isLevelBuilding) {
-          this.slime.destroy();
-        }
-      }
-      if (value === STATE_GAMEOVER) {
-        this.removeChild(this.deathThroes);
-        this.optionsMenu = new OptionDialog({
-          canvasId: '#options-canvas',
-          options: {
-            0: {
-              text: 'Retry',
-              action: () => {
-                // gameState.set(STATE_INITIAL);
-                console.info('retry')
-              }
-            },
-            1: {
-              text: 'Quit',
-              action: () => {
-                // gameState.set(STATE_TITLE);
-                gameEvents.emit(signals.levelChanging, new Title())
-              }
-            }
-          }
-        });
-      }
-    })
   }
 
   buildMap(resourceConfigs: ResourceConfig[], tileConfig: { [key: number]: TileConfig }) {

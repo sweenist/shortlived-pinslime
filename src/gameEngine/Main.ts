@@ -1,5 +1,5 @@
 import { Slime } from '../actors/Slime';
-import { fadeIn, fadeOut, STATE_TITLE } from '../constants';
+import { fadeIn, fadeOut, STATE_GAMEOVER, STATE_TITLE } from '../constants';
 import type { fader } from '../types';
 import { Vector2 } from '../utils/vector';
 import { Camera } from './Camera';
@@ -10,6 +10,9 @@ import { Level } from './Level';
 import { signals } from '../events/eventConstants';
 import { GameState } from '../game/GameState';
 import { Title } from '../game/Title';
+import { OptionDialog } from '../objects/TextBox/OptionDialog';
+import { Pinball } from '../levels/Pinball';
+import { configurationManager } from '../levels/configurationManager';
 
 export interface MainGameParams {
   ctx: CanvasRenderingContext2D;
@@ -23,6 +26,7 @@ export class Main extends GameObject {
   camera: Camera;
   input: GameInput;
   state: GameState;
+  optionsMenu?: OptionDialog;
   //Fade Effect
   fadeAlpha: number = 0;
   fadeDirection: fader = fadeIn;
@@ -55,6 +59,15 @@ export class Main extends GameObject {
         this.addChild(this.title);
       }
     });
+
+    gameEvents.on<typeof this.state.current>(signals.stateChanged, this, (value) => {
+      if (value === STATE_TITLE)
+        this.showOptionsForTitle();
+      else if (value === STATE_GAMEOVER)
+        this.showOptionsForGameOver();
+      else
+        this.hideOptions();
+    })
 
     this.input.consolate = () => {
       this.debug(0);
@@ -127,6 +140,72 @@ export class Main extends GameObject {
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       ctx.restore();
     }
+  }
+
+  private hideOptions() {
+    if (this.optionsMenu) {
+      this.optionsMenu.destroy();
+      this.optionsMenu = undefined;
+    }
+  }
+
+  private showOptionsForTitle() {
+
+    this.hideOptions();
+    this.optionsMenu = new OptionDialog({
+      canvasId: '#options-canvas',
+      options: {
+        0: {
+          text: 'Play',
+          action: () => {
+            console.info('Initializing level 0');
+            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]))
+          }
+        }
+      }
+    });
+
+    this.addChild(this.optionsMenu);
+  }
+  private showOptionsForGameOver() {
+
+    this.hideOptions();
+    const currentLevel = this.level as Pinball | undefined;
+    this.optionsMenu = new OptionDialog({
+      canvasId: '#options-canvas',
+      options: {
+        0: {
+          text: 'Play',
+          action: () => {
+            if (!currentLevel) return;
+
+            console.info('Initializing level 0');
+            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]))
+          }
+        }
+      }
+    });
+    this.optionsMenu = new OptionDialog({
+      canvasId: '#options-canvas',
+      options: {
+        0: {
+          text: 'Retry',
+          action: () => {
+            // gameState.set(STATE_INITIAL);
+            console.info('retry')
+          }
+        },
+        1: {
+          text: 'Quit',
+          action: () => {
+            // gameState.set(STATE_TITLE);
+            gameEvents.emit(signals.levelChanging, new Title())
+          }
+        }
+      }
+    });
+
+    this.addChild(this.optionsMenu);
   }
 
   startFade(onComplete: () => void) {
