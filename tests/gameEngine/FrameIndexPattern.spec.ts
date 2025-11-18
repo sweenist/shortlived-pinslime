@@ -7,9 +7,9 @@ describe('FrameIndexPattern', () => {
       duration: 200,
       type: 'frame',
       frames: [
-        { type: 'frame', frame: 1, time: 0 },
-        { type: 'frame', frame: 2, time: 100 },
-        { type: 'frame', frame: 3, time: 150 },
+        { frame: 1, time: 0 },
+        { frame: 2, time: 100 },
+        { frame: 3, time: 150 },
       ]
     });
 
@@ -21,9 +21,9 @@ describe('FrameIndexPattern', () => {
       duration: 200,
       type: 'frame',
       frames: [
-        { type: 'frame', frame: 1, time: 0 },
-        { type: 'frame', frame: 2, time: 100 },
-        { type: 'frame', frame: 3, time: 150 },
+        { frame: 1, time: 0 },
+        { frame: 2, time: 100 },
+        { frame: 3, time: 150 },
       ]
     });
 
@@ -44,9 +44,9 @@ describe('FrameIndexPattern', () => {
       duration: 200,
       type: 'frame',
       frames: [
-        { type: 'frame', frame: 1, time: 0 },
-        { type: 'frame', frame: 2, time: 100 },
-        { type: 'frame', frame: 3, time: 150 },
+        { frame: 1, time: 0 },
+        { frame: 2, time: 100 },
+        { frame: 3, time: 150 },
       ]
     });
 
@@ -62,9 +62,9 @@ describe('FrameIndexPattern', () => {
       duration: 200,
       type: 'frame',
       frames: [
-        { type: 'frame', frame: 1, time: 1 },
-        { type: 'frame', frame: 2, time: 100 },
-        { type: 'frame', frame: 3, time: 150 },
+        { frame: 1, time: 1 },
+        { frame: 2, time: 100 },
+        { frame: 3, time: 150 },
       ]
     });
 

@@ -13,11 +13,12 @@ export const makeAnimation = (rootFrame: number, duration: number, frameCount: n
     })
     accumulatedTime += rate;
   }
-  return { duration, frames }
+  return { type: 'frame', duration, frames }
 }
 
 export const singleFrame = (frame: number): animationConfiguration => {
   return {
+    type: 'frame',
     duration: 1,
     frames: [{
       frame,

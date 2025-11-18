@@ -3,6 +3,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [tsconfigPaths({ projects: ['tsconfig.test.json'] })],
+  base: './',
   test: {
     include: [
       'tests/**/*.spec.ts'
