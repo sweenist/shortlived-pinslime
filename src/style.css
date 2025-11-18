@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'BubbleBobble';
-  src: url('/fonts/BubbleBobble-rg3rx.ttf') format('truetype');
+  src: url('fonts/BubbleBobble-rg3rx.ttf') format('truetype');
 }
 
 html,
@@ -38,11 +38,16 @@ body {
   grid-row: 2;
   grid-column: 2;
   height: 0px;
-  border-image-source: url('sprites/FrameBlue.png');
+  border-image-source: url('./sprites/FrameBlue.png');
   border-image-slice: 8 8 8 8 fill;
   border-image-width: 8px;
   z-index: 2;
   animation: growheight 800ms ease-out 750ms forwards;
+
+  .complete {
+    transition: none;
+    height: 100%;
+  }
 }
 
 #options-canvas {

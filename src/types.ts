@@ -30,7 +30,8 @@ export type OptionActions = {
   action: () => void,
 };
 
-export type LevelOptions = {
+export type OptionMenuParams = {
+  divId: string;
   canvasId: string;
   options: { [key: number]: OptionActions };
 };

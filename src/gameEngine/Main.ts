@@ -155,6 +155,7 @@ export class Main extends GameObject {
     console.info("showing the options!")
     this.hideOptions();
     this.optionsMenu = new OptionDialog({
+      divId: '#options',
       canvasId: '#options-canvas',
       options: {
         0: {
@@ -173,6 +174,7 @@ export class Main extends GameObject {
     this.hideOptions();
     const currentLevel = this.level as Pinball | undefined;
     this.optionsMenu = new OptionDialog({
+      divId: '#options',
       canvasId: '#options-canvas',
       options: {
         0: {
@@ -187,6 +189,7 @@ export class Main extends GameObject {
       }
     });
     this.optionsMenu = new OptionDialog({
+      divId: '#options',
       canvasId: '#options-canvas',
       options: {
         0: {

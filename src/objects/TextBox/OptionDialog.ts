@@ -4,7 +4,7 @@ import { GameObject } from '../../gameEngine/GameObject';
 import type { Main } from '../../gameEngine/Main';
 import { Sprite } from '../../gameEngine/Sprite';
 import { resources } from '../../Resources';
-import type { LevelOptions, OptionActions } from '../../types';
+import type { OptionMenuParams, OptionActions } from '../../types';
 import type { animationConfiguration } from '../../types/animationTypes';
 import { gridCells } from '../../utils/grid';
 import { Vector2 } from '../../utils/vector';
@@ -31,20 +31,25 @@ export class OptionDialog extends GameObject {
   options: { [key: number]: OptionActions };
   optionWords: SpriteFontProps[][];
   cursor: Sprite;
+  div: HTMLDivElement;
   canvas: HTMLCanvasElement;
   activeOption: number = 0;
   drawWords: boolean = false;
   showCountdown: number;
 
-  constructor(options: LevelOptions) {
+  constructor(options: OptionMenuParams) {
     super();
-    console.info("constructing the options menu", options);
+
+    this.div = document.querySelector<HTMLDivElement>(options.divId)!;
+    this.div.classList.remove('complete');
+
     this.canvas = document.querySelector<HTMLCanvasElement>(options.canvasId)!;
     this.canvas.parentElement?.addEventListener('resize', this.resizeDialog)
     this.options = options.options
     this.drawLayer = 'USER_INTERFACE';
 
     this.optionWords = this.getFontSprites();
+
     this.showCountdown = 2100;
     this.cursor = new Sprite({
       resource: resources.images['cursor'],
@@ -64,12 +69,17 @@ export class OptionDialog extends GameObject {
       this.cursor.animations?.play('default');
       this.addChild(this.cursor);
     }
+    const { input } = root!;
 
     if (this.showCountdown <= 0) {
-      const { input } = root!;
       if (input.getActionJustPressed('Space')) {
         this.hide();
         this.options[this.activeOption].action();
+      }
+    } else {
+      if (input.getActionJustPressed('Space')) {
+        this.showCountdown = 0;
+        this.div.classList.add('complete');
       }
     }
 
@@ -128,17 +138,15 @@ export class OptionDialog extends GameObject {
 
   drawImage(ctx: CanvasRenderingContext2D, position: Vector2): void {
     const PADDING_LEFT = 56;
-    const PADDING_TOP = 7;
+    const PADDING_TOP = 18;
     const LINE_MAX_WIDTH = 240;
-    const LINE_VERTICAL_HEIGHT = 14;
+    const LINE_VERTICAL_HEIGHT = 38;
 
     let cursorX = position.x + PADDING_LEFT;
     let cursorY = position.y + PADDING_TOP;
     let currentShowIndex = 0;
 
     for (let index = 0; index < this.optionWords.length; index++) {
-      cursorY += LINE_VERTICAL_HEIGHT;
-
       this.optionWords[index].forEach((word) => {
         const spaceRemaining = position.x + LINE_MAX_WIDTH - cursorX;
         if (spaceRemaining < word.wordWidth) {
@@ -158,6 +166,8 @@ export class OptionDialog extends GameObject {
 
         cursorX += 3;
       });
+      cursorX = position.x + PADDING_LEFT;
+      cursorY += LINE_VERTICAL_HEIGHT;
     }
   }
 }
