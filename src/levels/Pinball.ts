@@ -1,7 +1,6 @@
 import { Slime } from '../actors/Slime';
 import {
   Level,
-  type LevelParams,
   type ResourceConfig,
 } from '../gameEngine/Level';
 import { resources } from '../Resources';
@@ -13,7 +12,6 @@ import type { deflectionCoefficient, Direction, DirectionShift, ItemConfig, MapC
 import { Ramp } from '../objects/Obstacles/Ramp';
 import { PullKnob } from '../objects/PullKnob/PullKnob';
 import { Sprite } from '../gameEngine/Sprite';
-import levelConfig from './config/level0.config.json';
 import tiledMap from './config/level0.map.json';
 import { Stopwatch } from '../objects/Stopwatch/Stopwatch';
 import { Item } from '../objects/Item/Item';
@@ -35,12 +33,14 @@ export class Pinball extends Level {
   mapAddresses: string[] = [];
   score: number = 0;
   optionsMenu: OptionDialog | undefined;
-  deathThroes: Sprite;
   slime: Slime;
+  levelConfiguration: LevelConfiguration;
 
 
-  constructor(params: LevelParams & { levelConfig: LevelConfiguration }) {
-    super({ actorPosition: params.actorPosition });
+  constructor(params: LevelConfiguration) {
+    super(params);
+
+    this.levelConfiguration = params;
 
     this.background = new Sprite({
       resource: resources.images['levelBackground'],
@@ -54,7 +54,7 @@ export class Pinball extends Level {
       pullknobConfig,
       slimeConfig,
       itemConfig,
-    } = levelConfig;
+    } = this.levelConfiguration.levelConfig;
 
     this.buildMap(resourceConfig, tileConfig);
 

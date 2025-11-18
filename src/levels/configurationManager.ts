@@ -9,12 +9,12 @@ import map1 from './config/level1.map.json';
 export type LevelConfiguration = {
   tiledMap: MapConfig;
   levelConfig:
-  & { [key: number]: TileConfig }
-  & { [key: number]: ItemConfig }
-  & PaddleLocations
-  & { [key: number]: ResourceConfig }
-  & {
+  {
+    itemConfig: ItemConfig[],
+    paddles: PaddleLocations,
+    tileConfig: { [key: number]: TileConfig },
     pullknobConfig: { location: point },
+    resourceConfig: ResourceConfig[],
     slimeConfig: { location: point, speed: number }
   }
 }
