@@ -28,9 +28,7 @@ export class Pinball extends Level {
   mapAddresses: string[] = [];
   score: number = 0;
   optionsMenu: OptionDialog | undefined;
-  slime: Slime;
   levelConfiguration: LevelConfiguration;
-
 
   constructor(params: LevelConfiguration) {
     super(params);
@@ -77,8 +75,8 @@ export class Pinball extends Level {
     this.addChild(pullknob);
 
     const slimePosition = new Vector2(gridCells(slimeConfig.location.x), gridCells(slimeConfig.location.y))
-    this.slime = new Slime(slimePosition, slimeConfig.speed);
-    this.addChild(this.slime);
+    const slime = new Slime(slimePosition, slimeConfig.speed);
+    this.addChild(slime);
 
     const stopwatch = new Stopwatch({ position: slimePosition.add(new Vector2(gridCells(-4), gridCells(-2))) });
     this.addChild(stopwatch);

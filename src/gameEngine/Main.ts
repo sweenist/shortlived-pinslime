@@ -1,5 +1,5 @@
 import { Slime } from '../actors/Slime';
-import { fadeIn, fadeOut, STATE_GAMEOVER, STATE_TITLE } from '../constants';
+import { fadeIn, fadeOut, STATE_GAMEOVER, STATE_INITIAL, STATE_TITLE } from '../constants';
 import type { fader } from '../types';
 import { Vector2 } from '../utils/vector';
 import { Camera } from './Camera';
@@ -170,7 +170,6 @@ export class Main extends GameObject {
     this.addChild(this.optionsMenu);
   }
   private showOptionsForGameOver() {
-
     this.hideOptions();
     const currentLevel = this.level as Pinball | undefined;
     this.optionsMenu = new OptionDialog({
@@ -193,14 +192,16 @@ export class Main extends GameObject {
         0: {
           text: 'Retry',
           action: () => {
-            // gameState.set(STATE_INITIAL);
+            const levelConfig = (this.level as Pinball)?.levelConfiguration
+            gameEvents.emit(signals.levelChanging, new Pinball(levelConfig));
+            this.state.set(STATE_INITIAL);
             console.info('retry')
           }
         },
         1: {
           text: 'Quit',
           action: () => {
-            // gameState.set(STATE_TITLE);
+            this.state.set(STATE_TITLE);
             gameEvents.emit(signals.levelChanging, new Title())
           }
         }
