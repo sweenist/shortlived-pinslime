@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.test.json && vite build",
+    "package": "rm ../pinslime.zip && cd dist && zip -r ../../pinslime.zip .",
     "preview": "vite preview",
     "test": "vitest run --config vitest.config.ts",
     "test:coverage": "vitest run --config vitest.config.ts --coverage",
