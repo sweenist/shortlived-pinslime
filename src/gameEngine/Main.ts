@@ -67,11 +67,13 @@ export class Main extends GameObject {
         this.showOptionsForGameOver();
       else
         this.hideOptions();
-    })
+    });
 
     this.input.consolate = () => {
       this.debug(0);
     };
+
+    this.showOptionsForTitle();
   }
 
   setLevel(level: Level) {
@@ -150,7 +152,7 @@ export class Main extends GameObject {
   }
 
   private showOptionsForTitle() {
-
+    console.info("showing the options!")
     this.hideOptions();
     this.optionsMenu = new OptionDialog({
       canvasId: '#options-canvas',

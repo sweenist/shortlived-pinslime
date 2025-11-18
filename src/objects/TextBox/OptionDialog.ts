@@ -38,7 +38,7 @@ export class OptionDialog extends GameObject {
 
   constructor(options: LevelOptions) {
     super();
-
+    console.info("constructing the options menu", options);
     this.canvas = document.querySelector<HTMLCanvasElement>(options.canvasId)!;
     this.canvas.parentElement?.addEventListener('resize', this.resizeDialog)
     this.options = options.options
