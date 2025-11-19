@@ -14,6 +14,7 @@ class Resources {
       //font
       fontWhite: 'sprites/ArcadeFont.png',
       cursor: 'sprites/Cursor.png',
+      _frame: 'sprites/FrameBlue.png',
       //large images
       levelBackground: 'sprites/CircuitBoard.png',
       title: 'sprites/TitleScreen.png',
