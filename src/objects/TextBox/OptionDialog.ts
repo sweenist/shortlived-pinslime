@@ -71,17 +71,15 @@ export class OptionDialog extends GameObject {
     }
     const { input } = root!;
 
-    if (this.showCountdown <= 0) {
-      if (input.getActionJustPressed('Space')) {
+    if (input.getActionJustPressed('Space'))
+      if (this.showCountdown <= 0) {
         this.hide();
         this.options[this.activeOption].action();
       }
-    } else {
-      if (input.getActionJustPressed('Space')) {
+      else {
         this.showCountdown = 0;
         this.div.classList.add('complete');
       }
-    }
 
     this.showCountdown -= deltaTime;
     this.drawWords = this.showCountdown < 0;

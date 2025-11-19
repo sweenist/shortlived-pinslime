@@ -11,4 +11,5 @@ export const signals = {
   startTextInteraction: 'START_TEXT_INTERACTION',
   endTextInteraction: 'END_TEXT_INTERACTION',
   arrowMovement: 'ARROW_MOVEMENT',
+  arrowStep: 'ARROW_MOVEMENT_SINGLE',
 };
