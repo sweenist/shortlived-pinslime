@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  base: '',
-  plugins: [tsconfigPaths({ projects: ['./tsconfig.json'] })],
-  assetsInclude: ['sprites/FrameBlue.png']
+  base: './',
+  plugins: [tsconfigPaths({ projects: ['./tsconfig.json'] })]
 })
