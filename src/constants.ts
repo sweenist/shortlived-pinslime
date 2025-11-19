@@ -1,8 +1,3 @@
-export const flags = {
-  caveKnightTalkedA: 'CAVE_KNIGHT_TALKED_A',
-  caveKnightTalkedB: 'CAVE_KNIGHT_TALKED_B',
-};
-
 export const fadeIn = 1;
 export const fadeOut = -1;
 
