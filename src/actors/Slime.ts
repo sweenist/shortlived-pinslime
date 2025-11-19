@@ -101,8 +101,6 @@ export class Slime extends GameObject {
     );
 
     gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
-      console.warn(`State is now ${value}`);
-
       if (value === STATE_INITIAL) {
         this.body.animations?.play('idle');
       }
@@ -225,6 +223,7 @@ export class Slime extends GameObject {
       this.turn(ramp, () => state.kill());
     }
     if (paddle) {
+      console.info('paddle', paddle);
       this.paddle = paddle;
     } else if (this.paddle) {
       this.paddle = null;
