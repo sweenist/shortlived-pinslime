@@ -35,6 +35,7 @@ body {
   grid-column: 2;
   height: 0px;
   border-image-source: url('sprites/FrameBlue.png');
+  background-color: #070e0f;
   border-image-slice: 8 8 8 8 fill;
   border-image-width: 8px;
   z-index: 2;
