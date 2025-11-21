@@ -21,8 +21,8 @@ import type { ItemEventMetaData } from '../types/eventTypes';
 import type { Main } from '../gameEngine/Main';
 import type { Direction, Movement } from '../types';
 import { signals } from '../events/eventConstants';
-import type { Ramp } from '../objects/Obstacles/Ramp';
-import type { Paddle } from '../objects/Paddle/Paddle';
+import { Ramp } from '../objects/Obstacles/Ramp';
+import { Paddle } from '../objects/Paddle/Paddle';
 import { AfterImage } from './AfterImage';
 import { ScoreText } from '../objects/TextBox/ScoreText';
 
@@ -212,8 +212,8 @@ export class Slime extends GameObject {
       return child.position.equals(destination);
     });
     const isObstruction = destinationTile?.some(tile => tile.isSolid);
-    const ramp = destinationTile?.find((tile) => tile.constructor.name === 'Ramp') as Ramp | undefined;
-    const paddle = destinationTile?.find((tile) => tile.constructor.name === 'Paddle') as Paddle | undefined;
+    const ramp = destinationTile?.find((tile): tile is Ramp => tile instanceof Ramp) as Ramp | undefined;
+    const paddle = destinationTile?.find((tile): tile is Paddle => tile instanceof Paddle) as Paddle | undefined;
 
     if (isObstruction) {
       state.kill();

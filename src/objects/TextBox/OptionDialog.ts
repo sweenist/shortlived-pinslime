@@ -147,8 +147,9 @@ export class OptionDialog extends GameObject {
   draw(ctx: CanvasRenderingContext2D, position: Vector2): void {
     if (this.displayWords) {
       const positionOffset = position.add(this.position);
+      const yOffset = this.activeOption * 2;
+      this.selectionArrow.draw(ctx, new Vector2(0, gridCells(yOffset) + yOffset));
       this.drawImage(ctx, positionOffset);
-      this.selectionArrow.draw(ctx, new Vector2(0, gridCells(this.activeOption * 2 + this.activeOption)));
     }
   }
 
