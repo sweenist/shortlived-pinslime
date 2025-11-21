@@ -48,6 +48,16 @@ export class GameInput {
         this.onArrowReleased(RIGHT);
       }
     });
+
+    document.addEventListener('touchstart', () => {
+      gameEvents.emit(signals.gameAction);
+    });
+
+    document.addEventListener('mousedown', (e) => {
+      if (e.button === 0) {
+        gameEvents.emit(signals.gameAction);
+      }
+    });
   }
 
   get direction() {
