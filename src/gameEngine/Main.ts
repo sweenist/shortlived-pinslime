@@ -48,6 +48,7 @@ export class Main extends GameObject {
   }
 
   ready(): void {
+    console.warn('canmera', this.camera, this.position);
     gameEvents.on<Level | Title>(signals.levelChanging, this, (newLevel) => {
       if (newLevel instanceof Level) {
         this.title?.destroy();
@@ -56,6 +57,7 @@ export class Main extends GameObject {
         this.level?.destroy();
         this.state.set(STATE_TITLE);
         this.title = newLevel;
+        this.camera.position = Vector2.Zero();
         this.addChild(this.title);
       }
     });
@@ -157,42 +159,25 @@ export class Main extends GameObject {
     this.optionsMenu = new OptionDialog({
       divId: '#options',
       canvasId: '#options-canvas',
-      options: {
-        0: {
+      options: [
+        {
           text: 'Play',
           action: () => {
             console.info('Initializing level 0');
             gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]))
           }
-        }
-      }
+        }]
     });
 
     this.addChild(this.optionsMenu);
   }
   private showOptionsForGameOver() {
     this.hideOptions();
-    const currentLevel = this.level as Pinball | undefined;
     this.optionsMenu = new OptionDialog({
       divId: '#options',
       canvasId: '#options-canvas',
-      options: {
-        0: {
-          text: 'Play',
-          action: () => {
-            if (!currentLevel) return;
-
-            console.info('Initializing level 0');
-            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]))
-          }
-        }
-      }
-    });
-    this.optionsMenu = new OptionDialog({
-      divId: '#options',
-      canvasId: '#options-canvas',
-      options: {
-        0: {
+      options: [
+        {
           text: 'Retry',
           action: () => {
             const levelConfig = (this.level as Pinball)?.levelConfiguration
@@ -201,14 +186,14 @@ export class Main extends GameObject {
             console.info('retry')
           }
         },
-        1: {
+        {
           text: 'Quit',
           action: () => {
             this.state.set(STATE_TITLE);
             gameEvents.emit(signals.levelChanging, new Title())
           }
         }
-      }
+      ]
     });
 
     this.addChild(this.optionsMenu);

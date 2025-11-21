@@ -66,6 +66,7 @@ export class GameInput {
   onArrowPressed(direction: Direction) {
     if (this.directions.indexOf(direction) === -1) {
       this.directions.unshift(direction);
+      gameEvents.emit(signals.arrowStep, direction);
     }
     gameEvents.emit(signals.arrowMovement, direction);
   }

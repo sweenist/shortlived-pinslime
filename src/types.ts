@@ -33,7 +33,7 @@ export type OptionActions = {
 export type OptionMenuParams = {
   divId: string;
   canvasId: string;
-  options: { [key: number]: OptionActions };
+  options: OptionActions[];
 };
 
 export type fader = -1 | 1;

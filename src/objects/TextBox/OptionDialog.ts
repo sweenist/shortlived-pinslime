@@ -1,10 +1,13 @@
+import { DOWN, UP } from '../../constants';
+import { signals } from '../../events/eventConstants';
+import { gameEvents } from '../../events/Events';
 import { Animations } from '../../gameEngine/Animations';
 import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
 import { GameObject } from '../../gameEngine/GameObject';
 import type { Main } from '../../gameEngine/Main';
 import { Sprite } from '../../gameEngine/Sprite';
 import { resources } from '../../Resources';
-import type { OptionMenuParams, OptionActions } from '../../types';
+import type { OptionMenuParams, OptionActions, Direction } from '../../types';
 import type { animationConfiguration } from '../../types/animationTypes';
 import { gridCells } from '../../utils/grid';
 import { Vector2 } from '../../utils/vector';
@@ -28,13 +31,13 @@ const cursorAnimation: animationConfiguration = {
 }
 
 export class OptionDialog extends GameObject {
-  options: { [key: number]: OptionActions };
+  options: OptionActions[];
   optionWords: SpriteFontProps[][];
-  cursor: Sprite;
+  selectionArrow: Sprite;
   div: HTMLDivElement;
   canvas: HTMLCanvasElement;
   activeOption: number = 0;
-  drawWords: boolean = false;
+  displayWords: boolean = false;
   showCountdown: number;
 
   constructor(options: OptionMenuParams) {
@@ -51,7 +54,7 @@ export class OptionDialog extends GameObject {
     this.optionWords = this.getFontSprites();
 
     this.showCountdown = 2100;
-    this.cursor = new Sprite({
+    this.selectionArrow = new Sprite({
       resource: resources.images['cursor'],
       frameColumns: 2,
       frameSize: new Vector2(8, 8),
@@ -63,11 +66,25 @@ export class OptionDialog extends GameObject {
     this.show();
   }
 
+  ready(): void {
+    gameEvents.on<Direction>(signals.arrowStep, this, (value) => {
+      if (this.displayWords) {
+        if (value === DOWN) {
+          const index = this.activeOption + 1;
+          this.activeOption = index === this.options.length ? this.activeOption : index;
+        }
+        else if (value === UP) {
+          this.activeOption = Math.max(0, this.activeOption - 1);
+        }
+      }
+    })
+  }
+
   step(deltaTime: number, root?: Main): void {
     if (this.showCountdown > 0 && this.showCountdown - deltaTime <= 0) {
-      this.cursor.stepEntry(deltaTime, root!);
-      this.cursor.animations?.play('default');
-      this.addChild(this.cursor);
+      this.selectionArrow.stepEntry(deltaTime, root!);
+      this.selectionArrow.animations?.play('default');
+      this.addChild(this.selectionArrow);
     }
     const { input } = root!;
 
@@ -81,8 +98,9 @@ export class OptionDialog extends GameObject {
         this.div.classList.add('complete');
       }
 
+
     this.showCountdown -= deltaTime;
-    this.drawWords = this.showCountdown < 0;
+    this.displayWords = this.showCountdown < 0;
   }
 
   private resizeDialog() {
@@ -127,10 +145,10 @@ export class OptionDialog extends GameObject {
   }
 
   draw(ctx: CanvasRenderingContext2D, position: Vector2): void {
-    if (this.drawWords) {
+    if (this.displayWords) {
       const positionOffset = position.add(this.position);
       this.drawImage(ctx, positionOffset);
-      this.cursor.draw(ctx, Vector2.Zero());
+      this.selectionArrow.draw(ctx, new Vector2(0, gridCells(this.activeOption * 2)));
     }
   }
 
