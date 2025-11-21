@@ -14,6 +14,7 @@ import {
 import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
 import type { animationConfiguration } from "../../types/animationTypes";
 import { DOWN, LEFT, RIGHT, UP } from "../../constants";
+import { gameEvents } from "../../events/Events";
 
 interface PaddleConfig {
   offset: Vector2;
@@ -41,7 +42,8 @@ export interface PaddleParams {
 export class Paddle extends GameObject {
   sprite: Sprite;
   deflection: Direction;
-  isActivated: boolean = false
+  isActivated: boolean = false;
+  isTriggered: boolean = false;
   activationTime: number = 0;
 
   constructor(params: PaddleParams) {
@@ -68,6 +70,10 @@ export class Paddle extends GameObject {
 
   ready(): void {
     this.sprite.animations?.play('rest');
+
+    gameEvents.on<void>('GAME_ACTION', this, () => {
+      this.isTriggered = true;
+    });
   }
 
   step(deltaTime: number, root?: Main): void {
@@ -79,12 +85,17 @@ export class Paddle extends GameObject {
     }
 
     if (state.isPlaying)
-      if (input.getActionJustPressed('Space')) {
-        this.isActivated = true
-        this.activationTime = 180;
-        this.sprite.animations?.playOnce('flap', () => {
-          this.sprite.animations?.play('rest')
-        });
+      if (input.getActionJustPressed('Space') || this.isTriggered) {
+        this.activate();
       }
+    this.isTriggered = false;
+  }
+
+  activate() {
+    this.isActivated = true
+    this.activationTime = 300;
+    this.sprite.animations?.playOnce('flap', () => {
+      this.sprite.animations?.play('rest')
+    });
   }
 }
