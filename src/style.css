@@ -14,8 +14,8 @@ body {
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: 4fr 1fr 2fr;
   border: 2px solid #e1e1e1;
-  width: 640px;
-  height: 320px;
+  max-width: 1280px;
+  /* max-height: 320px; */
   aspect-ratio: 16 / 9;
 }
 

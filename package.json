@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.test.json && vite build",
-    "build:post": "sed -i \"s|url('([^']*\\)')|url('../\\1')|g\" dist/assets/*.css",
+    "build:post": "sed -i \"s|url(\\([^']*\\))|url(../\\1)|g\" dist/assets/*.css",
     "package": "rm ../pinslime.zip && cd dist && zip -r ../../pinslime.zip .",
     "preview": "vite preview",
     "test": "vitest run --config vitest.config.ts",

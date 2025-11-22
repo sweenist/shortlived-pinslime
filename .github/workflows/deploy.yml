@@ -27,6 +27,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Adjust CSS paths
+        run: npm run build:post
+
       - uses: KikimoraGames/itch-publish@v0.0.3
         with:
           butlerApiKey: ${{secrets.BUTLER_API_KEY}}

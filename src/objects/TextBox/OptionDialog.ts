@@ -34,7 +34,6 @@ export class OptionDialog extends GameObject {
   options: OptionActions[];
   optionWords: SpriteFontProps[][];
   selectionArrow: Sprite;
-  div: HTMLDivElement;
   canvas: HTMLCanvasElement;
   activeOption: number = 0;
   displayWords: boolean = false;
@@ -43,11 +42,11 @@ export class OptionDialog extends GameObject {
   constructor(options: OptionMenuParams) {
     super();
 
-    this.div = document.querySelector<HTMLDivElement>(options.divId)!;
-    this.div.classList.remove('complete');
 
     this.canvas = document.querySelector<HTMLCanvasElement>(options.canvasId)!;
     this.canvas.parentElement?.addEventListener('resize', this.resizeDialog)
+    this.canvas.parentElement?.classList.remove('complete');
+
     this.options = options.options
     this.drawLayer = 'USER_INTERFACE';
 
@@ -89,18 +88,18 @@ export class OptionDialog extends GameObject {
     const { input } = root!;
 
     if (input.getActionJustPressed('Space'))
-      if (this.showCountdown <= 0) {
+      if (this.displayWords) {
         this.hide();
         this.options[this.activeOption].action();
       }
       else {
         this.showCountdown = 0;
-        this.div.classList.add('complete');
+        this.canvas.parentElement?.classList.add('complete');
       }
 
 
     this.showCountdown -= deltaTime;
-    this.displayWords = this.showCountdown < 0;
+    this.displayWords = this.showCountdown <= 0;
   }
 
   private resizeDialog() {
@@ -109,11 +108,14 @@ export class OptionDialog extends GameObject {
   }
 
   hide() {
-    this.canvas.parentElement?.classList.add('hidden');
+    this.canvas.parentElement?.classList.add('hidden', 'complete');
   }
 
   show() {
+    console.info(this.canvas.parentElement?.classList);
     this.canvas.parentElement?.classList.remove('hidden');
+
+    console.info('after', this.canvas.parentElement?.classList);
   }
 
   private getFontSprites(): SpriteFontProps[][] {
