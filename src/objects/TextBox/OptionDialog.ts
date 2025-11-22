@@ -46,6 +46,7 @@ export class OptionDialog extends GameObject {
     this.canvas = document.querySelector<HTMLCanvasElement>(options.canvasId)!;
     this.canvas.parentElement?.addEventListener('resize', this.resizeDialog)
     this.canvas.parentElement?.classList.remove('complete');
+    this.canvas.parentElement?.classList.add('opening');
 
     this.options = options.options
     this.drawLayer = 'USER_INTERFACE';
@@ -75,15 +76,17 @@ export class OptionDialog extends GameObject {
         else if (value === UP) {
           this.activeOption = Math.max(0, this.activeOption - 1);
         }
+        const yOffset = (this.activeOption * 2) + 1;
+        this.selectionArrow.position = new Vector2(gridCells(1), gridCells(yOffset) + yOffset + 3);
       }
     })
   }
 
   step(deltaTime: number, root?: Main): void {
     if (this.showCountdown > 0 && this.showCountdown - deltaTime <= 0) {
+      this.addChild(this.selectionArrow);
       this.selectionArrow.stepEntry(deltaTime, root!);
       this.selectionArrow.animations?.play('default');
-      this.addChild(this.selectionArrow);
     }
     const { input } = root!;
 
@@ -95,8 +98,8 @@ export class OptionDialog extends GameObject {
       else {
         this.showCountdown = 0;
         this.canvas.parentElement?.classList.add('complete');
+        this.canvas.parentElement?.classList.remove('opening');
       }
-
 
     this.showCountdown -= deltaTime;
     this.displayWords = this.showCountdown <= 0;
@@ -109,11 +112,13 @@ export class OptionDialog extends GameObject {
 
   hide() {
     this.canvas.parentElement?.classList.add('hidden', 'complete');
+    this.canvas.parentElement?.classList.remove('opening');
   }
 
   show() {
     console.info(this.canvas.parentElement?.classList);
     this.canvas.parentElement?.classList.remove('hidden');
+    this.canvas.parentElement?.classList.add('opening');
 
     console.info('after', this.canvas.parentElement?.classList);
   }
@@ -149,8 +154,6 @@ export class OptionDialog extends GameObject {
   draw(ctx: CanvasRenderingContext2D, position: Vector2): void {
     if (this.displayWords) {
       const positionOffset = position.add(this.position);
-      const yOffset = this.activeOption * 2;
-      this.selectionArrow.draw(ctx, new Vector2(0, gridCells(yOffset) + yOffset));
       this.drawImage(ctx, positionOffset);
     }
   }

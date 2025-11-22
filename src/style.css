@@ -42,7 +42,7 @@ body {
   z-index: 2;
 }
 
-#options:not(.complete) {
+#options.opening {
   animation: growheight 800ms ease-out 750ms forwards;
 }
 
