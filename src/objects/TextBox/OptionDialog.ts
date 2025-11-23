@@ -79,6 +79,11 @@ export class OptionDialog extends GameObject {
         const yOffset = (this.activeOption * 2) + 1;
         this.selectionArrow.position = new Vector2(gridCells(1), gridCells(yOffset) + yOffset + 3);
       }
+    });
+
+    gameEvents.on<Vector2>(signals.gameAction, this, (value) => {
+      console.info('pointer: ', value)
+      console.info('relative', this.canvas.getBoundingClientRect());
     })
   }
 

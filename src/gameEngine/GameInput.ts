@@ -2,6 +2,7 @@ import { UP, DOWN, LEFT, RIGHT } from '../constants';
 import { signals } from '../events/eventConstants';
 import { gameEvents } from '../events/Events';
 import type { Direction } from '../types';
+import { Vector2 } from '../utils/vector';
 
 export class GameInput {
   directions: Direction[] = [];
@@ -49,13 +50,14 @@ export class GameInput {
       }
     });
 
-    document.addEventListener('touchstart', () => {
-      gameEvents.emit(signals.gameAction);
+    document.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0]
+      gameEvents.emit(signals.gameAction, new Vector2(touch.clientX, touch.clientY));
     });
 
     document.addEventListener('mousedown', (e) => {
       if (e.button === 0) {
-        gameEvents.emit(signals.gameAction);
+        gameEvents.emit(signals.gameAction, new Vector2(e.clientX, e.clientY));
       }
     });
   }
