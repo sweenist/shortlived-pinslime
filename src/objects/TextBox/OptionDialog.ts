@@ -11,15 +11,7 @@ import type { OptionMenuParams, OptionActions, Direction } from '../../types';
 import type { animationConfiguration } from '../../types/animationTypes';
 import { gridCells } from '../../utils/grid';
 import { Vector2 } from '../../utils/vector';
-import { getCharacterFrame, getCharacterWidth } from './SpriteMapping';
-
-type SpriteFontProps = {
-  wordWidth: number;
-  chars: {
-    width: number;
-    sprite: Sprite;
-  }[];
-};
+import { Label } from './Label';
 
 const cursorAnimation: animationConfiguration = {
   duration: 1000,
@@ -32,7 +24,7 @@ const cursorAnimation: animationConfiguration = {
 
 export class OptionDialog extends GameObject {
   options: OptionActions[];
-  optionWords: SpriteFontProps[][];
+  labels: Label[];
   selectionArrow: Sprite;
   canvas: HTMLCanvasElement;
   activeOption: number = 0;
@@ -51,7 +43,13 @@ export class OptionDialog extends GameObject {
     this.options = options.options
     this.drawLayer = 'USER_INTERFACE';
 
-    this.optionWords = this.getFontSprites();
+    this.labels = Object.values((this.options).map((option, index) => {
+      return new Label({
+        scale: 3,
+        text: option.text,
+        position: new Vector2(52, (index * 36) + 18)
+      });
+    }))
 
     this.showCountdown = 2100;
     this.selectionArrow = new Sprite({
@@ -92,6 +90,7 @@ export class OptionDialog extends GameObject {
       this.addChild(this.selectionArrow);
       this.selectionArrow.stepEntry(deltaTime, root!);
       this.selectionArrow.animations?.play('default');
+      this.labels.forEach((label) => this.addChild(label));
     }
     const { input } = root!;
 
@@ -126,75 +125,5 @@ export class OptionDialog extends GameObject {
     this.canvas.parentElement?.classList.add('opening');
 
     console.info('after', this.canvas.parentElement?.classList);
-  }
-
-  private getFontSprites(): SpriteFontProps[][] {
-    const message = Object.values(this.options).map((m) => m.text);
-    return message.map((m) => m.split(' ').map((word) => {
-      let wordWidth = 0;
-      const chars = word.split('').map((char) => {
-        const charWidth = getCharacterWidth(char);
-        wordWidth += charWidth;
-
-        return {
-          width: charWidth,
-          sprite: new Sprite({
-            resource: resources.images.fontWhite,
-            name: char,
-            frameColumns: 13,
-            frameRows: 5,
-            frameSize: new Vector2(8, 8),
-            frameIndex: getCharacterFrame(char),
-            scale: 3
-          }),
-        };
-      });
-      return {
-        wordWidth,
-        chars,
-      };
-    }));
-  }
-
-  draw(ctx: CanvasRenderingContext2D, position: Vector2): void {
-    if (this.displayWords) {
-      const positionOffset = position.add(this.position);
-      this.drawImage(ctx, positionOffset);
-    }
-  }
-
-  drawImage(ctx: CanvasRenderingContext2D, position: Vector2): void {
-    const PADDING_LEFT = 56;
-    const PADDING_TOP = 18;
-    const LINE_MAX_WIDTH = 240;
-    const LINE_VERTICAL_HEIGHT = 38;
-
-    let cursorX = position.x + PADDING_LEFT;
-    let cursorY = position.y + PADDING_TOP;
-    let currentShowIndex = 0;
-
-    for (let index = 0; index < this.optionWords.length; index++) {
-      this.optionWords[index].forEach((word) => {
-        const spaceRemaining = position.x + LINE_MAX_WIDTH - cursorX;
-        if (spaceRemaining < word.wordWidth) {
-          cursorY += LINE_VERTICAL_HEIGHT;
-          cursorX = position.x + PADDING_LEFT;
-        }
-        word.chars.forEach((char) => {
-          const { width, sprite } = char;
-          const widthCharOffset = cursorX - 5;
-
-          const drawPosition = new Vector2(widthCharOffset, cursorY);
-          sprite.draw(ctx, drawPosition);
-
-          cursorX += width * sprite.scale + 1;
-          currentShowIndex += 1;
-        });
-
-        cursorX += 3;
-      });
-      cursorX = position.x + PADDING_LEFT;
-      cursorY += LINE_VERTICAL_HEIGHT;
-    }
   }
 }

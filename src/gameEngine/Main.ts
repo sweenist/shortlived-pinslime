@@ -154,14 +154,13 @@ export class Main extends GameObject {
   }
 
   private showOptionsForTitle() {
-    console.info("showing the options!")
     this.hideOptions();
     this.optionsMenu = new OptionDialog({
       divId: '#options',
       canvasId: '#options-canvas',
       options: [
         {
-          text: 'Play',
+          text: 'play',
           action: () => {
             console.info('Initializing level 0');
             gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]))
@@ -178,7 +177,7 @@ export class Main extends GameObject {
       canvasId: '#options-canvas',
       options: [
         {
-          text: 'Retry',
+          text: 'retry',
           action: () => {
             const levelConfig = (this.level as Pinball)?.levelConfiguration
             gameEvents.emit(signals.levelChanging, new Pinball(levelConfig));
@@ -187,7 +186,7 @@ export class Main extends GameObject {
           }
         },
         {
-          text: 'Quit',
+          text: 'quit',
           action: () => {
             this.state.set(STATE_TITLE);
             gameEvents.emit(signals.levelChanging, new Title())
