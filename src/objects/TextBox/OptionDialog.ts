@@ -34,7 +34,6 @@ export class OptionDialog extends GameObject {
   constructor(options: OptionMenuParams) {
     super();
 
-
     this.canvas = document.querySelector<HTMLCanvasElement>(options.canvasId)!;
     this.canvas.parentElement?.addEventListener('resize', this.resizeDialog)
     this.canvas.parentElement?.classList.remove('complete');
@@ -66,23 +65,37 @@ export class OptionDialog extends GameObject {
 
   ready(): void {
     gameEvents.on<Direction>(signals.arrowStep, this, (value) => {
-      if (this.displayWords) {
-        if (value === DOWN) {
-          const index = this.activeOption + 1;
-          this.activeOption = index === this.options.length ? this.activeOption : index;
-        }
-        else if (value === UP) {
-          this.activeOption = Math.max(0, this.activeOption - 1);
-        }
-        const yOffset = (this.activeOption * 2) + 1;
-        this.selectionArrow.position = new Vector2(gridCells(1), gridCells(yOffset) + yOffset + 3);
+      if (!this.displayWords) return;
+
+      if (value === DOWN) {
+        const index = this.activeOption + 1;
+        this.activeOption = index === this.options.length ? this.activeOption : index;
       }
+      else if (value === UP) {
+        this.activeOption = Math.max(0, this.activeOption - 1);
+      }
+      const yOffset = (this.activeOption * 2) + 1;
+      this.selectionArrow.position = new Vector2(gridCells(1), gridCells(yOffset) + yOffset + 3);
     });
 
-    gameEvents.on<Vector2>(signals.gameAction, this, (value) => {
-      console.info('pointer: ', value)
-      console.info('relative', this.canvas.getBoundingClientRect());
-    })
+    gameEvents.on<Vector2>(signals.gameAction, this, (pointer) => {
+      if (!this.displayWords) return;
+
+      const rect = this.canvas.getBoundingClientRect();
+      const scaleX = this.canvas.width / rect.width;
+      const scaleY = this.canvas.height / rect.height;
+      const relativePosition = new Vector2(
+        Math.floor((pointer.x - rect.left) * scaleX),
+        Math.floor((pointer.y - rect.top) * scaleY)
+      );
+      console.info('mousie', rect, scaleX, scaleY, relativePosition);
+      const hitLabelIndex = this.labels.findIndex((label) => label.pointerCollides(relativePosition));
+      if (hitLabelIndex > -1) {
+        console.info(this.labels[hitLabelIndex].position, this.labels[hitLabelIndex].boundingBoxMaxima)
+        this.hide();
+        this.options[hitLabelIndex].action();
+      }
+    });
   }
 
   step(deltaTime: number, root?: Main): void {

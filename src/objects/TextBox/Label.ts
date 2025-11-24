@@ -32,7 +32,7 @@ export class Label extends GameObject {
       frameColumns: 13,
       frameRows: 5,
       frameSize: new Vector2(8, 8),
-      scale: 3
+      scale: params.scale
     }
 
     this.labelSprites = this.getFontSprites(params.text);
@@ -55,7 +55,7 @@ export class Label extends GameObject {
             frameRows: 5,
             frameSize: new Vector2(8, 8),
             frameIndex: getCharacterFrame(char),
-            scale: 3
+            scale: this.spriteConfig.scale
           }),
         };
       });
@@ -69,14 +69,13 @@ export class Label extends GameObject {
   private getBoundMaxima(): Vector2 {
     const xMax = this.labelSprites.reduce((prop, next) => {
       return prop += next.wordWidth * (this.spriteConfig.scale ?? 1) + 1
-    }, 0);
+    }, 0) + this.position.x;
 
-    const yMax = (this.spriteConfig.frameSize?.y ?? 8) * (this.spriteConfig.scale ?? 1)
+    const yMax = (this.spriteConfig.frameSize?.y ?? 8) * (this.spriteConfig.scale ?? 1) + this.position.y
     return new Vector2(xMax, yMax);
   }
 
   drawImage(ctx: CanvasRenderingContext2D, position: Vector2): void {
-
     let cursorX = position.x;
     let currentShowIndex = 0;
 
@@ -94,5 +93,14 @@ export class Label extends GameObject {
 
       cursorX += 3;
     });
+  }
+
+  pointerCollides(relativePosition: Vector2): boolean {
+    return (
+      relativePosition.x >= this.position.x
+      && relativePosition.x <= this.boundingBoxMaxima.x
+      && relativePosition.y >= this.position.y
+      && relativePosition.y <= this.boundingBoxMaxima.y
+    );
   }
 }
