@@ -100,6 +100,13 @@ export class Slime extends GameObject {
       this.onItemCollect(value)
     );
 
+    gameEvents.on<Vector2>(signals.gameAction, this, (_) => {
+      if (this.paddle && this.paddle.isActivated) {
+        this.facingDirection = this.paddle.deflection;
+        this.paddle = null;
+      }
+    });
+
     gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
       if (value === STATE_INITIAL) {
         this.body.animations?.play('idle');
