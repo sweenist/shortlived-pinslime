@@ -1,11 +1,13 @@
 import { GameObject } from "../gameEngine/GameObject";
 import { Sprite } from "../gameEngine/Sprite";
+import { Label } from "../objects/TextBox/Label";
 import { resources } from "../Resources";
 import { Vector2 } from "../utils/vector";
 
 export class Title extends GameObject {
   background: Sprite;
   text: Sprite;
+  hint: Label;
 
   constructor() {
     super()
@@ -21,8 +23,15 @@ export class Title extends GameObject {
       scale: 0.5,
     });
 
+    this.hint = new Label({
+      text: 'USE SPACEBAR  MOUSE  OR TOUCH!',
+      position: Vector2.fromGridPoint({ x: 3, y: 10 })
+    });
+    this.hint.drawLayer = 'DEFAULT';
+
     this.addChild(this.background);
     this.addChild(this.text);
+    this.addChild(this.hint);
   }
 
   draw(ctx: CanvasRenderingContext2D, _position: Vector2, _debug?: boolean): void {
@@ -43,5 +52,6 @@ export class Title extends GameObject {
 
     const textX = Math.abs((ctx.canvas.width / 2) - (this.text.resource.image.width / 4)); // scale is 1/2
     this.text.draw(ctx, new Vector2(textX, 0));
+    this.hint.draw(ctx, _position)
   }
 }
