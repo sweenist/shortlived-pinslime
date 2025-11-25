@@ -60,6 +60,7 @@ export class GameObject {
   getOrderedDrawSprites() {
     return [...this.children].sort((src, target) => {
       if (target.drawLayer === 'GROUND') return 1;
+      if (target.drawLayer === 'SKY') return -1;
       return src.position.y > target.position.y ? 1 : -1;
     });
   }

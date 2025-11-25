@@ -69,12 +69,16 @@ export class Main extends GameObject {
     });
 
     gameEvents.on<typeof this.state.current>(signals.stateChanged, this, (value) => {
-      if (value === STATE_TITLE)
+      if (value === STATE_TITLE) {
+        this.displayScore(false)
         this.showOptionsForTitle();
+      }
       else if (value === STATE_GAMEOVER)
         this.showOptionsForGameOver();
-      else
+      else {
         this.hideOptions();
+        this.displayScore(true)
+      }
     });
 
     this.input.consolate = () => {
@@ -82,6 +86,14 @@ export class Main extends GameObject {
     };
 
     this.showOptionsForTitle();
+  }
+
+  displayScore(show: boolean) {
+    const scoreDiv = document.querySelector<HTMLDivElement>('#score');
+    if (show)
+      scoreDiv?.classList.add('playing');
+    else
+      scoreDiv?.classList.remove('playing');
   }
 
   setLevel(level: Level) {
