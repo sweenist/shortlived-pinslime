@@ -28,7 +28,7 @@ export class Label extends GameObject {
 
     this.drawLayer = 'USER_INTERFACE';
     this.spriteConfig = {
-      resource: resources.images.fontWhite,
+      resource: resources.images['font'],
       frameColumns: 13,
       frameRows: 5,
       frameSize: new Vector2(8, 8),
@@ -49,13 +49,9 @@ export class Label extends GameObject {
         return {
           width: charWidth,
           sprite: new Sprite({
-            resource: resources.images.fontWhite,
+            ...this.spriteConfig,
             name: char,
-            frameColumns: 13,
-            frameRows: 5,
-            frameSize: new Vector2(8, 8),
             frameIndex: getCharacterFrame(char),
-            scale: this.spriteConfig.scale
           }),
         };
       });

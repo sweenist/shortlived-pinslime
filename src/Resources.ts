@@ -12,7 +12,7 @@ class Resources {
     this.images = {};
     this.toLoad = {
       //font
-      fontWhite: 'sprites/ArcadeFont.png',
+      font: 'sprites/ArcadeFont.png',
       cursor: 'sprites/Cursor.png',
       _frame: 'sprites/FrameBlue.png',
       //large images

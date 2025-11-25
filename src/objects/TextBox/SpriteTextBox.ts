@@ -39,10 +39,10 @@ export class SpriteTextBox extends GameObject {
 
     this.portrait = content.portraitFrame
       ? new Sprite({
-          resource: resources.images.portraits,
-          frameColumns: 4,
-          frameIndex: content.portraitFrame!,
-        })
+        resource: resources.images.portraits,
+        frameColumns: 4,
+        frameIndex: content.portraitFrame!,
+      })
       : null;
 
     this.words = this.getFontSprites();
@@ -82,7 +82,7 @@ export class SpriteTextBox extends GameObject {
         return {
           width: charWidth,
           sprite: new Sprite({
-            resource: resources.images.fontWhite,
+            resource: resources.images['font'],
             name: char,
             frameColumns: 13,
             frameRows: 6,

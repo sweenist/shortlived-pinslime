@@ -27,7 +27,7 @@ export class ScoreText extends GameObject {
       return {
         width: charWidth,
         sprite: new Sprite({
-          resource: resources.images.fontWhite,
+          resource: resources.images['font'],
           name: char,
           frameColumns: 13,
           frameRows: 5,
