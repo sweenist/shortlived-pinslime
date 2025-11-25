@@ -34,6 +34,15 @@ export class GameState {
     return this.current === STATE_PLAYING;
   }
 
+  public get getPlayTime(): number | null {
+    if (this.isPlaying)
+      return this._remaining;
+
+    return this._index < STATE_NAMES.findIndex((s) => s === STATE_PLAYING)
+      ? this._stateDurations[STATE_PLAYING]
+      : null;
+  }
+
   public get current(): string {
     return this._stateNames[this._index];
   }
