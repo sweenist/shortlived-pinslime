@@ -1,3 +1,4 @@
+export const backgroundColor = '#070e0f';
 export const fadeIn = 1;
 export const fadeOut = -1;
 
