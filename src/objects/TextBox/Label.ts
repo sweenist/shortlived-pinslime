@@ -1,6 +1,7 @@
 import { GameObject } from "../../gameEngine/GameObject";
 import { Sprite, type SpriteParams } from "../../gameEngine/Sprite";
 import { resources } from "../../Resources";
+import type { DrawLayers } from "../../types";
 import { Vector2 } from "../../utils/vector";
 import { getCharacterFrame, getCharacterWidth } from "./SpriteMapping";
 
@@ -16,6 +17,8 @@ type LabelProps = {
   text: string;
   scale?: number;
   position?: Vector2;
+  drawLayer?: DrawLayers;
+  name?: string
 }
 
 export class Label extends GameObject {
@@ -26,7 +29,8 @@ export class Label extends GameObject {
   constructor(params: LabelProps) {
     super(params.position);
 
-    this.drawLayer = 'USER_INTERFACE';
+    this.drawLayer = params.drawLayer ?? 'USER_INTERFACE';
+    this.name = params.name ?? `${params.text}-label`;
     this.spriteConfig = {
       resource: resources.images['font'],
       frameColumns: 13,

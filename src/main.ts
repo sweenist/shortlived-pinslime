@@ -10,6 +10,10 @@ const menuCanvas = document.querySelector<HTMLCanvasElement>('#options-canvas')!
 const menuContext = menuCanvas.getContext('2d')!;
 menuContext.imageSmoothingEnabled = false;
 
+const scoreCanvas = document.querySelector<HTMLCanvasElement>('#score-canvas')!
+const scoreContext = scoreCanvas.getContext('2d')!;
+scoreContext.imageSmoothingEnabled = false;
+
 
 const mainScene = new Main({ ctx: mainContext });
 
@@ -21,6 +25,7 @@ const update = (deltaTime: number) => {
 const draw = () => {
   mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
   menuContext.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
+  scoreContext.clearRect(0, 0, scoreCanvas.width, scoreCanvas.height);
 
   mainScene.drawBackground(mainContext);
   mainContext.save();

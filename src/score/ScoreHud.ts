@@ -1,4 +1,3 @@
-import { backgroundColor } from "../constants";
 import { GameObject } from "../gameEngine/GameObject";
 import { Label } from "../objects/TextBox/Label";
 import { Vector2 } from "../utils/vector";
@@ -10,24 +9,69 @@ export class ScoreHud extends GameObject {
   hiScoreValue?: Label;
   timeLabel?: Label;
   timeValue?: Label;
+  shouldDraw: boolean;
+  canvasContext: CanvasRenderingContext2D;
+  shouldDebug: boolean = true;
 
   constructor() {
     super();
 
-    this.drawLayer = 'DEFAULT';
+    //gross but whatever
+    const canvas = document.querySelector<HTMLCanvasElement>('#score-canvas');
+    this.canvasContext = canvas?.getContext('2d')!;
+
+    this.shouldDraw = false;
 
     this.scoreLabel = new Label({
       text: 'SCORE',
-      position: new Vector2(8, 8),
+      position: new Vector2(8, 4),
+      drawLayer: 'DEFAULT',
     });
 
+    this.scoreValue = new Label({
+      text: '00000',
+      position: new Vector2(58, 4),
+      drawLayer: 'DEFAULT',
+      name: 'score-value'
+    });
+
+    this.hiScoreLabel = new Label({
+      text: 'HISCORE',
+      position: new Vector2(116, 4),
+      drawLayer: 'DEFAULT'
+    });
+
+    this.hiScoreValue = new Label({
+      text: '00000',
+      position: new Vector2(184, 4),
+      drawLayer: 'DEFAULT',
+      name: 'hi-score-value'
+    });
+
+    this.timeLabel = new Label({
+      text: 'TIME',
+      position: new Vector2(240, 4),
+      drawLayer: 'DEFAULT'
+    });
+
+    this.timeValue = new Label({
+      text: '00',
+      position: new Vector2(280, 4),
+      drawLayer: 'DEFAULT',
+      name: 'time-value',
+    });
+
+
     this.addChild(this.scoreLabel);
+    this.addChild(this.scoreValue);
+    this.addChild(this.hiScoreLabel);
+    this.addChild(this.hiScoreValue);
+    this.addChild(this.timeLabel);
+    this.addChild(this.timeValue);
   }
 
-  draw(ctx: CanvasRenderingContext2D, position: Vector2, _debug?: boolean): void {
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, ctx.canvas.width, 16);
-
-    super.draw(ctx, position);
+  draw(_ctx: CanvasRenderingContext2D, _position: Vector2, _debug?: boolean): void {
+    super.draw(this.canvasContext, this.position, this.shouldDebug);
+    this.shouldDebug = false
   }
 }
