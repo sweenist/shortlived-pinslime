@@ -15,7 +15,6 @@ body {
   grid-template-rows: minmax(9%, 1fr) 2fr 2fr 2fr;
   border: 2px solid #e1e1e1;
   max-width: 1280px;
-  /* max-height: 85dvh; */
   aspect-ratio: 16 / 9;
 }
 
@@ -78,18 +77,23 @@ body {
 
 #score.playing {
   background-color: #070e0f;
+  border-bottom: #56cd44 4px solid;
   z-index: 2;
 }
 
 #score-canvas {
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
   display: block;
-  visibility: collapse;
+  object-fit: contain;
+  image-rendering: pixelated;
 }
 
 .hidden {
   visibility: hidden;
-  height: 0;
+  height: 1px;
   width: 0;
 }
