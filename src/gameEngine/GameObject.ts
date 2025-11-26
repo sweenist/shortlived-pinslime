@@ -40,10 +40,10 @@ export class GameObject {
   ) {
     const drawPosition = position.add(this.position);
 
-    this.drawImage(ctx, drawPosition);
+    this.drawImage(ctx, drawPosition, _debug);
 
     this.getOrderedDrawSprites().forEach((child) =>
-      child.draw(ctx, drawPosition)
+      child.draw(ctx, drawPosition, _debug)
     );
   }
 
@@ -86,7 +86,6 @@ export class GameObject {
   }
 
   removeChild(gameObject: GameObject) {
-    // console.debug(`Removing child ${this.constructor.name}`);
     gameEvents.unsubscribe(gameObject);
     this.children = this.children.filter((g) => {
       return gameObject !== g;
