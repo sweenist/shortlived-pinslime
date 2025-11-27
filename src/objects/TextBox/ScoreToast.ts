@@ -9,7 +9,7 @@ type CharacterSprites = {
   sprite: Sprite;
 };
 
-export class ScoreText extends GameObject {
+export class ScoreToast extends GameObject {
   drawWords: boolean = false;
   scoreChars: CharacterSprites[];
 

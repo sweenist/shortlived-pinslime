@@ -24,7 +24,7 @@ import { signals } from '../events/eventConstants';
 import { Ramp } from '../objects/Obstacles/Ramp';
 import { Paddle } from '../objects/Paddle/Paddle';
 import { AfterImage } from './AfterImage';
-import { ScoreText } from '../objects/TextBox/ScoreText';
+import { ScoreToast } from '../objects/TextBox/ScoreToast';
 
 const itemShiftStep = new Vector2(0, -1);
 
@@ -258,7 +258,7 @@ export class Slime extends GameObject {
     this.itemPickupTime = 750;
 
     this.itemPickupShell = new GameObject();
-    const scoreSpriteText = new ScoreText({ position: new Vector2(20, -12), score: `${points}` });
+    const scoreSpriteText = new ScoreToast({ position: new Vector2(20, -12), score: `${points}` });
     this.itemPickupShell.addChild(
       new Sprite({
         resource: image,
