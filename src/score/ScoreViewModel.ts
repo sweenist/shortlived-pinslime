@@ -1,4 +1,4 @@
-import { STATE_DEAD, STATE_GAMEOVER, type STATE_NAMES } from "../constants";
+import { STATE_GAMEOVER, type STATE_NAMES } from "../constants";
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
