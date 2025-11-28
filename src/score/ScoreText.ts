@@ -10,7 +10,7 @@ type NumericSprites = {
 
 type ScoreTextParams = {
   position: Vector2
-  score: number,
+  initialValue: number,
   leadingZeros?: number
 }
 const NUMBER_WIDTH = 8 as const;
@@ -23,7 +23,7 @@ export class ScoreText extends GameObject {
   constructor(params: ScoreTextParams) {
     super(params.position);
 
-    this.scoreValue = params.score;
+    this.scoreValue = params.initialValue;
     this.leadingZeros = params.leadingZeros ?? null
 
     this.scoreChars = this.getNumberSprites();
@@ -61,7 +61,7 @@ export class ScoreText extends GameObject {
       const drawPosition = new Vector2(cursorX, position.y);
       sprite?.draw(ctx, drawPosition);
 
-      cursorX += NUMBER_WIDTH * sprite.scale + 1;
+      cursorX += NUMBER_WIDTH * (sprite?.scale ?? 1) + 1;
     });
   }
 }

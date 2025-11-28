@@ -1,26 +1,28 @@
 import { GameObject } from "../gameEngine/GameObject";
+import type { Main } from "../gameEngine/Main";
 import { Label } from "../objects/TextBox/Label";
 import { Vector2 } from "../utils/vector";
+import { ScoreText } from "./ScoreText";
+import type { ScoreViewModel } from "./ScoreViewModel";
 
 export class ScoreHud extends GameObject {
+  viewModel: ScoreViewModel;
   scoreLabel: Label;
-  scoreValue?: Label;
-  hiScoreLabel?: Label;
-  hiScoreValue?: Label;
-  timeLabel?: Label;
-  timeValue?: Label;
-  shouldDraw: boolean;
+  scoreValue: ScoreText;
+  hiScoreLabel: Label;
+  hiScoreValue: ScoreText;
+  timeLabel: Label;
+  timeValue: ScoreText;
   canvasContext: CanvasRenderingContext2D;
   shouldDebug: boolean = true;
 
-  constructor() {
+  constructor(viewModel: ScoreViewModel) {
     super();
 
+    this.viewModel = viewModel;
     //gross but whatever
     const canvas = document.querySelector<HTMLCanvasElement>('#score-canvas');
     this.canvasContext = canvas?.getContext('2d')!;
-
-    this.shouldDraw = false;
 
     this.scoreLabel = new Label({
       text: 'SCORE',
@@ -28,11 +30,10 @@ export class ScoreHud extends GameObject {
       drawLayer: 'DEFAULT',
     });
 
-    this.scoreValue = new Label({
-      text: '00000',
+    this.scoreValue = new ScoreText({
+      initialValue: 0,
       position: new Vector2(58, 4),
-      drawLayer: 'DEFAULT',
-      name: 'score-value'
+      leadingZeros: 5
     });
 
     this.hiScoreLabel = new Label({
@@ -41,11 +42,10 @@ export class ScoreHud extends GameObject {
       drawLayer: 'DEFAULT'
     });
 
-    this.hiScoreValue = new Label({
-      text: '00000',
+    this.hiScoreValue = new ScoreText({
       position: new Vector2(184, 4),
-      drawLayer: 'DEFAULT',
-      name: 'hi-score-value'
+      initialValue: this.viewModel.highScore,
+      leadingZeros: 5,
     });
 
     this.timeLabel = new Label({
@@ -54,20 +54,24 @@ export class ScoreHud extends GameObject {
       drawLayer: 'DEFAULT'
     });
 
-    this.timeValue = new Label({
-      text: '00',
+    this.timeValue = new ScoreText({
       position: new Vector2(280, 4),
-      drawLayer: 'DEFAULT',
-      name: 'time-value',
+      initialValue: this.viewModel.timeRemaining / 1000,
+      leadingZeros: 2
     });
 
-
+    this.addChild(this.viewModel);
     this.addChild(this.scoreLabel);
     this.addChild(this.scoreValue);
     this.addChild(this.hiScoreLabel);
     this.addChild(this.hiScoreValue);
     this.addChild(this.timeLabel);
     this.addChild(this.timeValue);
+  }
+
+  step(_deltaTime: number, _root?: Main): void {
+    this.scoreValue.scoreValue = this.viewModel.score; //direct manipulation feels gross;
+    this.timeValue.scoreValue = Math.ceil(this.viewModel.timeRemaining / 1000);
   }
 
   draw(_ctx: CanvasRenderingContext2D, _position: Vector2, _debug?: boolean): void {

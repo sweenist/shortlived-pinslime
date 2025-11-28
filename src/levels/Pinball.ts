@@ -21,6 +21,7 @@ import { gameEvents } from '../events/Events';
 import type { LevelConfiguration } from './configurationManager';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
 import { ScoreHud } from '../score/ScoreHud';
+import { ScoreViewModel } from '../score/ScoreViewModel';
 
 const TILE_HEIGHT = 16 as const;
 const TILE_WIDTH = 16 as const
@@ -83,7 +84,8 @@ export class Pinball extends Level {
     const stopwatch = new Stopwatch({ position: slimePosition.add(new Vector2(gridCells(-4), gridCells(-2))) });
     this.addChild(stopwatch);
 
-    this.scoreHud = new ScoreHud();
+    const scoreViewModel = new ScoreViewModel(0);
+    this.scoreHud = new ScoreHud(scoreViewModel);
     this.addChild(this.scoreHud);
   }
 
