@@ -24,7 +24,7 @@ export class Title extends GameObject {
     });
 
     this.hint = new Label({
-      text: 'USE SPACEBAR  MOUSE  OR TOUCH!',
+      text: 'USE SPACEBAR  MOUSE  OR TOUCH',
       position: Vector2.fromGridPoint({ x: 3, y: 10 })
     });
     this.hint.drawLayer = 'DEFAULT';

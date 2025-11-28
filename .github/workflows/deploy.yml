@@ -37,4 +37,4 @@ jobs:
           itchUsername: ${{vars.ITCH_USERNAME}}
           itchGameId: ${{ vars.ITCH_GAME_ID }}
           buildChannel: itch_build
-          buildNumber: 0.1.${{github.run_number}}
+          buildNumber: 1.0.${{github.run_number}}
