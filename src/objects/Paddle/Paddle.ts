@@ -13,8 +13,9 @@ import {
 } from './paddleAnimations';
 import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
 import type { animationConfiguration } from "../../types/animationTypes";
-import { DOWN, LEFT, RIGHT, UP } from "../../constants";
+import { DOWN, LEFT, RIGHT, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, UP } from "../../constants";
 import { gameEvents } from "../../events/Events";
+import { signals } from "../../events/eventConstants";
 
 interface PaddleConfig {
   offset: Vector2;
@@ -71,7 +72,7 @@ export class Paddle extends GameObject {
   ready(): void {
     this.sprite.animations?.play('rest');
 
-    gameEvents.on<void>('GAME_ACTION', this, () => {
+    gameEvents.on<void>(signals.gameAction, this, () => {
       this.isTriggered = true;
     });
   }
@@ -84,7 +85,7 @@ export class Paddle extends GameObject {
       if (this.activationTime <= 0) this.isActivated = false;
     }
 
-    if (state.isPlaying)
+    if (state.current === STATE_INITIAL || state.current === STATE_LAUNCHING || state.isPlaying)
       if (input.getActionJustPressed('Space') || this.isTriggered) {
         this.activate();
       }
