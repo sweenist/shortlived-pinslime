@@ -88,10 +88,8 @@ export class OptionDialog extends GameObject {
         Math.floor((pointer.x - rect.left) * scaleX),
         Math.floor((pointer.y - rect.top) * scaleY)
       );
-      console.info('mousie', rect, scaleX, scaleY, relativePosition);
       const hitLabelIndex = this.labels.findIndex((label) => label.pointerCollides(relativePosition));
       if (hitLabelIndex > -1) {
-        console.info(this.labels[hitLabelIndex].position, this.labels[hitLabelIndex].boundingBoxMaxima)
         this.hide();
         this.options[hitLabelIndex].action();
       }
@@ -100,10 +98,7 @@ export class OptionDialog extends GameObject {
 
   step(deltaTime: number, root?: Main): void {
     if (this.showCountdown > 0 && this.showCountdown - deltaTime <= 0) {
-      this.addChild(this.selectionArrow);
-      this.selectionArrow.stepEntry(deltaTime, root!);
-      this.selectionArrow.animations?.play('default');
-      this.labels.forEach((label) => this.addChild(label));
+      this.displayMenu(deltaTime, root!);
     }
     const { input } = root!;
 
@@ -116,6 +111,7 @@ export class OptionDialog extends GameObject {
         this.showCountdown = 0;
         this.canvas.parentElement?.classList.add('complete');
         this.canvas.parentElement?.classList.remove('opening');
+        this.displayMenu(deltaTime, root!);
       }
 
     this.showCountdown -= deltaTime;
@@ -127,16 +123,23 @@ export class OptionDialog extends GameObject {
     this.canvas.height = Math.floor(this.canvas.parentElement?.clientHeight ?? this.canvas.height);
   }
 
-  hide() {
+  hide(): void {
     this.canvas.parentElement?.classList.add('hidden', 'complete');
     this.canvas.parentElement?.classList.remove('opening');
   }
 
-  show() {
+  show(): void {
     console.info(this.canvas.parentElement?.classList);
     this.canvas.parentElement?.classList.remove('hidden');
     this.canvas.parentElement?.classList.add('opening');
 
     console.info('after', this.canvas.parentElement?.classList);
+  }
+
+  displayMenu(deltaTime: number, root: Main): void {
+    this.addChild(this.selectionArrow);
+    this.selectionArrow.stepEntry(deltaTime, root);
+    this.selectionArrow.animations?.play('default');
+    this.labels.forEach((label) => this.addChild(label));
   }
 }
