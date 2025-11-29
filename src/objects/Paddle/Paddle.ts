@@ -13,7 +13,7 @@ import {
 } from './paddleAnimations';
 import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
 import type { animationConfiguration } from "../../types/animationTypes";
-import { DOWN, LEFT, RIGHT, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, UP } from "../../constants";
+import { DOWN, LEFT, RIGHT, STATE_INITIAL, STATE_LAUNCHING, UP } from "../../constants";
 import { gameEvents } from "../../events/Events";
 import { signals } from "../../events/eventConstants";
 
