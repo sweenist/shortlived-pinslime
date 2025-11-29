@@ -10,7 +10,7 @@ import { resources } from '../../Resources';
 import type { OptionMenuParams, OptionActions, Direction } from '../../types';
 import type { animationConfiguration } from '../../types/animationTypes';
 import { gridCells } from '../../utils/grid';
-import { Vector2 } from '../../utils/vector';
+import { fontSize, Vector2 } from '../../utils/vector';
 import { Label } from './Label';
 
 const cursorAnimation: animationConfiguration = {
@@ -54,7 +54,7 @@ export class OptionDialog extends GameObject {
     this.selectionArrow = new Sprite({
       resource: resources.images['cursor'],
       frameColumns: 2,
-      frameSize: new Vector2(8, 8),
+      frameSize: fontSize,
       scale: 3,
       position: new Vector2(gridCells(1), gridCells(1) + 3),
       animations: new Animations({ default: new FrameIndexPattern(cursorAnimation) }),

@@ -4,7 +4,7 @@ import type { Main } from "../../gameEngine/Main";
 import { Sprite } from "../../gameEngine/Sprite";
 import { resources } from "../../Resources";
 import type { Direction, DirectionShift } from "../../types";
-import { Vector2 } from "../../utils/vector";
+import { spriteSize, Vector2 } from "../../utils/vector";
 import {
   N_E_PADDLE_REST, N_W_PADDLE_REST, E_N_PADDLE_REST, E_S_PADDLE_REST,
   W_N_PADDLE_REST, W_S_PADDLE_REST, S_E_PADDLE_REST, S_W_PADDLE_REST,
@@ -59,7 +59,7 @@ export class Paddle extends GameObject {
       position: paddleConfig.offset,
       frameColumns: 4,
       frameRows: 4,
-      frameSize: new Vector2(16, 16),
+      frameSize: spriteSize,
       animations: new Animations({
         rest: new FrameIndexPattern(paddleConfig.rest),
         flap: new FrameIndexPattern(paddleConfig.flap),

@@ -6,7 +6,7 @@ import type { Main } from "../gameEngine/Main";
 import { Sprite } from "../gameEngine/Sprite";
 import { resources } from "../Resources";
 import type { Movement, Direction } from "../types";
-import { Vector2 } from "../utils/vector";
+import { spriteSize, Vector2 } from "../utils/vector";
 
 export type Shade = {
   umbra: Sprite,
@@ -106,7 +106,7 @@ export class AfterImage extends GameObject {
 
     const spriteParams = {
       resource: resources.images['slimeTrail'],
-      frameSize: new Vector2(16, 16),
+      frameSize: spriteSize,
       frameColumns: 2,
       frameRows: 4,
     };

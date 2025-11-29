@@ -2,7 +2,7 @@ import { GameObject } from "../../gameEngine/GameObject";
 import { Sprite, type SpriteParams } from "../../gameEngine/Sprite";
 import { resources } from "../../Resources";
 import type { DrawLayers } from "../../types";
-import { Vector2 } from "../../utils/vector";
+import { fontSize, Vector2 } from "../../utils/vector";
 import { getCharacterFrame, getCharacterWidth } from "./SpriteMapping";
 
 type SpriteFontProps = {
@@ -35,7 +35,7 @@ export class Label extends GameObject {
       resource: resources.images['font'],
       frameColumns: 13,
       frameRows: 5,
-      frameSize: new Vector2(8, 8),
+      frameSize: fontSize,
       scale: params.scale
     }
 

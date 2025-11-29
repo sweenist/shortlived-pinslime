@@ -5,7 +5,7 @@ import { GameObject } from "../../gameEngine/GameObject";
 import type { Main } from "../../gameEngine/Main";
 import { Sprite } from "../../gameEngine/Sprite";
 import { resources } from "../../Resources";
-import { Vector2 } from "../../utils/vector";
+import { spriteSize, Vector2 } from "../../utils/vector";
 import { COUNTDOWN } from "./stopwatchAnimations";
 
 export class Stopwatch extends GameObject {
@@ -19,7 +19,7 @@ export class Stopwatch extends GameObject {
       position: Vector2.Zero(),
       frameRows: 4,
       frameColumns: 4,
-      frameSize: new Vector2(16, 16),
+      frameSize: spriteSize,
       animations: new Animations({ countdown: new FrameIndexPattern(COUNTDOWN) })
     });
 

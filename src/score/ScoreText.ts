@@ -2,7 +2,7 @@ import { GameObject } from "../gameEngine/GameObject";
 import { Sprite } from "../gameEngine/Sprite";
 import { getCharacterFrame } from "../objects/TextBox/SpriteMapping";
 import { resources } from "../Resources";
-import { Vector2 } from "../utils/vector";
+import { fontSize, spriteSize, Vector2 } from "../utils/vector";
 
 type NumericSprites = {
   [key: string]: Sprite;
@@ -39,7 +39,7 @@ export class ScoreText extends GameObject {
         name: char,
         frameColumns: 13,
         frameRows: 5,
-        frameSize: new Vector2(8, 8),
+        frameSize: fontSize,
         frameIndex: getCharacterFrame(char),
       });
     }

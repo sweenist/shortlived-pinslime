@@ -1,7 +1,7 @@
 import { Animations } from './Animations';
 import { GameObject } from './GameObject';
 import type { ImageResource } from '../Resources';
-import { Vector2 } from '../utils/vector';
+import { spriteSize, Vector2 } from '../utils/vector';
 import { OffsetIndexPattern } from './animations/OffsetIndexPattern';
 import type { DrawLayers } from '../types';
 
@@ -33,7 +33,7 @@ export class Sprite extends GameObject {
     super(params.position); // relative offset
     this.resource = params.resource;
     this.name = params.name ?? this.resource.name;
-    this.frameSize = params.frameSize ?? new Vector2(16, 16);
+    this.frameSize = params.frameSize ?? spriteSize;
     this.frameColumns = params.frameColumns ?? 1;
     this.frameRows = params.frameRows ?? 1;
     this.frameIndex = params.frameIndex ?? 0;

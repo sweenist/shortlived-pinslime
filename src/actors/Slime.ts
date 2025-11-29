@@ -4,7 +4,7 @@ import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INI
 import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
-import { CardinalVectors, Vector2 } from '../utils/vector';
+import { CardinalVectors, spriteSize, Vector2 } from '../utils/vector';
 import {
   DEATH,
   EXPIRED,
@@ -53,7 +53,7 @@ export class Slime extends GameObject {
 
     this.body = new Sprite({
       resource: resources.images.hero,
-      frameSize: new Vector2(16, 16),
+      frameSize: spriteSize,
       frameColumns: 6,
       frameRows: 6,
       frameIndex: 1,
@@ -71,7 +71,7 @@ export class Slime extends GameObject {
 
     this.gizmo = new Sprite({
       resource: resources.images['gizmo'],
-      frameSize: new Vector2(16, 16),
+      frameSize: spriteSize,
       position: Vector2.Zero()
     });
 
@@ -262,7 +262,7 @@ export class Slime extends GameObject {
     this.itemPickupShell.addChild(
       new Sprite({
         resource: image,
-        frameSize: new Vector2(16, 16),
+        frameSize: spriteSize,
         position: new Vector2(0, -18),
         name: 'item'
       })

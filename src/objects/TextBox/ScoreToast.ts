@@ -1,7 +1,7 @@
 import { GameObject } from '../../gameEngine/GameObject';
 import { Sprite } from '../../gameEngine/Sprite';
 import { resources } from '../../Resources';
-import { Vector2 } from '../../utils/vector';
+import { fontSize, Vector2 } from '../../utils/vector';
 import { getCharacterFrame, getCharacterWidth } from './SpriteMapping';
 
 type CharacterSprites = {
@@ -31,7 +31,7 @@ export class ScoreToast extends GameObject {
           name: char,
           frameColumns: 13,
           frameRows: 5,
-          frameSize: new Vector2(8, 8),
+          frameSize: fontSize,
           frameIndex: getCharacterFrame(char),
         }),
       };

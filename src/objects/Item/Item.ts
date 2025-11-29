@@ -3,7 +3,7 @@ import { gameEvents } from '../../events/Events';
 import { GameObject } from '../../gameEngine/GameObject';
 import { Sprite } from '../../gameEngine/Sprite';
 import { resources } from '../../Resources';
-import { Vector2 } from '../../utils/vector';
+import { spriteSize, Vector2 } from '../../utils/vector';
 import { signals } from '../../events/eventConstants';
 import type { Movement } from '../../types';
 import type { Main } from '../../gameEngine/Main';
@@ -33,7 +33,7 @@ export class Item extends GameObject {
 
     this.sprite = new Sprite({
       resource: resources.images[this.imageName],
-      frameSize: new Vector2(16, 16),
+      frameSize: spriteSize,
       frameColumns: 2,
       frameRows: 3,
       animations: new Animations({

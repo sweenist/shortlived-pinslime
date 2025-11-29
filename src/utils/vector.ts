@@ -90,3 +90,6 @@ export const CardinalVectors: Record<Direction, Vector2> = {
   DOWN: new Vector2(0, 1),
   LEFT: new Vector2(-1, 0),
 };
+
+export const spriteSize = new Vector2(16, 16);
+export const fontSize = new Vector2(8, 8);
