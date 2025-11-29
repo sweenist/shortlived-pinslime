@@ -32,6 +32,8 @@ class Resources {
       stopwatch: 'sprites/Stopwatch.png',
       textbox: 'sprites/text-box.png',
       walls: 'sprites/PingWalls.png',
+      wallsBlue: 'sprites/Walls-Blue.png',
+      wallsGreen: 'sprites/Walls-Green.png',
       floors: 'sprites/Floor.png',
       //Items
       grape: 'sprites/Grape.png',
