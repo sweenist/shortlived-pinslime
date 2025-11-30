@@ -12,7 +12,6 @@ import type { deflectionCoefficient, Direction, DirectionShift, ItemConfig, MapC
 import { Ramp } from '../objects/Obstacles/Ramp';
 import { PullKnob } from '../objects/PullKnob/PullKnob';
 import { Sprite } from '../gameEngine/Sprite';
-import tiledMap from './config/level0.map.json';
 import { Stopwatch } from '../objects/Stopwatch/Stopwatch';
 import { Item } from '../objects/Item/Item';
 import type { ItemEventMetaData } from '../types/eventTypes';
@@ -98,7 +97,7 @@ export class Pinball extends Level {
   }
 
   private buildMap(resourceConfigs: ResourceConfig[], tileConfig: { [key: number]: TileConfig }) {
-    const { data, width, height } = tiledMap.layers[0] as MapConfig;
+    const { data, width, height } = this.levelConfiguration.tiledMap as MapConfig;
 
     this.mapSize = new Vector2(width * TILE_WIDTH, height * TILE_HEIGHT);
 
