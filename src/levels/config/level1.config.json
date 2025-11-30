@@ -1,0 +1,311 @@
+{
+  "tileConfig": {
+    "1": { "resourceName": "floors", "frameIndex": 0, "isSolid": false },
+    "2": { "resourceName": "floors", "frameIndex": 1, "isSolid": false },
+    "3": { "resourceName": "floors", "frameIndex": 2, "isSolid": false },
+    "4": { "resourceName": "floors", "frameIndex": 3, "isSolid": false },
+    "5": { "resourceName": "floors", "frameIndex": 4, "isSolid": false },
+    "6": { "resourceName": "floors", "frameIndex": 5, "isSolid": false },
+    "7": { "resourceName": "floors", "frameIndex": 6, "isSolid": false },
+    "8": { "resourceName": "floors", "frameIndex": 7, "isSolid": false },
+    "9": { "resourceName": "floors", "frameIndex": 8, "isSolid": false },
+    "10": { "resourceName": "floors", "frameIndex": 9, "isSolid": false },
+    "11": { "resourceName": "floors", "frameIndex": 10, "isSolid": false },
+    "12": { "resourceName": "floors", "frameIndex": 11, "isSolid": false },
+    "13": { "resourceName": "floors", "frameIndex": 12, "isSolid": false },
+    "14": { "resourceName": "floors", "frameIndex": 13, "isSolid": false },
+    "15": { "resourceName": "floors", "frameIndex": 14, "isSolid": false },
+    "16": { "resourceName": "floors", "frameIndex": 15, "isSolid": false },
+    "17": { "resourceName": "floors", "frameIndex": 16, "isSolid": false },
+    "21": { "resourceName": "wallsBlue", "frameIndex": 0 },
+    "22": { "resourceName": "wallsBlue", "frameIndex": 1 },
+    "23": { "resourceName": "wallsBlue", "frameIndex": 2 },
+    "24": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 3,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "25": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 4,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "26": { "resourceName": "wallsBlue", "frameIndex": 5 },
+    "27": { "resourceName": "wallsBlue", "frameIndex": 6 },
+    "28": { "resourceName": "wallsBlue", "frameIndex": 7 },
+    "29": { "resourceName": "wallsBlue", "frameIndex": 8 },
+    "30": { "resourceName": "wallsBlue", "frameIndex": 9 },
+    "31": { "resourceName": "wallsBlue", "frameIndex": 10 },
+    "32": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 11,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "33": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 12,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "34": { "resourceName": "wallsBlue", "frameIndex": 13 },
+    "35": { "resourceName": "wallsBlue", "frameIndex": 14 },
+    "36": { "resourceName": "wallsBlue", "frameIndex": 15 },
+    "37": { "resourceName": "wallsBlue", "frameIndex": 16 },
+    "38": { "resourceName": "wallsBlue", "frameIndex": 17 },
+    "39": { "resourceName": "wallsBlue", "frameIndex": 18 },
+    "40": { "resourceName": "wallsBlue", "frameIndex": 19 },
+    "41": { "resourceName": "wallsBlue", "frameIndex": 20 },
+    "42": { "resourceName": "wallsBlue", "frameIndex": 21 },
+    "43": { "resourceName": "wallsBlue", "frameIndex": 22, "isSolid": false },
+    "44": { "resourceName": "wallsBlue", "frameIndex": 23 },
+    "45": { "resourceName": "wallsBlue", "frameIndex": 24 },
+    "46": { "resourceName": "wallsBlue", "frameIndex": 25 },
+    "47": { "resourceName": "wallsBlue", "frameIndex": 26 },
+    "48": { "resourceName": "wallsBlue", "frameIndex": 27 },
+    "49": { "resourceName": "wallsBlue", "frameIndex": 28 },
+    "50": { "resourceName": "wallsBlue", "frameIndex": 29 },
+    "51": { "resourceName": "wallsBlue", "frameIndex": 30 },
+    "52": { "resourceName": "wallsBlue", "frameIndex": 31 },
+    "53": { "resourceName": "wallsBlue", "frameIndex": 32 },
+    "54": { "resourceName": "wallsBlue", "frameIndex": 33 },
+    "55": { "resourceName": "wallsBlue", "frameIndex": 34 },
+    "56": { "resourceName": "wallsBlue", "frameIndex": 35 },
+    "57": { "resourceName": "wallsBlue", "frameIndex": 36 },
+    "58": { "resourceName": "wallsBlue", "frameIndex": 37 },
+    "59": { "resourceName": "wallsBlue", "frameIndex": 38 },
+    "60": { "resourceName": "wallsBlue", "frameIndex": 39 },
+    "61": { "resourceName": "wallsBlue", "frameIndex": 40 },
+    "62": { "resourceName": "wallsBlue", "frameIndex": 41 },
+    "63": { "resourceName": "wallsBlue", "frameIndex": 42 },
+    "64": { "resourceName": "wallsBlue", "frameIndex": 43 },
+    "65": { "resourceName": "wallsBlue", "frameIndex": 44 },
+    "66": { "resourceName": "wallsBlue", "frameIndex": 45 },
+    "69": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 48,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "70": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 49,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "71": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 50,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "72": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 51,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "73": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 52,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "74": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 53,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "77": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 56,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "78": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 57,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "79": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 58,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "80": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 59,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "81": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 60,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "82": {
+      "resourceName": "wallsBlue",
+      "frameIndex": 61,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    }
+  },
+  "paddles": {
+    "S_E": [
+      { "x": 26, "y": 12 },
+      { "x": 7, "y": 35 },
+      { "x": 7, "y": 30 }
+    ],
+    "E_S": [
+      { "x": 27, "y": 35 },
+      { "x": 22, "y": 34 },
+      { "x": 8, "y": 25 },
+      { "x": 27, "y": 24 }
+    ],
+    "W_S": [
+      { "x": 7, "y": 7 },
+      { "x": 15, "y": 7 },
+      { "x": 30, "y": 7 },
+      { "x": 17, "y": 20 },
+      { "x": 22, "y": 24 },
+      { "x": 24, "y": 26 },
+      { "x": 22, "y": 20 },
+      { "x": 19, "y": 26 },
+      { "x": 26, "y": 7 }
+    ],
+    "N_E": [
+      { "x": 26, "y": 8 },
+      { "x": 7, "y": 10 },
+      { "x": 7, "y": 11 },
+      { "x": 13, "y": 14 },
+      { "x": 26, "y": 15 },
+      { "x": 30, "y": 35 },
+      { "x": 27, "y": 36 },
+      { "x": 7, "y": 36 }
+    ],
+    "E_N": [
+      { "x": 31, "y": 15 },
+      { "x": 13, "y": 20 },
+      { "x": 26, "y": 20 },
+      { "x": 40, "y": 37 },
+      { "x": 41, "y": 37 },
+      { "x": 18, "y": 37 },
+      { "x": 10, "y": 30 },
+      { "x": 22, "y": 26 }
+    ],
+    "W_N": [],
+    "S_W": [
+      { "x": 13, "y": 17 },
+      { "x": 34, "y": 25 }
+    ],
+    "N_W": [
+      { "x": 41, "y": 15 },
+      { "x": 38, "y": 28 },
+      { "x": 19, "y": 37 },
+      { "x": 10, "y": 26 }
+    ]
+  },
+  "pullknobConfig": {
+    "location": { "x": 5, "y": 20 }
+  },
+  "slimeConfig": {
+    "location": { "x": 6, "y": 20 },
+    "speed": 4
+  },
+  "itemConfig": [
+    { "location": { "x": 8, "y": 16 }, "image": "grape" },
+    { "location": { "x": 12, "y": 8 }, "image": "grape" },
+    { "location": { "x": 12, "y": 9 }, "image": "grape" },
+    { "location": { "x": 17, "y": 8 }, "image": "grape" },
+    { "location": { "x": 17, "y": 9 }, "image": "grape" },
+    { "location": { "x": 24, "y": 14 }, "image": "grape" },
+    { "location": { "x": 27, "y": 14 }, "image": "grape" },
+    { "location": { "x": 30, "y": 12 }, "image": "grape" },
+    { "location": { "x": 31, "y": 11 }, "image": "grape" },
+    { "location": { "x": 30, "y": 18 }, "image": "grape" },
+    { "location": { "x": 41, "y": 30 }, "image": "grape" },
+    { "location": { "x": 40, "y": 33 }, "image": "grape" },
+    { "location": { "x": 36, "y": 28 }, "image": "grape" },
+    { "location": { "x": 38, "y": 35 }, "image": "grape" },
+    { "location": { "x": 36, "y": 36 }, "image": "grape" },
+    { "location": { "x": 30, "y": 28 }, "image": "grape" },
+    { "location": { "x": 21, "y": 29 }, "image": "grape" },
+    { "location": { "x": 19, "y": 29 }, "image": "grape" },
+    { "location": { "x": 21, "y": 35 }, "image": "grape" },
+    { "location": { "x": 11, "y": 34 }, "image": "grape" },
+    { "location": { "x": 12, "y": 31 }, "image": "grape" },
+    { "location": { "x": 12, "y": 25 }, "image": "grape" },
+    { "location": { "x": 14, "y": 22 }, "image": "grape" },
+
+    { "location": { "x": 20, "y": 9 }, "image": "orange" },
+    { "location": { "x": 15, "y": 18 }, "image": "orange" },
+    { "location": { "x": 23, "y": 14 }, "image": "orange" },
+    { "location": { "x": 38, "y": 18 }, "image": "orange" },
+    { "location": { "x": 35, "y": 21 }, "image": "orange" },
+    { "location": { "x": 40, "y": 24 }, "image": "orange" },
+    { "location": { "x": 34, "y": 34 }, "image": "orange" },
+    { "location": { "x": 32, "y": 28 }, "image": "orange" },
+    { "location": { "x": 26, "y": 30 }, "image": "orange" },
+    { "location": { "x": 26, "y": 32 }, "image": "orange" },
+    { "location": { "x": 22, "y": 25 }, "image": "orange" },
+    { "location": { "x": 9, "y": 22 }, "image": "orange" }
+  ],
+  "resourceConfig": [
+    {
+      "name": "wallsBlue",
+      "startIndex": 21,
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 8,
+        "rows": 8
+      }
+    },
+    {
+      "name": "floors",
+      "startIndex": 1,
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 5,
+        "rows": 4
+      }
+    },
+    {
+      "name": "paddles",
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 4,
+        "rows": 4
+      }
+    },
+    {
+      "name": "pullknob",
+      "frameConfig": {
+        "size": { "x": 80, "y": 16 },
+        "columns": 1,
+        "rows": 7
+      }
+    }
+  ]
+}

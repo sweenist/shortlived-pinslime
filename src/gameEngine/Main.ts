@@ -175,8 +175,7 @@ export class Main extends GameObject {
         {
           text: 'play',
           action: () => {
-            console.info('Initializing level 0');
-            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]))
+            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[1]))
           }
         }]
     });
