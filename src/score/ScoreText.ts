@@ -2,7 +2,7 @@ import { GameObject } from "../gameEngine/GameObject";
 import { Sprite } from "../gameEngine/Sprite";
 import { getCharacterFrame } from "../objects/TextBox/SpriteMapping";
 import { resources } from "../Resources";
-import { fontSize, spriteSize, Vector2 } from "../utils/vector";
+import { fontSize, Vector2 } from "../utils/vector";
 
 type NumericSprites = {
   [key: string]: Sprite;
@@ -27,7 +27,6 @@ export class ScoreText extends GameObject {
     this.leadingZeros = params.leadingZeros ?? null
 
     this.scoreChars = this.getNumberSprites();
-    console.warn(this.scoreChars);
   }
 
   private getNumberSprites(): NumericSprites {

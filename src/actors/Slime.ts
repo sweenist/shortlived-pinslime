@@ -135,6 +135,8 @@ export class Slime extends GameObject {
       else if (value === STATE_GAMEOVER) {
         this.body.isVisible = false;
         this.isLocked = true;
+        this.itemPickupShell?.destroy();
+
         gameEvents.unsubscribe(this)
         if (this.isLevelBuilding) {
           this.addChild(this.gizmo);

@@ -15,7 +15,6 @@ export class ScoreToast extends GameObject {
 
   constructor(params: { position: Vector2, score: string }) {
     super(params.position);
-    console.info("the SCORE:", params.score);
 
     this.scoreChars = this.getNumberSprites(params.score)
   }

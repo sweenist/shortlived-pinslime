@@ -129,11 +129,8 @@ export class OptionDialog extends GameObject {
   }
 
   show(): void {
-    console.info(this.canvas.parentElement?.classList);
     this.canvas.parentElement?.classList.remove('hidden');
     this.canvas.parentElement?.classList.add('opening');
-
-    console.info('after', this.canvas.parentElement?.classList);
   }
 
   displayMenu(deltaTime: number, root: Main): void {

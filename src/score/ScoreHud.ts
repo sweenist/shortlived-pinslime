@@ -14,7 +14,6 @@ export class ScoreHud extends GameObject {
   timeLabel: Label;
   timeValue: ScoreText;
   canvasContext: CanvasRenderingContext2D;
-  shouldDebug: boolean = true;
 
   constructor(viewModel: ScoreViewModel) {
     super();
@@ -75,7 +74,6 @@ export class ScoreHud extends GameObject {
   }
 
   draw(_ctx: CanvasRenderingContext2D, _position: Vector2, _debug?: boolean): void {
-    super.draw(this.canvasContext, this.position, this.shouldDebug);
-    this.shouldDebug = false
+    super.draw(this.canvasContext, this.position);
   }
 }

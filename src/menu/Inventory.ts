@@ -32,7 +32,6 @@ export class Inventory extends GameObject {
         id: this.nextId,
         image: resources.images.rod,
       });
-      console.log('inventory items', this.items);
       this.renderInventory();
     });
   }

@@ -48,7 +48,6 @@ export class Main extends GameObject {
   }
 
   ready(): void {
-    console.warn('canmera', this.camera, this.position);
     gameEvents.on<Level | Title>(signals.levelChanging, this, (newLevel) => {
       if (newLevel instanceof Level) {
         this.title?.destroy();

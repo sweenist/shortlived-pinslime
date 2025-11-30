@@ -33,7 +33,6 @@ export class Level extends GameObject {
   }
 
   destroy(): void {
-    console.debug(`Unsubscribing ${this.constructor.name} event listeners`);
     gameEvents.unsubscribe(this);
     super.destroy();
   }
