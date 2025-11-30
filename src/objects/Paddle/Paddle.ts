@@ -42,6 +42,7 @@ export interface PaddleParams {
 
 export class Paddle extends GameObject {
   sprite: Sprite;
+  bottomRight: Vector2;
   deflection: Direction;
   isActivated: boolean = false;
   isTriggered: boolean = false;
@@ -66,7 +67,8 @@ export class Paddle extends GameObject {
       })
     });
 
-    this.addChild(this.sprite)
+    this.addChild(this.sprite);
+    this.bottomRight = this.position.add(spriteSize);
   }
 
   ready(): void {

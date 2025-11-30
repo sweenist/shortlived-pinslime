@@ -32,6 +32,7 @@ export class Pinball extends Level {
   optionsMenu: OptionDialog | undefined;
   levelConfiguration: LevelConfiguration;
   scoreHud: ScoreHud;
+  paddles: Paddle[] = [];
 
   constructor(params: LevelConfiguration) {
     super(params);
@@ -61,6 +62,7 @@ export class Pinball extends Level {
           position: new Vector2(gridCells(location.x), gridCells(location.y))
         });
         this.addChild(paddleObject);
+        this.paddles.push(paddleObject);
       });
     });
 
@@ -95,7 +97,7 @@ export class Pinball extends Level {
     });
   }
 
-  buildMap(resourceConfigs: ResourceConfig[], tileConfig: { [key: number]: TileConfig }) {
+  private buildMap(resourceConfigs: ResourceConfig[], tileConfig: { [key: number]: TileConfig }) {
     const { data, width, height } = tiledMap.layers[0] as MapConfig;
 
     this.mapSize = new Vector2(width * TILE_WIDTH, height * TILE_HEIGHT);

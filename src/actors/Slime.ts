@@ -15,7 +15,7 @@ import {
   MOVE_RIGHT,
   MOVE_UP,
 } from './slimeAnimations';
-import { moveTowards } from '../utils/moveUtils';
+import { moveTowards, updateMidPoint } from '../utils/moveUtils';
 import { gameEvents } from '../events/Events';
 import type { ItemEventMetaData } from '../types/eventTypes';
 import type { Main } from '../gameEngine/Main';
@@ -25,11 +25,13 @@ import { Ramp } from '../objects/Obstacles/Ramp';
 import { Paddle } from '../objects/Paddle/Paddle';
 import { AfterImage } from './AfterImage';
 import { ScoreToast } from '../objects/TextBox/ScoreToast';
+import type { Pinball } from '../levels/Pinball';
 
 const itemShiftStep = new Vector2(0, -1);
 
 export class Slime extends GameObject {
   facingDirection: Direction;
+  midPoint: Vector2;
   destinationPosition: Vector2;
   body: Sprite;
   paddle: Paddle | null | undefined;
@@ -69,6 +71,8 @@ export class Slime extends GameObject {
       }),
     });
 
+    this.midPoint = this.position.add(new Vector2(8, 8));
+
     this.gizmo = new Sprite({
       resource: resources.images['gizmo'],
       frameSize: spriteSize,
@@ -101,10 +105,7 @@ export class Slime extends GameObject {
     );
 
     gameEvents.on<Vector2>(signals.gameAction, this, (_) => {
-      if (this.paddle && this.paddle.isActivated) {
-        this.facingDirection = this.paddle.deflection;
-        this.paddle = null;
-      }
+      this.redirect();
     });
 
     gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
@@ -154,10 +155,7 @@ export class Slime extends GameObject {
 
     const { input, state } = root;
     if (input.getActionJustPressed('Space') && this.paddle) {
-      if (this.paddle.isActivated) {
-        this.facingDirection = this.paddle.deflection;
-        this.paddle = null;
-      }
+      this.redirect()
     }
 
     if (state.current === STATE_LAUNCHING) {
@@ -169,11 +167,16 @@ export class Slime extends GameObject {
       return;
     }
 
-    const distance = moveTowards(this.position, this.destinationPosition, this.speed);
-    const hasArrived = distance < 1;
+    if (state.isPlaying) {
+      const distance = moveTowards(this.position, this.destinationPosition, this.speed);
+      updateMidPoint(this.position, this.midPoint);
+      this.checkForPaddle();
 
-    if (hasArrived) {
-      this.tryMove(root);
+      const hasArrived = distance < 1;
+
+      if (hasArrived) {
+        this.tryMove(root);
+      }
     }
 
     if (state.current !== STATE_GAMEOVER)
@@ -220,7 +223,6 @@ export class Slime extends GameObject {
     });
     const isObstruction = destinationTile?.some(tile => tile.isSolid);
     const ramp = destinationTile?.find((tile): tile is Ramp => tile instanceof Ramp) as Ramp | undefined;
-    const paddle = destinationTile?.find((tile): tile is Paddle => tile instanceof Paddle) as Paddle | undefined;
 
     if (isObstruction) {
       state.kill();
@@ -228,12 +230,6 @@ export class Slime extends GameObject {
     }
     if (ramp) {
       this.turn(ramp, () => state.kill());
-    }
-    if (paddle) {
-      console.info('paddle', paddle);
-      this.paddle = paddle;
-    } else if (this.paddle) {
-      this.paddle = null;
     }
 
     this.destinationPosition = destination;
@@ -273,9 +269,49 @@ export class Slime extends GameObject {
     this.addChild(this.itemPickupShell);
   }
 
+  checkForPaddle() {
+    const isHorizontal = [LEFT, RIGHT].includes(this.facingDirection);
+
+    // only check if midpoint coordinate is multiple of 16
+    if (isHorizontal && this.midPoint.x % 16 !== 0)
+      return;
+    if (!isHorizontal && this.midPoint.y % 16 !== 0)
+      return;
+
+    const usePaddleExtrema = [UP, LEFT].includes(this.facingDirection);
+
+    let checkPosition: Vector2 = this.midPoint.duplicate();
+
+    switch (this.facingDirection) {
+      case 'UP':
+        {
+          checkPosition.x = this.position.x + 16;
+          break;
+        }
+      case 'DOWN': {
+        checkPosition.x = this.position.x;
+        break;
+      }
+      case 'LEFT': {
+        checkPosition.y = this.position.y + 16;
+        break;
+      }
+      case 'RIGHT': {
+        checkPosition.y = this.position.y;
+      }
+    }
+
+    const candidate = (this.parent as Pinball).paddles.find((paddle) => {
+      return usePaddleExtrema
+        ? paddle.bottomRight.equals(checkPosition)
+        : paddle.position.equals(checkPosition);
+    }) ?? null;
+
+    this.paddle = candidate;
+  }
+
   turn(ramp: Ramp, kill: () => void) {
     if (!ramp.canTurn(this.facingDirection)) {
-      console.info(`Did not find ${this.facingDirection} in`, ramp.approaches)
       kill();
     }
 
@@ -289,6 +325,14 @@ export class Slime extends GameObject {
         this.facingDirection = k;
       }
     })
+  }
+
+  redirect() {
+    if (this.paddle && this.paddle.isActivated) {
+      this.destinationPosition = this.paddle.position.duplicate();
+      this.facingDirection = this.paddle.deflection;
+      this.paddle = null;
+    }
   }
 
   debug(level: number) {
