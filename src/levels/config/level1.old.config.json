@@ -242,9 +242,9 @@
     "speed": 4
   },
   "itemConfig": [
-    { "location": { "x": 32, "y": 7 }, "image": "orange", "pointValue": 500 },
-    { "location": { "x": 8, "y": 18 }, "image": "grape", "pointValue": 250 },
-    { "location": { "x": 10, "y": 7 }, "image": "grape", "pointValue": 250 }
+    { "location": { "x": 32, "y": 7 }, "image": "orange" },
+    { "location": { "x": 8, "y": 18 }, "image": "grape" },
+    { "location": { "x": 10, "y": 7 }, "image": "grape" }
   ],
   "resourceConfig": [
     {

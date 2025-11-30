@@ -21,6 +21,7 @@ import type { LevelConfiguration } from './configurationManager';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
 import { ScoreHud } from '../score/ScoreHud';
 import { ScoreViewModel } from '../score/ScoreViewModel';
+import { pointValues } from '../objects/Item/itemConstants';
 
 const TILE_HEIGHT = 16 as const;
 const TILE_WIDTH = 16 as const
@@ -69,7 +70,7 @@ export class Pinball extends Level {
       const collectible = new Item({
         position: Vector2.fromGridPoint(item.location),
         image: item.image,
-        pointValue: item.pointValue
+        pointValue: pointValues[item.image]
       });
       this.addChild(collectible);
     })

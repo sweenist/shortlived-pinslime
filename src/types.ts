@@ -61,7 +61,6 @@ export type MapConfig = {
 export type ItemConfig = {
   location: point,
   image: string,
-  pointValue: number,
 };
 
 export type PaddleLocations = Partial<Record<keyof typeof DirectionShift, Array<point>>>
