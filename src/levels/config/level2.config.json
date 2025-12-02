@@ -1,0 +1,298 @@
+{
+  "tileConfig": {
+    "1": { "resourceName": "floors", "frameIndex": 0, "isSolid": false },
+    "2": { "resourceName": "floors", "frameIndex": 1, "isSolid": false },
+    "3": { "resourceName": "floors", "frameIndex": 2, "isSolid": false },
+    "4": { "resourceName": "floors", "frameIndex": 3, "isSolid": false },
+    "5": { "resourceName": "floors", "frameIndex": 4, "isSolid": false },
+    "6": { "resourceName": "floors", "frameIndex": 5, "isSolid": false },
+    "7": { "resourceName": "floors", "frameIndex": 6, "isSolid": false },
+    "8": { "resourceName": "floors", "frameIndex": 7, "isSolid": false },
+    "9": { "resourceName": "floors", "frameIndex": 8, "isSolid": false },
+    "10": { "resourceName": "floors", "frameIndex": 9, "isSolid": false },
+    "11": { "resourceName": "floors", "frameIndex": 10, "isSolid": false },
+    "12": { "resourceName": "floors", "frameIndex": 11, "isSolid": false },
+    "13": { "resourceName": "floors", "frameIndex": 12, "isSolid": false },
+    "14": { "resourceName": "floors", "frameIndex": 13, "isSolid": false },
+    "15": { "resourceName": "floors", "frameIndex": 14, "isSolid": false },
+    "16": { "resourceName": "floors", "frameIndex": 15, "isSolid": false },
+    "17": { "resourceName": "floors", "frameIndex": 16, "isSolid": false },
+    "21": { "resourceName": "wallsGreen", "frameIndex": 0 },
+    "22": { "resourceName": "wallsGreen", "frameIndex": 1 },
+    "23": { "resourceName": "wallsGreen", "frameIndex": 2 },
+    "24": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 3,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "25": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 4,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "26": { "resourceName": "wallsGreen", "frameIndex": 5 },
+    "27": { "resourceName": "wallsGreen", "frameIndex": 6 },
+    "28": { "resourceName": "wallsGreen", "frameIndex": 7 },
+    "29": { "resourceName": "wallsGreen", "frameIndex": 8 },
+    "30": { "resourceName": "wallsGreen", "frameIndex": 9 },
+    "31": { "resourceName": "wallsGreen", "frameIndex": 10 },
+    "32": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 11,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "33": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 12,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "34": { "resourceName": "wallsGreen", "frameIndex": 13 },
+    "35": { "resourceName": "wallsGreen", "frameIndex": 14 },
+    "36": { "resourceName": "wallsGreen", "frameIndex": 15 },
+    "37": { "resourceName": "wallsGreen", "frameIndex": 16 },
+    "38": { "resourceName": "wallsGreen", "frameIndex": 17 },
+    "39": { "resourceName": "wallsGreen", "frameIndex": 18 },
+    "40": { "resourceName": "wallsGreen", "frameIndex": 19 },
+    "41": { "resourceName": "wallsGreen", "frameIndex": 20 },
+    "42": { "resourceName": "wallsGreen", "frameIndex": 21 },
+    "43": { "resourceName": "wallsGreen", "frameIndex": 22, "isSolid": false },
+    "44": { "resourceName": "wallsGreen", "frameIndex": 23 },
+    "45": { "resourceName": "wallsGreen", "frameIndex": 24 },
+    "46": { "resourceName": "wallsGreen", "frameIndex": 25 },
+    "47": { "resourceName": "wallsGreen", "frameIndex": 26 },
+    "48": { "resourceName": "wallsGreen", "frameIndex": 27 },
+    "49": { "resourceName": "wallsGreen", "frameIndex": 28 },
+    "50": { "resourceName": "wallsGreen", "frameIndex": 29 },
+    "51": { "resourceName": "wallsGreen", "frameIndex": 30 },
+    "52": { "resourceName": "wallsGreen", "frameIndex": 31 },
+    "53": { "resourceName": "wallsGreen", "frameIndex": 32 },
+    "54": { "resourceName": "wallsGreen", "frameIndex": 33 },
+    "55": { "resourceName": "wallsGreen", "frameIndex": 34 },
+    "56": { "resourceName": "wallsGreen", "frameIndex": 35 },
+    "57": { "resourceName": "wallsGreen", "frameIndex": 36 },
+    "58": { "resourceName": "wallsGreen", "frameIndex": 37 },
+    "59": { "resourceName": "wallsGreen", "frameIndex": 38 },
+    "60": { "resourceName": "wallsGreen", "frameIndex": 39 },
+    "61": { "resourceName": "wallsGreen", "frameIndex": 40 },
+    "62": { "resourceName": "wallsGreen", "frameIndex": 41 },
+    "63": { "resourceName": "wallsGreen", "frameIndex": 42 },
+    "64": { "resourceName": "wallsGreen", "frameIndex": 43 },
+    "65": { "resourceName": "wallsGreen", "frameIndex": 44 },
+    "66": { "resourceName": "wallsGreen", "frameIndex": 45 },
+    "69": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 48,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "70": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 49,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "71": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 50,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "72": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 51,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "73": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 52,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["RIGHT", "DOWN"]
+    },
+    "74": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 53,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["LEFT", "DOWN"]
+    },
+    "77": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 56,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "78": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 57,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "79": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 58,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "80": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 59,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    },
+    "81": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 60,
+      "isSolid": false,
+      "deflection": 1,
+      "approaches": ["RIGHT", "UP"]
+    },
+    "82": {
+      "resourceName": "wallsGreen",
+      "frameIndex": 61,
+      "isSolid": false,
+      "deflection": -1,
+      "approaches": ["LEFT", "UP"]
+    }
+  },
+  "paddles": {
+    "S_E": [
+      { "x": 27, "y": 7 },
+      { "x": 27, "y": 27 },
+      { "x": 31, "y": 32 },
+      { "x": 24, "y": 31 },
+      { "x": 7, "y": 27 }
+    ],
+    "E_S": [
+      { "x": 8, "y": 15 },
+      { "x": 14, "y": 7 },
+      { "x": 14, "y": 20 },
+      { "x": 26, "y": 27 },
+      { "x": 10, "y": 24 }
+    ],
+    "W_S": [
+      { "x": 15, "y": 7 },
+      { "x": 20, "y": 17 }
+    ],
+    "N_E": [
+      { "x": 37, "y": 25 },
+      { "x": 26, "y": 32 },
+      { "x": 23, "y": 19 }
+    ],
+    "E_N": [
+      { "x": 16, "y": 12 },
+      { "x": 11, "y": 20 },
+      { "x": 22, "y": 17 },
+      { "x": 24, "y": 17 },
+      { "x": 33, "y": 27 },
+      { "x": 15, "y": 22 },
+      { "x": 11, "y": 34 }
+    ],
+    "W_N": [{ "x": 17, "y": 20 }],
+    "S_W": [
+      { "x": 32, "y": 13 },
+      { "x": 38, "y": 11 },
+      { "x": 14, "y": 27 }
+    ],
+    "N_W": [
+      { "x": 5, "y": 13 },
+      { "x": 17, "y": 15 },
+      { "x": 32, "y": 10 },
+      { "x": 38, "y": 8 },
+      { "x": 38, "y": 14 },
+      { "x": 24, "y": 29 },
+      { "x": 14, "y": 31 }
+    ]
+  },
+  "pullknobConfig": {
+    "location": { "x": 6, "y": 20 }
+  },
+  "slimeConfig": {
+    "location": { "x": 7, "y": 20 },
+    "speed": 4
+  },
+  "itemConfig": [
+    { "location": { "x": 7, "y": 9 }, "image": "grape" },
+    { "location": { "x": 8, "y": 32 }, "image": "grape" },
+    { "location": { "x": 10, "y": 11 }, "image": "grape" },
+    { "location": { "x": 15, "y": 10 }, "image": "grape" },
+    { "location": { "x": 10, "y": 28 }, "image": "grape" },
+    { "location": { "x": 22, "y": 11 }, "image": "grape" },
+    { "location": { "x": 28, "y": 13 }, "image": "grape" },
+    { "location": { "x": 25, "y": 8 }, "image": "grape" },
+    { "location": { "x": 35, "y": 11 }, "image": "grape" },
+    { "location": { "x": 25, "y": 31 }, "image": "grape" },
+    { "location": { "x": 26, "y": 28 }, "image": "grape" },
+    { "location": { "x": 29, "y": 22 }, "image": "grape" },
+    { "location": { "x": 36, "y": 18 }, "image": "grape" },
+    { "location": { "x": 38, "y": 7 }, "image": "grape" },
+    { "location": { "x": 39, "y": 23 }, "image": "grape" },
+
+    { "location": { "x": 11, "y": 13 }, "image": "orange" },
+    { "location": { "x": 13, "y": 27 }, "image": "orange" },
+    { "location": { "x": 15, "y": 32 }, "image": "orange" },
+    { "location": { "x": 28, "y": 7 }, "image": "orange" },
+    { "location": { "x": 36, "y": 8 }, "image": "orange" },
+    { "location": { "x": 34, "y": 14 }, "image": "orange" },
+    { "location": { "x": 34, "y": 21 }, "image": "orange" },
+    { "location": { "x": 39, "y": 25 }, "image": "orange" },
+    { "location": { "x": 39, "y": 27 }, "image": "orange" },
+    { "location": { "x": 31, "y": 28 }, "image": "orange" },
+    { "location": { "x": 26, "y": 33 }, "image": "orange" },
+    { "location": { "x": 22, "y": 29 }, "image": "orange" },
+    { "location": { "x": 21, "y": 10 }, "image": "orange" }
+  ],
+  "resourceConfig": [
+    {
+      "name": "wallsGreen",
+      "startIndex": 21,
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 8,
+        "rows": 8
+      }
+    },
+    {
+      "name": "floors",
+      "startIndex": 1,
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 5,
+        "rows": 4
+      }
+    },
+    {
+      "name": "paddles",
+      "frameConfig": {
+        "size": { "x": 16, "y": 16 },
+        "columns": 4,
+        "rows": 4
+      }
+    },
+    {
+      "name": "pullknob",
+      "frameConfig": {
+        "size": { "x": 80, "y": 16 },
+        "columns": 1,
+        "rows": 7
+      }
+    }
+  ]
+}
