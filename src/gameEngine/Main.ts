@@ -51,7 +51,7 @@ export class Main extends GameObject {
     gameEvents.on<Level | Title>(signals.levelChanging, this, (newLevel) => {
       if (newLevel instanceof Level) {
         this.title?.destroy();
-        this.startFade(() => this.setLevel(newLevel));
+        this.setLevel(newLevel);
       } else if (newLevel instanceof Title) {
         this.level?.destroy();
         this.state.set(STATE_TITLE);
