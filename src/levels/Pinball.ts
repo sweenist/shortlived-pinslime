@@ -59,7 +59,7 @@ export class Pinball extends Level {
       locations.forEach((location: { x: number; y: number }) => {
         const paddleObject = new Paddle({
           direction: direction as keyof typeof DirectionShift,
-          position: new Vector2(gridCells(location.x), gridCells(location.y))
+          position: Vector2.fromGridPoint(location)
         });
         this.addChild(paddleObject);
         this.paddles.push(paddleObject);
@@ -75,11 +75,11 @@ export class Pinball extends Level {
       this.addChild(collectible);
     })
 
-    const pullknobPosition = new Vector2(gridCells(pullknobConfig.location.x), gridCells(pullknobConfig.location.y))
+    const pullknobPosition = Vector2.fromGridPoint(pullknobConfig.location);
     const pullknob = new PullKnob(pullknobPosition);
     this.addChild(pullknob);
 
-    const slimePosition = new Vector2(gridCells(slimeConfig.location.x), gridCells(slimeConfig.location.y))
+    const slimePosition = Vector2.fromGridPoint(slimeConfig.location);
     const slime = new Slime(slimePosition, slimeConfig.speed);
     this.addChild(slime);
 

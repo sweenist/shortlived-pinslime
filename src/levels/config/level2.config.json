@@ -275,22 +275,6 @@
         "columns": 5,
         "rows": 4
       }
-    },
-    {
-      "name": "paddles",
-      "frameConfig": {
-        "size": { "x": 16, "y": 16 },
-        "columns": 4,
-        "rows": 4
-      }
-    },
-    {
-      "name": "pullknob",
-      "frameConfig": {
-        "size": { "x": 80, "y": 16 },
-        "columns": 1,
-        "rows": 7
-      }
     }
   ]
 }
