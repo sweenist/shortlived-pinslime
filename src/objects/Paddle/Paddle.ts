@@ -27,10 +27,10 @@ interface PaddleConfig {
 const paddleConfiguration: Record<keyof typeof DirectionShift, PaddleConfig> = {
   N_E: { offset: new Vector2(-3, 2), rest: N_E_PADDLE_REST, flap: N_E_PADDLE_FLAP, deflection: RIGHT },
   N_W: { offset: new Vector2(3, 2), rest: N_W_PADDLE_REST, flap: N_W_PADDLE_FLAP, deflection: LEFT },
-  E_N: { offset: new Vector2(-2, 3), rest: E_N_PADDLE_REST, flap: E_N_PADDLE_FLAP, deflection: UP },
-  E_S: { offset: new Vector2(-2, -3), rest: E_S_PADDLE_REST, flap: E_S_PADDLE_FLAP, deflection: DOWN },
-  W_N: { offset: new Vector2(2, -3), rest: W_N_PADDLE_REST, flap: W_N_PADDLE_FLAP, deflection: UP },
-  W_S: { offset: new Vector2(2, -3), rest: W_S_PADDLE_REST, flap: W_S_PADDLE_FLAP, deflection: DOWN },
+  E_N: { offset: new Vector2(-1, 3), rest: E_N_PADDLE_REST, flap: E_N_PADDLE_FLAP, deflection: UP },
+  E_S: { offset: new Vector2(-1, -3), rest: E_S_PADDLE_REST, flap: E_S_PADDLE_FLAP, deflection: DOWN },
+  W_N: { offset: new Vector2(1, 3), rest: W_N_PADDLE_REST, flap: W_N_PADDLE_FLAP, deflection: UP },
+  W_S: { offset: new Vector2(1, -3), rest: W_S_PADDLE_REST, flap: W_S_PADDLE_FLAP, deflection: DOWN },
   S_E: { offset: new Vector2(-3, -2), rest: S_E_PADDLE_REST, flap: S_E_PADDLE_FLAP, deflection: RIGHT },
   S_W: { offset: new Vector2(3, -2), rest: S_W_PADDLE_REST, flap: S_W_PADDLE_FLAP, deflection: LEFT },
 }

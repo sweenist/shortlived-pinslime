@@ -63,12 +63,14 @@ export class Main extends GameObject {
 
     gameEvents.on<typeof this.state.current>(signals.stateChanged, this, (value) => {
       if (value === STATE_TITLE) {
-        this.displayScore(false)
+        this.displayScore(false);
         this.showOptionsForTitle();
       }
       else if (value === STATE_GAMEOVER) {
         const slime = (this.level as Pinball).children.filter((s) => s.name === 'slime')[0] as Slime
-        if (!slime.isLevelBuilding) this.showOptionsForGameOver();
+        if (!slime.isLevelBuilding) {
+          this.showOptionsForGameOver();
+        }
       }
       else {
         this.hideOptions();
