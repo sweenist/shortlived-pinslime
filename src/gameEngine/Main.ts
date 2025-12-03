@@ -177,7 +177,7 @@ export class Main extends GameObject {
         {
           text: 'play',
           action: () => {
-            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[1]))
+            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[2]))
           }
         }]
     });
