@@ -36,8 +36,7 @@ export class OptionDialog extends GameObject {
 
     this.canvas = document.querySelector<HTMLCanvasElement>(options.canvasId)!;
     this.canvas.parentElement?.addEventListener('resize', this.resizeDialog)
-    this.canvas.parentElement?.classList.remove('complete');
-    this.canvas.parentElement?.classList.add('opening');
+    this.canvas.parentElement?.classList.remove('complete', 'opening');
 
     this.options = options.options
     this.drawLayer = 'USER_INTERFACE';
@@ -99,6 +98,7 @@ export class OptionDialog extends GameObject {
   step(deltaTime: number, root?: Main): void {
     if (this.showCountdown > 0 && this.showCountdown - deltaTime <= 0) {
       this.displayMenu(deltaTime, root!);
+      this.complete();
     }
     const { input } = root!;
 
@@ -109,8 +109,7 @@ export class OptionDialog extends GameObject {
       }
       else {
         this.showCountdown = 0;
-        this.canvas.parentElement?.classList.add('complete');
-        this.canvas.parentElement?.classList.remove('opening');
+        this.complete();
         this.displayMenu(deltaTime, root!);
       }
 
@@ -125,6 +124,11 @@ export class OptionDialog extends GameObject {
 
   hide(): void {
     this.canvas.parentElement?.classList.add('hidden', 'complete');
+    this.canvas.parentElement?.classList.remove('opening');
+  }
+
+  complete(): void {
+    this.canvas.parentElement?.classList.add('complete');
     this.canvas.parentElement?.classList.remove('opening');
   }
 
