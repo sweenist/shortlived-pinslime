@@ -14,3 +14,10 @@ export const signals = {
   arrowStep: 'ARROW_MOVEMENT_SINGLE',
   gameAction: 'GAME_ACTION',
 };
+
+export const soundTriggers = {
+  playFruit: 'PLAY_FRUIT_COLLECT',
+  playCrashDeath: 'PLAY_DEATH',
+  playExpirationDeath: 'PLAY_EXPIRED',
+  playMoveCursor: 'PLAY_SELECTION',
+}

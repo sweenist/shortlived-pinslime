@@ -13,6 +13,7 @@ import { Title } from '../game/Title';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
 import { Pinball } from '../levels/Pinball';
 import { configurationManager } from '../levels/configurationManager';
+import { SoundManager } from '../sound/SoundManager';
 
 export interface MainGameParams {
   ctx: CanvasRenderingContext2D;
@@ -26,6 +27,7 @@ export class Main extends GameObject {
   camera: Camera;
   input: GameInput;
   state: GameState;
+  soundManager: SoundManager;
   optionsMenu?: OptionDialog;
   //Fade Effect
   fadeAlpha: number = 0;
@@ -42,9 +44,11 @@ export class Main extends GameObject {
     this.input = new GameInput();
     this.title = new Title();
     this.state = new GameState();
+    this.soundManager = new SoundManager();
 
     this.addChild(this.camera);
     this.addChild(this.title);
+    this.addChild(this.soundManager);
   }
 
   ready(): void {
@@ -177,7 +181,7 @@ export class Main extends GameObject {
         {
           text: 'play',
           action: () => {
-            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[2]))
+            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]));
           }
         }]
     });

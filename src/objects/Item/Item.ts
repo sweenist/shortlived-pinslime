@@ -4,7 +4,7 @@ import { GameObject } from '../../gameEngine/GameObject';
 import { Sprite } from '../../gameEngine/Sprite';
 import { resources } from '../../Resources';
 import { spriteSize, Vector2 } from '../../utils/vector';
-import { signals } from '../../events/eventConstants';
+import { signals, soundTriggers } from '../../events/eventConstants';
 import type { Movement } from '../../types';
 import type { Main } from '../../gameEngine/Main';
 import { Animations } from '../../gameEngine/Animations';
@@ -73,11 +73,14 @@ export class Item extends GameObject {
   }
 
   onPlayerCollide() {
-    if (this.respawnCooldown == 0)
+    if (this.respawnCooldown == 0) {
       gameEvents.emit<ItemEventMetaData>(signals.slimeItemCollect, {
         image: resources.images[this.imageName],
         position: this.position,
         points: this.pointValue,
       });
+
+      gameEvents.emit(soundTriggers.playFruit);
+    }
   }
 }

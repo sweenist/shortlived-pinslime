@@ -1,5 +1,5 @@
 import { DOWN, UP } from '../../constants';
-import { signals } from '../../events/eventConstants';
+import { signals, soundTriggers } from '../../events/eventConstants';
 import { gameEvents } from '../../events/Events';
 import { Animations } from '../../gameEngine/Animations';
 import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
@@ -68,9 +68,14 @@ export class OptionDialog extends GameObject {
 
       if (value === DOWN) {
         const index = this.activeOption + 1;
-        this.activeOption = index === this.options.length ? this.activeOption : index;
+        const canMove = index !== this.options.length
+        if (canMove) {
+          this.activeOption = index;
+          gameEvents.emit(soundTriggers.playMoveCursor);
+        }
       }
       else if (value === UP) {
+        if (this.activeOption > 0) gameEvents.emit(soundTriggers.playMoveCursor);
         this.activeOption = Math.max(0, this.activeOption - 1);
       }
       const yOffset = (this.activeOption * 2) + 1;

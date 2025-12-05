@@ -4,13 +4,22 @@ export type ImageResource = {
   name: string;
 };
 
+export type SoundResource = {
+  sound: HTMLAudioElement;
+  loaded: boolean;
+  name: string;
+}
+
 class Resources {
-  public toLoad: { [key: string]: string };
+  private imagesToLoad: { [key: string]: string };
+  public soundsToLoad: { [key: string]: string };
+
   public images: { [key: string]: ImageResource };
+  public sounds: Map<string, SoundResource> = new Map();
 
   constructor() {
     this.images = {};
-    this.toLoad = {
+    this.imagesToLoad = {
       //font
       font: 'sprites/ArcadeFont.png',
       cursor: 'sprites/Cursor.png',
@@ -31,7 +40,6 @@ class Resources {
       slimeDeath: 'sprites/death-spritesheet.png',
       stopwatch: 'sprites/Stopwatch.png',
       textbox: 'sprites/text-box.png',
-      walls: 'sprites/PingWalls.png',
       wallsBlue: 'sprites/Walls-Blue.png',
       wallsGreen: 'sprites/Walls-Green.png',
       floors: 'sprites/Floor.png',
@@ -40,14 +48,41 @@ class Resources {
       orange: 'sprites/Orange.png',
     };
 
-    Object.keys(this.toLoad).forEach((key: string) => {
+    this.soundsToLoad = {
+      selectDing: 'sounds/SelectDing.mp3',
+      fruitCollect1: 'sounds/FruitCollect1.mp3',
+      fruitCollect2: 'sounds/FruitCollect2.mp3',
+      fruitCollect3: 'sounds/FruitCollect3.mp3',
+      fruitCollect4: 'sounds/FruitCollect4.mp3',
+      fruitCollect5: 'sounds/FruitCollect5.mp3',
+      collisionDeath: 'sounds/CollideSplatter.mp3',
+      timeOutDeath: 'sounds/ExpireSplatter.mp3',
+    }
+
+    Object.keys(this.imagesToLoad).forEach((key: string) => {
       const image = new Image();
 
-      image.src = this.toLoad[key];
+      image.src = this.imagesToLoad[key];
       this.images[key] = { image, loaded: false, name: key };
 
       image.onload = () => {
         this.images[key].loaded = true;
+      };
+    });
+
+    Object.keys(this.soundsToLoad).forEach((key: string) => {
+      const sound = new Audio();
+      sound.preload = 'auto';
+      sound.volume = 0.85;
+
+      sound.src = this.soundsToLoad[key];
+      this.sounds.set(key, { sound, loaded: false, name: key });
+      sound.addEventListener('canplaythrough', () => { console.info(`Can play ${key}`) });
+
+      sound.onload = () => {
+        console.info(`loading ${key}`);
+        const loadedSound = this.sounds.get(key);
+        loadedSound!.loaded = true;
       };
     });
   }
