@@ -1,10 +1,13 @@
-import { resources } from "../Resources";
+import { resources, type SoundResource } from "../Resources";
 import type { SOUND_NAMES } from "../types";
 
 export class SoundPlayer {
+  musicEnabled: boolean = true;
+  soundEffectsEnabled: boolean = true;
 
 
   play(name: SOUND_NAMES): void {
+    if (!this.soundEffectsEnabled) return;
     const sound = resources.sounds.get(name);
     console.info('volume', sound?.sound.volume)
     const clone = sound?.sound.cloneNode(true) as HTMLAudioElement
@@ -16,7 +19,7 @@ export class SoundPlayer {
     }
   }
 
-  playMusic(name: SOUND_NAMES, loop: boolean): HTMLAudioElement | null {
+  playMusic(name: SOUND_NAMES, loop: boolean): SoundResource | null {
     const music = resources.sounds.get(name);
 
     if (!music) {
@@ -26,7 +29,7 @@ export class SoundPlayer {
     const audio = music.sound;
     audio.loop = loop;
     audio.play().catch((e) => console.error('muzak died', e));
-    return audio;
+    return music;
   }
 
   fadeOut(audio: HTMLAudioElement, duration: number = 1250): Promise<void> {

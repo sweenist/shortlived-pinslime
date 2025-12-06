@@ -29,6 +29,7 @@ export class Main extends GameObject {
   state: GameState;
   soundManager: SoundManager;
   optionsMenu?: OptionDialog;
+  soundControlElement!: HTMLDivElement;
   //Fade Effect
   fadeAlpha: number = 0;
   fadeDirection: fader = fadeIn;
@@ -67,8 +68,9 @@ export class Main extends GameObject {
 
     gameEvents.on<typeof this.state.current>(signals.stateChanged, this, (value) => {
       if (value === STATE_TITLE) {
-        console.info('startr over')
         this.displayScore(false);
+
+        this.soundControlElement.classList.remove('hidden');
         this.showOptionsForTitle();
       }
       else if (value === STATE_GAMEOVER) {
@@ -79,6 +81,7 @@ export class Main extends GameObject {
       }
       else {
         this.hideOptions();
+        this.soundControlElement.classList.add('hidden');
         this.displayScore(true)
       }
     });
@@ -86,6 +89,19 @@ export class Main extends GameObject {
     this.input.consolate = () => {
       this.debug(0);
     };
+
+    this.soundControlElement = document.querySelector('#sound-controls') as HTMLDivElement;
+    const musicControl = this.soundControlElement.querySelector('#music-control') as HTMLImageElement;
+    const soundControl = this.soundControlElement.querySelector('#effect-control') as HTMLImageElement;
+
+    musicControl.onclick = () => {
+      gameEvents.emit(signals.toggleMusic);
+      this.toggleControl(musicControl);
+    }
+    soundControl.onclick = () => {
+      gameEvents.emit(signals.toggleSound);
+      this.toggleControl(soundControl);
+    }
 
     this.showOptionsForTitle();
   }
@@ -175,6 +191,7 @@ export class Main extends GameObject {
 
   private showOptionsForTitle() {
     this.hideOptions();
+    this.soundControlElement.classList.remove('off');
     this.optionsMenu = new OptionDialog({
       divId: '#options',
       canvasId: '#options-canvas',
@@ -215,6 +232,15 @@ export class Main extends GameObject {
     });
 
     this.addChild(this.optionsMenu);
+  }
+
+  private toggleControl(self: HTMLImageElement) {
+    if (self.classList.contains('off')) {
+      self.classList.remove('off');
+    }
+    else {
+      self.classList.add('off');
+    }
   }
 
   startFade(onComplete: () => void) {

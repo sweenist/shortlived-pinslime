@@ -13,6 +13,8 @@ export const signals = {
   arrowMovement: 'ARROW_MOVEMENT',
   arrowStep: 'ARROW_MOVEMENT_SINGLE',
   gameAction: 'GAME_ACTION',
+  toggleMusic: 'TOGGLE_MUSIC',
+  toggleSound: 'TOGGLE_SOUND',
 };
 
 export const soundTriggers = {

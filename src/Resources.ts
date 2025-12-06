@@ -8,6 +8,7 @@ export type SoundResource = {
   sound: HTMLAudioElement;
   loaded: boolean;
   name: string;
+  defaultVolume: number;
 }
 
 class Resources {
@@ -77,9 +78,8 @@ class Resources {
       sound.preload = 'auto';
       sound.volume = 0.85;
 
-
       sound.src = this.soundsToLoad[key];
-      this.sounds.set(key, { sound, loaded: false, name: key });
+      this.sounds.set(key, { sound, loaded: false, name: key, defaultVolume: 0.85 });
       sound.addEventListener('canplaythrough', () => { console.info(`Can play ${key}`) });
     });
   }

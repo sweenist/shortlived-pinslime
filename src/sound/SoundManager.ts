@@ -2,6 +2,7 @@ import { STATE_DEAD, STATE_LOADING, STATE_NAMES, STATE_TITLE } from "../constant
 import { signals, soundTriggers } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
+import type { SoundResource } from "../Resources";
 import type { SOUND_NAMES } from "../types";
 import { SoundPlayer } from "./SoundPlayer";
 
@@ -9,7 +10,7 @@ export class SoundManager extends GameObject {
   soundPlayer: SoundPlayer;
   fruitCount: number = 0;
   fruitCountUp: boolean = true;
-  currentTrack: HTMLAudioElement | null = null;
+  currentTrack: SoundResource | null = null;
 
   constructor() {
     super();
@@ -19,6 +20,18 @@ export class SoundManager extends GameObject {
 
   ready(): void {
     this.currentTrack = this.soundPlayer.playMusic('titleMusic', false);
+
+    gameEvents.on(signals.toggleMusic, this, () => {
+      this.soundPlayer.musicEnabled = !this.soundPlayer.musicEnabled;
+      if (this.currentTrack)
+        this.currentTrack.sound.volume = this.soundPlayer.musicEnabled
+          ? this.currentTrack?.defaultVolume
+          : 0;
+    });
+
+    gameEvents.on(signals.toggleSound, this, () => {
+      this.soundPlayer.soundEffectsEnabled = !this.soundPlayer.soundEffectsEnabled;
+    })
 
     gameEvents.on(soundTriggers.playMoveCursor, this, () => {
       this.soundPlayer.play('selectDing');
@@ -40,7 +53,7 @@ export class SoundManager extends GameObject {
       }
       else if (value === STATE_LOADING) {
         if (this.currentTrack)
-          this.soundPlayer.fadeOut(this.currentTrack);
+          this.soundPlayer.fadeOut(this.currentTrack?.sound);
         this.soundPlayer.play('confirmation')
       }
       else if (value === STATE_DEAD) {
