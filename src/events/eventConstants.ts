@@ -20,4 +20,5 @@ export const soundTriggers = {
   playCrashDeath: 'PLAY_DEATH',
   playExpirationDeath: 'PLAY_EXPIRED',
   playMoveCursor: 'PLAY_SELECTION',
+  playSelectionConfirmed: 'PLAY_CONFIRMATION',
 }

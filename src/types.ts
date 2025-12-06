@@ -1,3 +1,4 @@
+import type { SOUNDS } from "./constants";
 import type { Vector2 } from "./utils/vector";
 
 export type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
@@ -63,5 +64,5 @@ export type ItemConfig = {
   image: string,
 };
 
-export type PaddleLocations = Partial<Record<keyof typeof DirectionShift, Array<point>>>
-
+export type PaddleLocations = Partial<Record<keyof typeof DirectionShift, Array<point>>>;
+export type SOUND_NAMES = typeof SOUNDS[number];

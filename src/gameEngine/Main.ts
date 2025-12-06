@@ -67,6 +67,7 @@ export class Main extends GameObject {
 
     gameEvents.on<typeof this.state.current>(signals.stateChanged, this, (value) => {
       if (value === STATE_TITLE) {
+        console.info('startr over')
         this.displayScore(false);
         this.showOptionsForTitle();
       }

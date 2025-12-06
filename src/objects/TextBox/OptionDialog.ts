@@ -110,6 +110,7 @@ export class OptionDialog extends GameObject {
     if (input.getActionJustPressed('Space'))
       if (this.displayWords) {
         this.hide();
+        gameEvents.emit(soundTriggers.playSelectionConfirmed);
         this.options[this.activeOption].action();
       }
       else {

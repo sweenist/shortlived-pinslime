@@ -6,6 +6,7 @@ export class GameState {
   private _index: number;
   private readonly _stateDurations: { [key: string]: number | null } = {
     title: null,
+    titleExit: 1250,
     initial: 3000,
     launching: 1000,
     playing: 20000,

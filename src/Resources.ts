@@ -50,6 +50,7 @@ class Resources {
 
     this.soundsToLoad = {
       selectDing: 'sounds/SelectDing.mp3',
+      confirmation: 'sounds/select.wav',
       fruitCollect1: 'sounds/FruitCollect1.mp3',
       fruitCollect2: 'sounds/FruitCollect2.mp3',
       fruitCollect3: 'sounds/FruitCollect3.mp3',
@@ -57,6 +58,7 @@ class Resources {
       fruitCollect5: 'sounds/FruitCollect5.mp3',
       collisionDeath: 'sounds/CollideSplatter.mp3',
       timeOutDeath: 'sounds/ExpireSplatter.mp3',
+      titleMusic: 'sounds/TitleTheme.mp3'
     }
 
     Object.keys(this.imagesToLoad).forEach((key: string) => {
@@ -75,15 +77,10 @@ class Resources {
       sound.preload = 'auto';
       sound.volume = 0.85;
 
+
       sound.src = this.soundsToLoad[key];
       this.sounds.set(key, { sound, loaded: false, name: key });
       sound.addEventListener('canplaythrough', () => { console.info(`Can play ${key}`) });
-
-      sound.onload = () => {
-        console.info(`loading ${key}`);
-        const loadedSound = this.sounds.get(key);
-        loadedSound!.loaded = true;
-      };
     });
   }
 }
