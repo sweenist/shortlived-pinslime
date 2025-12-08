@@ -25,6 +25,8 @@ export const SOUNDS = [
   'fruitCollect3',
   'fruitCollect4',
   'fruitCollect5',
+  'countDown',
+  'paddle',
   'collisionDeath',
   'timeOutDeath',
   'titleMusic',

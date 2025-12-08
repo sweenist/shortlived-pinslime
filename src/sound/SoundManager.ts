@@ -1,7 +1,8 @@
-import { STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_LAUNCHING, STATE_LOADING, STATE_TITLE } from "../constants";
+import { STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, STATE_LOADING, STATE_TITLE } from "../constants";
 import { signals, soundTriggers } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
+import type { Main } from "../gameEngine/Main";
 import { type SoundResource } from "../Resources";
 import type { GameStateType, SOUND_NAMES } from "../types";
 import { SoundPlayer } from "./SoundPlayer";
@@ -42,8 +43,13 @@ export class SoundManager extends GameObject {
       this.soundPlayer.play(`fruitCollect${this.fruitCount}` as unknown as SOUND_NAMES);
     });
 
+    gameEvents.on(soundTriggers.playPaddle, this, () => {
+      this.soundPlayer.play('paddle');
+    })
+
     gameEvents.on<GameStateType>(signals.stateChanged, this, (value) => {
       if (value === STATE_TITLE) {
+        this.soundPlayer.stop(this.currentTrack?.sound);
         this.currentTrack = this.soundPlayer.playMusic('titleMusic', false);
       }
       else if (value === STATE_LOADING) {
@@ -51,6 +57,8 @@ export class SoundManager extends GameObject {
           this.soundPlayer.fadeOut(this.currentTrack?.sound);
         this.soundPlayer.play('confirmation')
       }
+      else if (value === STATE_INITIAL)
+        this.soundPlayer.play('countDown');
       else if (value === STATE_LAUNCHING) {
         this.currentTrack = this.soundPlayer.playMusic('levelMusic', false);
       }
@@ -66,6 +74,12 @@ export class SoundManager extends GameObject {
         this.currentTrack = this.soundPlayer.playMusic('deathMusic', false);
       }
     });
+  }
+
+  step(_deltaTime: number, root?: Main): void {
+    const { input, state } = root!
+    if (input.getActionJustPressed('SPACE') && (state.current === STATE_INITIAL || state.current === STATE_LAUNCHING || state.isPlaying))
+      this.soundPlayer.play('paddle');
   }
 
   adjustFruit() {

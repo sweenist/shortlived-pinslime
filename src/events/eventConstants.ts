@@ -19,6 +19,7 @@ export const signals = {
 
 export const soundTriggers = {
   playFruit: 'PLAY_FRUIT_COLLECT',
+  playPaddle: 'PLAY_PADDLE',
   playCrashDeath: 'PLAY_DEATH',
   playExpirationDeath: 'PLAY_EXPIRED',
   playMoveCursor: 'PLAY_SELECTION',

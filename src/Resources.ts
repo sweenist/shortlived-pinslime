@@ -57,6 +57,8 @@ class Resources {
       fruitCollect3: 'sounds/FruitCollect3.mp3',
       fruitCollect4: 'sounds/FruitCollect4.mp3',
       fruitCollect5: 'sounds/FruitCollect5.mp3',
+      countDown: 'sounds/CountDown.mp3',
+      paddle: 'sounds/Paddle.wav',
       collisionDeath: 'sounds/CollideSplatter.mp3',
       timeOutDeath: 'sounds/ExpireSplatter.mp3',
       titleMusic: 'sounds/TitleTheme.mp3',

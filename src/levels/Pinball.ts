@@ -15,7 +15,7 @@ import { Sprite } from '../gameEngine/Sprite';
 import { Stopwatch } from '../objects/Stopwatch/Stopwatch';
 import { Item } from '../objects/Item/Item';
 import type { ItemEventMetaData } from '../types/eventTypes';
-import { signals } from '../events/eventConstants';
+import { signals, soundTriggers } from '../events/eventConstants';
 import { gameEvents } from '../events/Events';
 import type { LevelConfiguration } from './configurationManager';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
@@ -95,6 +95,11 @@ export class Pinball extends Level {
     gameEvents.on<ItemEventMetaData>(signals.slimeItemCollect, this, ({ points }) => {
       this.score += points ?? 0;
     });
+
+
+    gameEvents.on(signals.gameAction, this, () => {
+      gameEvents.emit(soundTriggers.playPaddle)
+    })
   }
 
   private buildMap(resourceConfigs: ResourceConfig[], tileConfig: { [key: number]: TileConfig }) {
