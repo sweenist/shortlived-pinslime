@@ -1,5 +1,5 @@
 import { Slime } from '../actors/Slime';
-import { fadeIn, fadeOut, STATE_GAMEOVER, STATE_INITIAL, STATE_TITLE } from '../constants';
+import { fadeIn, fadeOut, STATE_GAMEOVER, STATE_INITIAL, STATE_LOADING, STATE_TITLE } from '../constants';
 import type { fader } from '../types';
 import { Vector2 } from '../utils/vector';
 import { Camera } from './Camera';
@@ -73,6 +73,8 @@ export class Main extends GameObject {
         this.soundControlElement.classList.remove('hidden');
         this.showOptionsForTitle();
       }
+      else if (value === STATE_LOADING)
+        this.displayScore(false);
       else if (value === STATE_GAMEOVER) {
         const slime = (this.level as Pinball).children.filter((s) => s.name === 'slime')[0] as Slime
         if (!slime.isLevelBuilding) {
@@ -199,7 +201,8 @@ export class Main extends GameObject {
           text: 'play',
           action: () => {
             gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]));
-          }
+          },
+          actOnState: STATE_INITIAL,
         }]
     });
 

@@ -1,6 +1,7 @@
 import { DOWN, UP } from '../../constants';
 import { signals, soundTriggers } from '../../events/eventConstants';
 import { gameEvents } from '../../events/Events';
+import type { GameState } from '../../game/GameState';
 import { Animations } from '../../gameEngine/Animations';
 import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
 import { GameObject } from '../../gameEngine/GameObject';
@@ -29,7 +30,9 @@ export class OptionDialog extends GameObject {
   canvas: HTMLCanvasElement;
   activeOption: number = 0;
   displayWords: boolean = false;
-  showCountdown: number;
+  timeUntilDisplayed: number;
+  isActing: boolean = false;
+
 
   constructor(options: OptionMenuParams) {
     super();
@@ -49,7 +52,7 @@ export class OptionDialog extends GameObject {
       });
     }))
 
-    this.showCountdown = 2100;
+    this.timeUntilDisplayed = 2100;
     this.selectionArrow = new Sprite({
       resource: resources.images['cursor'],
       frameColumns: 2,
@@ -83,7 +86,7 @@ export class OptionDialog extends GameObject {
     });
 
     gameEvents.on<Vector2>(signals.gameAction, this, (pointer) => {
-      if (!this.displayWords) return;
+      if (!this.displayWords || this.isActing) return;
 
       const rect = this.canvas.getBoundingClientRect();
       const scaleX = this.canvas.width / rect.width;
@@ -101,26 +104,25 @@ export class OptionDialog extends GameObject {
   }
 
   step(deltaTime: number, root?: Main): void {
-    if (this.showCountdown > 0 && this.showCountdown - deltaTime <= 0) {
+    if (this.timeUntilDisplayed > 0 && this.timeUntilDisplayed - deltaTime <= 0) {
       this.displayMenu(deltaTime, root!);
       this.complete();
     }
-    const { input } = root!;
+    const { input, state } = root!;
 
-    if (input.getActionJustPressed('Space'))
+    if (input.getActionJustPressed('Space') && !this.isActing)
       if (this.displayWords) {
-        this.hide();
-        gameEvents.emit(soundTriggers.playSelectionConfirmed);
-        this.options[this.activeOption].action();
+        state.next();
+        this.perform(state);
       }
       else {
-        this.showCountdown = 0;
+        this.timeUntilDisplayed = 0;
         this.complete();
         this.displayMenu(deltaTime, root!);
       }
 
-    this.showCountdown -= deltaTime;
-    this.displayWords = this.showCountdown <= 0;
+    this.timeUntilDisplayed -= deltaTime;
+    this.displayWords = this.timeUntilDisplayed <= 0;
   }
 
   private resizeDialog() {
@@ -148,5 +150,32 @@ export class OptionDialog extends GameObject {
     this.selectionArrow.stepEntry(deltaTime, root);
     this.selectionArrow.animations?.play('default');
     this.labels.forEach((label) => this.addChild(label));
+  }
+
+  perform(state: GameState) {
+    const option = this.options[this.activeOption];
+    if (option.actOnState && state.current != option.actOnState) {
+      let eventId: number;
+      this.isActing = true;
+      gameEvents.emit(soundTriggers.playSelectionConfirmed);
+      this.selectionArrow.isVisible = false;
+      this.labels[this.activeOption].isBlinking = true;
+
+      eventId = gameEvents.on(signals.stateChanged, this, (stateName) => {
+        if (stateName === option.actOnState) {
+          this.hide()
+          option.action();
+          gameEvents.off(eventId);
+          this.isActing = false;
+        }
+        else {
+          console.warn("State change happened [current], [trigger]", stateName, option.actOnState)
+        }
+      })
+    }
+    else {
+      this.hide();
+      this.options[this.activeOption].action();
+    }
   }
 }

@@ -1,9 +1,12 @@
 import { GameObject } from "../../gameEngine/GameObject";
+import type { Main } from "../../gameEngine/Main";
 import { Sprite, type SpriteParams } from "../../gameEngine/Sprite";
 import { resources } from "../../Resources";
 import type { DrawLayers } from "../../types";
 import { fontSize, Vector2 } from "../../utils/vector";
 import { getCharacterFrame, getCharacterWidth } from "./SpriteMapping";
+
+const BLINK_RATE = 125;
 
 type SpriteFontProps = {
   wordWidth: number;
@@ -25,6 +28,8 @@ export class Label extends GameObject {
   labelSprites!: SpriteFontProps[];
   spriteConfig: SpriteParams;
   boundingBoxMaxima: Vector2;
+  isBlinking: boolean = false;
+  blinkTimer: number = 0;
 
   constructor(params: LabelProps) {
     super(params.position);
@@ -75,7 +80,18 @@ export class Label extends GameObject {
     return new Vector2(xMax, yMax);
   }
 
+  private get shouldRender() {
+    return Math.ceil(this.blinkTimer / BLINK_RATE) % 2 === 0;
+  }
+
+  step(deltaTime: number, _root?: Main): void {
+    if (this.isBlinking) {
+      this.blinkTimer += deltaTime;
+    }
+  }
+
   drawImage(ctx: CanvasRenderingContext2D, position: Vector2): void {
+    if (this.isBlinking && !this.shouldRender) return;
     let cursorX = position.x;
     let currentShowIndex = 0;
 

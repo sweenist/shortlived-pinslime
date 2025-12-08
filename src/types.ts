@@ -27,8 +27,9 @@ export type DialogueScenario = {
 };
 
 export type OptionActions = {
-  text: string,
-  action: () => void,
+  text: string;
+  action: () => void;
+  actOnState?: GameStateType;
 };
 
 export type OptionMenuParams = {
