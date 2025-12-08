@@ -1,4 +1,4 @@
-import { STATE_NAMES, STATE_PLAYING } from "../constants";
+import { STATE_PLAYING } from "../constants";
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";

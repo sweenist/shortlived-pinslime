@@ -28,4 +28,6 @@ export const SOUNDS = [
   'collisionDeath',
   'timeOutDeath',
   'titleMusic',
+  'deathMusic',
+  'levelMusic',
 ] as const;

@@ -1,8 +1,8 @@
-import { STATE_DEAD, STATE_EXPIRED, STATE_LOADING, STATE_TITLE } from "../constants";
+import { STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_LAUNCHING, STATE_LOADING, STATE_TITLE } from "../constants";
 import { signals, soundTriggers } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
-import type { SoundResource } from "../Resources";
+import { type SoundResource } from "../Resources";
 import type { GameStateType, SOUND_NAMES } from "../types";
 import { SoundPlayer } from "./SoundPlayer";
 
@@ -42,11 +42,6 @@ export class SoundManager extends GameObject {
       this.soundPlayer.play(`fruitCollect${this.fruitCount}` as unknown as SOUND_NAMES);
     });
 
-    gameEvents.on(soundTriggers.playSelectionConfirmed, this, () => {
-      // this.soundPlayer.play('confirmation');
-      //need smaller duration noise
-    });
-
     gameEvents.on<GameStateType>(signals.stateChanged, this, (value) => {
       if (value === STATE_TITLE) {
         this.currentTrack = this.soundPlayer.playMusic('titleMusic', false);
@@ -56,11 +51,19 @@ export class SoundManager extends GameObject {
           this.soundPlayer.fadeOut(this.currentTrack?.sound);
         this.soundPlayer.play('confirmation')
       }
+      else if (value === STATE_LAUNCHING) {
+        this.currentTrack = this.soundPlayer.playMusic('levelMusic', false);
+      }
       else if (value === STATE_DEAD) {
+        this.soundPlayer.stop(this.currentTrack?.sound);
         this.soundPlayer.play('collisionDeath');
       }
       else if (value === STATE_EXPIRED) {
+        this.soundPlayer.stop(this.currentTrack?.sound);
         this.soundPlayer.play('timeOutDeath');
+      }
+      else if (value === STATE_GAMEOVER) {
+        this.currentTrack = this.soundPlayer.playMusic('deathMusic', false);
       }
     });
   }
