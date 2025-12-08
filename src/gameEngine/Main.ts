@@ -191,7 +191,6 @@ export class Main extends GameObject {
 
   private showOptionsForTitle() {
     this.hideOptions();
-    this.soundControlElement.classList.remove('off');
     this.optionsMenu = new OptionDialog({
       divId: '#options',
       canvasId: '#options-canvas',

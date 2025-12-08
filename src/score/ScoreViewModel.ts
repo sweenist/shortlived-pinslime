@@ -1,8 +1,9 @@
-import { STATE_GAMEOVER, type STATE_NAMES } from "../constants";
+import { STATE_GAMEOVER } from "../constants";
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
 import type { Main } from "../gameEngine/Main";
+import type { GameStateType } from "../types";
 
 export class ScoreViewModel extends GameObject {
   score: number;
@@ -24,7 +25,7 @@ export class ScoreViewModel extends GameObject {
       this.score += value;
     })
 
-    gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (state) => {
+    gameEvents.on<GameStateType>(signals.stateChanged, this, (state) => {
       if (state === STATE_GAMEOVER) {
         if (this.score > this.highScore) {
           this.saveHighScore()

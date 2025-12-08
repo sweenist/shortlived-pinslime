@@ -1,9 +1,9 @@
-import { STATE_DEAD, STATE_LOADING, STATE_NAMES, STATE_TITLE } from "../constants";
+import { STATE_DEAD, STATE_EXPIRED, STATE_LOADING, STATE_TITLE } from "../constants";
 import { signals, soundTriggers } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
 import { GameObject } from "../gameEngine/GameObject";
 import type { SoundResource } from "../Resources";
-import type { SOUND_NAMES } from "../types";
+import type { GameStateType, SOUND_NAMES } from "../types";
 import { SoundPlayer } from "./SoundPlayer";
 
 export class SoundManager extends GameObject {
@@ -47,7 +47,7 @@ export class SoundManager extends GameObject {
       //need smaller duration noise
     });
 
-    gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
+    gameEvents.on<GameStateType>(signals.stateChanged, this, (value) => {
       if (value === STATE_TITLE) {
         this.currentTrack = this.soundPlayer.playMusic('titleMusic', false);
       }
@@ -57,8 +57,10 @@ export class SoundManager extends GameObject {
         this.soundPlayer.play('confirmation')
       }
       else if (value === STATE_DEAD) {
-        console.info('Dead... play sound')
         this.soundPlayer.play('collisionDeath');
+      }
+      else if (value === STATE_EXPIRED) {
+        this.soundPlayer.play('timeOutDeath');
       }
     });
   }

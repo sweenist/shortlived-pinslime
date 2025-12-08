@@ -5,7 +5,7 @@ import { GameObject } from "../gameEngine/GameObject";
 import type { Main } from "../gameEngine/Main";
 import { Sprite } from "../gameEngine/Sprite";
 import { resources } from "../Resources";
-import type { Movement, Direction } from "../types";
+import type { Movement, Direction, GameStateType } from "../types";
 import { spriteSize, Vector2 } from "../utils/vector";
 
 export type Shade = {
@@ -57,7 +57,7 @@ export class AfterImage extends GameObject {
   }
 
   ready() {
-    gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
+    gameEvents.on<GameStateType>(signals.stateChanged, this, (value) => {
       if (value === STATE_PLAYING)
         this.isActive = true;
       else

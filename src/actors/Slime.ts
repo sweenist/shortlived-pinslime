@@ -1,6 +1,6 @@
 import { Animations } from '../gameEngine/Animations';
 import { FrameIndexPattern } from '../gameEngine/animations/FrameIndexPattern';
-import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, STATE_NAMES, UP } from '../constants';
+import { DOWN, LEFT, RIGHT, STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, UP } from '../constants';
 import { GameObject } from '../gameEngine/GameObject';
 import { resources } from '../Resources';
 import { Sprite } from '../gameEngine/Sprite';
@@ -19,7 +19,7 @@ import { moveTowards, updateMidPoint } from '../utils/moveUtils';
 import { gameEvents } from '../events/Events';
 import type { ItemEventMetaData } from '../types/eventTypes';
 import type { Main } from '../gameEngine/Main';
-import type { Direction, Movement } from '../types';
+import type { Direction, GameStateType, Movement } from '../types';
 import { signals } from '../events/eventConstants';
 import { Ramp } from '../objects/Obstacles/Ramp';
 import { Paddle } from '../objects/Paddle/Paddle';
@@ -108,7 +108,7 @@ export class Slime extends GameObject {
       this.redirect();
     });
 
-    gameEvents.on<typeof STATE_NAMES[number]>(signals.stateChanged, this, (value) => {
+    gameEvents.on<GameStateType>(signals.stateChanged, this, (value) => {
       if (value === STATE_INITIAL) {
         this.body.animations?.play('idle');
       }
