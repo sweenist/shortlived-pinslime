@@ -26,6 +26,7 @@ import { Paddle } from '../objects/Paddle/Paddle';
 import { AfterImage } from './AfterImage';
 import { ScoreToast } from '../objects/TextBox/ScoreToast';
 import type { Pinball } from '../levels/Pinball';
+import { gameState } from '../game/GameState';
 
 const itemShiftStep = new Vector2(0, -1);
 
@@ -155,21 +156,21 @@ export class Slime extends GameObject {
       this.processOnItemPickup(deltaTime);
     }
 
-    const { input, state } = root;
+    const { input } = root;
     if (input.getActionJustPressed('Space') && this.paddle) {
       this.redirect()
     }
 
-    if (state.current === STATE_LAUNCHING) {
+    if (gameState.current === STATE_LAUNCHING) {
       const inertiaStep = LAUNCH.duration - LAUNCH.frames[4].time;
-      const stateTime = state.getStepTime();
+      const stateTime = gameState.getStepTime();
       if (stateTime < inertiaStep) {
         moveTowards(this.position, this.destinationPosition, this.speed)
       }
       return;
     }
 
-    if (state.isPlaying) {
+    if (gameState.isPlaying) {
       const distance = moveTowards(this.position, this.destinationPosition, this.speed);
       updateMidPoint(this.position, this.midPoint);
       this.checkForPaddle();
@@ -181,15 +182,14 @@ export class Slime extends GameObject {
       }
     }
 
-    if (state.current !== STATE_GAMEOVER)
+    if (gameState.current !== STATE_GAMEOVER)
       gameEvents.emit(signals.slimePosition, { position: this.position, direction: this.facingDirection } as Movement);
   }
 
   tryMove(root: Main) {
     if (this.isLocked || root.isFading) return;
 
-    const { state } = root!;
-    if (!state.isPlaying) {
+    if (!gameState.isPlaying) {
       return;
     }
 
@@ -227,11 +227,11 @@ export class Slime extends GameObject {
     const ramp = destinationTile?.find((tile): tile is Ramp => tile instanceof Ramp) as Ramp | undefined;
 
     if (isObstruction) {
-      state.kill();
+      gameState.kill();
       return;
     }
     if (ramp) {
-      this.turn(ramp, () => state.kill());
+      this.turn(ramp, () => gameState.kill());
     }
 
     this.destinationPosition = destination;

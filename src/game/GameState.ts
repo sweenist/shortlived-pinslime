@@ -102,3 +102,5 @@ export class GameState {
     return this._remaining;
   }
 }
+
+export const gameState = new GameState();

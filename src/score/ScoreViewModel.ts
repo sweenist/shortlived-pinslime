@@ -1,6 +1,7 @@
 import { STATE_GAMEOVER } from "../constants";
 import { signals } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
+import { gameState } from "../game/GameState";
 import { GameObject } from "../gameEngine/GameObject";
 import type { Main } from "../gameEngine/Main";
 import type { GameStateType } from "../types";
@@ -34,9 +35,8 @@ export class ScoreViewModel extends GameObject {
     });
   }
 
-  step(deltaTime: number, root?: Main): void {
-    const { state } = root!;
-    if (state.isPlaying) {
+  step(deltaTime: number, _root?: Main): void {
+    if (gameState.isPlaying) {
       this.timeRemaining -= deltaTime;
       this.timeRemaining = Math.max(0, this.timeRemaining);
     }

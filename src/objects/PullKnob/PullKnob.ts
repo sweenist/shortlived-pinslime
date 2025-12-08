@@ -1,4 +1,5 @@
 import { STATE_LAUNCHING } from "../../constants";
+import { gameState } from "../../game/GameState";
 import { Animations } from "../../gameEngine/Animations";
 import { FrameIndexPattern } from "../../gameEngine/animations/FrameIndexPattern";
 import { OffsetIndexPattern } from "../../gameEngine/animations/OffsetIndexPattern";
@@ -52,10 +53,8 @@ export class PullKnob extends GameObject {
     this.pin.animations?.play('idle');
   }
 
-  step(_deltaTime: number, root?: Main): void {
-    const { state } = root!;
-
-    if (state.current === STATE_LAUNCHING) {
+  step(_deltaTime: number, _root?: Main): void {
+    if (gameState.current === STATE_LAUNCHING) {
       this.pin.animations?.playOnce('launching', () => {
         this.pin.animations?.play('idle');
       });

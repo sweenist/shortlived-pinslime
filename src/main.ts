@@ -2,6 +2,7 @@ import './style.css';
 
 import { GameLoop } from './gameEngine/GameLoop';
 import { Main } from './gameEngine/Main';
+import { gameState } from './game/GameState';
 
 const mainCanvas = document.querySelector<HTMLCanvasElement>('#game-canvas')!;
 const mainContext = mainCanvas.getContext('2d')!;
@@ -19,6 +20,7 @@ const mainScene = new Main({ ctx: mainContext });
 
 const update = (deltaTime: number) => {
   mainScene.stepEntry(deltaTime, mainScene);
+  gameState.step(deltaTime);
   mainScene.input.update();
 };
 

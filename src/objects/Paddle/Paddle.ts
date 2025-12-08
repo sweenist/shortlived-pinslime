@@ -16,6 +16,7 @@ import type { animationConfiguration } from "../../types/animationTypes";
 import { DOWN, LEFT, RIGHT, STATE_INITIAL, STATE_LAUNCHING, UP } from "../../constants";
 import { gameEvents } from "../../events/Events";
 import { signals } from "../../events/eventConstants";
+import { gameState } from "../../game/GameState";
 
 interface PaddleConfig {
   offset: Vector2;
@@ -80,14 +81,14 @@ export class Paddle extends GameObject {
   }
 
   step(deltaTime: number, root?: Main): void {
-    const { input, state } = root!;
+    const { input } = root!;
 
     if (this.isActivated) {
       this.activationTime -= deltaTime;
       if (this.activationTime <= 0) this.isActivated = false;
     }
 
-    if (state.current === STATE_INITIAL || state.current === STATE_LAUNCHING || state.isPlaying)
+    if (gameState.current === STATE_INITIAL || gameState.current === STATE_LAUNCHING || gameState.isPlaying)
       if (input.getActionJustPressed('Space') || this.isTriggered) {
         this.activate();
       }

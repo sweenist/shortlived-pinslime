@@ -1,6 +1,6 @@
 import { Slime } from '../actors/Slime';
 import { fadeIn, fadeOut, STATE_GAMEOVER, STATE_INITIAL, STATE_LOADING, STATE_TITLE } from '../constants';
-import type { fader } from '../types';
+import type { fader, GameStateType } from '../types';
 import { Vector2 } from '../utils/vector';
 import { Camera } from './Camera';
 import { gameEvents } from '../events/Events';
@@ -8,7 +8,7 @@ import { GameInput } from './GameInput';
 import { GameObject } from './GameObject';
 import { Level } from './Level';
 import { signals } from '../events/eventConstants';
-import { GameState } from '../game/GameState';
+import { gameState } from '../game/GameState';
 import { Title } from '../game/Title';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
 import { Pinball } from '../levels/Pinball';
@@ -26,7 +26,6 @@ export class Main extends GameObject {
   title?: Title;
   camera: Camera;
   input: GameInput;
-  state: GameState;
   soundManager: SoundManager;
   optionsMenu?: OptionDialog;
   soundControlElement!: HTMLDivElement;
@@ -44,7 +43,6 @@ export class Main extends GameObject {
     this.camera = new Camera(params.ctx.canvas, true);
     this.input = new GameInput();
     this.title = new Title();
-    this.state = new GameState();
     this.soundManager = new SoundManager();
 
     this.addChild(this.camera);
@@ -59,14 +57,14 @@ export class Main extends GameObject {
         this.setLevel(newLevel);
       } else if (newLevel instanceof Title) {
         this.level?.destroy();
-        this.state.set(STATE_TITLE);
+        gameState.set(STATE_TITLE);
         this.title = newLevel;
         this.camera.position = Vector2.Zero();
         this.addChild(this.title);
       }
     });
 
-    gameEvents.on<typeof this.state.current>(signals.stateChanged, this, (value) => {
+    gameEvents.on<GameStateType>(signals.stateChanged, this, (value) => {
       if (value === STATE_TITLE) {
         this.displayScore(false);
 
@@ -127,7 +125,6 @@ export class Main extends GameObject {
 
   stepEntry(deltaTime: number, root: Main): void {
     super.stepEntry(deltaTime, root);
-    this.state.step(deltaTime);
 
     if (this.input.getActionJustPressed('KeyG')) {
       if (this.isDesaturating) {
@@ -200,7 +197,7 @@ export class Main extends GameObject {
         {
           text: 'play',
           action: () => {
-            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]));
+            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[2]));
           },
           actOnState: STATE_INITIAL,
         }]
@@ -219,14 +216,14 @@ export class Main extends GameObject {
           action: () => {
             const levelConfig = (this.level as Pinball)?.levelConfiguration
             gameEvents.emit(signals.levelChanging, new Pinball(levelConfig));
-            this.state.set(STATE_INITIAL);
+            gameState.set(STATE_INITIAL);
             console.info('retry')
           }
         },
         {
           text: 'quit',
           action: () => {
-            this.state.set(STATE_TITLE);
+            gameState.set(STATE_TITLE);
             gameEvents.emit(signals.levelChanging, new Title())
           }
         }

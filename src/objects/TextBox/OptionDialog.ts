@@ -1,7 +1,7 @@
 import { DOWN, UP } from '../../constants';
 import { signals, soundTriggers } from '../../events/eventConstants';
 import { gameEvents } from '../../events/Events';
-import type { GameState } from '../../game/GameState';
+import { gameState } from '../../game/GameState';
 import { Animations } from '../../gameEngine/Animations';
 import { FrameIndexPattern } from '../../gameEngine/animations/FrameIndexPattern';
 import { GameObject } from '../../gameEngine/GameObject';
@@ -96,9 +96,10 @@ export class OptionDialog extends GameObject {
         Math.floor((pointer.y - rect.top) * scaleY)
       );
       const hitLabelIndex = this.labels.findIndex((label) => label.pointerCollides(relativePosition));
+
       if (hitLabelIndex > -1) {
-        this.hide();
-        this.options[hitLabelIndex].action();
+        this.activeOption = hitLabelIndex;
+        this.perform();
       }
     });
   }
@@ -108,12 +109,11 @@ export class OptionDialog extends GameObject {
       this.displayMenu(deltaTime, root!);
       this.complete();
     }
-    const { input, state } = root!;
+    const { input } = root!;
 
     if (input.getActionJustPressed('Space') && !this.isActing)
       if (this.displayWords) {
-        state.next();
-        this.perform(state);
+        this.perform();
       }
       else {
         this.timeUntilDisplayed = 0;
@@ -152,12 +152,13 @@ export class OptionDialog extends GameObject {
     this.labels.forEach((label) => this.addChild(label));
   }
 
-  perform(state: GameState) {
+  perform() {
     const option = this.options[this.activeOption];
-    if (option.actOnState && state.current != option.actOnState) {
+    if (option.actOnState && gameState.current != option.actOnState) {
       let eventId: number;
       this.isActing = true;
       gameEvents.emit(soundTriggers.playSelectionConfirmed);
+      gameState.next();
       this.selectionArrow.isVisible = false;
       this.labels[this.activeOption].isBlinking = true;
 

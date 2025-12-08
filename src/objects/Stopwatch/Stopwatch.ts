@@ -1,4 +1,5 @@
 import { STATE_TITLE } from "../../constants";
+import { gameState } from "../../game/GameState";
 import { Animations } from "../../gameEngine/Animations";
 import { FrameIndexPattern } from "../../gameEngine/animations/FrameIndexPattern";
 import { GameObject } from "../../gameEngine/GameObject";
@@ -29,10 +30,9 @@ export class Stopwatch extends GameObject {
     });
   }
 
-  step(_deltaTime: number, root?: Main): void {
-    const { state } = root!
-    if (state.current === STATE_TITLE) {
-      state.next();
+  step(_deltaTime: number, _root?: Main): void {
+    if (gameState.current === STATE_TITLE) {
+      gameState.next();
     }
   }
 }

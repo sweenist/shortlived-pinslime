@@ -1,6 +1,7 @@
 import { STATE_DEAD, STATE_EXPIRED, STATE_GAMEOVER, STATE_INITIAL, STATE_LAUNCHING, STATE_LOADING, STATE_TITLE } from "../constants";
 import { signals, soundTriggers } from "../events/eventConstants";
 import { gameEvents } from "../events/Events";
+import { gameState } from "../game/GameState";
 import { GameObject } from "../gameEngine/GameObject";
 import type { Main } from "../gameEngine/Main";
 import { type SoundResource } from "../Resources";
@@ -32,6 +33,10 @@ export class SoundManager extends GameObject {
 
     gameEvents.on(signals.toggleSound, this, () => {
       this.soundPlayer.soundEffectsEnabled = !this.soundPlayer.soundEffectsEnabled;
+    })
+
+    gameEvents.on(signals.levelChanging, this, () => {
+      this.soundPlayer.stop(this.currentTrack?.sound);
     })
 
     gameEvents.on(soundTriggers.playMoveCursor, this, () => {
@@ -77,8 +82,8 @@ export class SoundManager extends GameObject {
   }
 
   step(_deltaTime: number, root?: Main): void {
-    const { input, state } = root!
-    if (input.getActionJustPressed('SPACE') && (state.current === STATE_INITIAL || state.current === STATE_LAUNCHING || state.isPlaying))
+    const { input } = root!
+    if (input.getActionJustPressed('SPACE') && (gameState.current === STATE_INITIAL || gameState.current === STATE_LAUNCHING || gameState.isPlaying))
       this.soundPlayer.play('paddle');
   }
 
