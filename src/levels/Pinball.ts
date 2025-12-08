@@ -96,10 +96,9 @@ export class Pinball extends Level {
       this.score += points ?? 0;
     });
 
-
     gameEvents.on(signals.gameAction, this, () => {
       gameEvents.emit(soundTriggers.playPaddle)
-    })
+    });
   }
 
   private buildMap(resourceConfigs: ResourceConfig[], tileConfig: { [key: number]: TileConfig }) {

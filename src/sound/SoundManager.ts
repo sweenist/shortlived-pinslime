@@ -35,7 +35,7 @@ export class SoundManager extends GameObject {
       this.soundPlayer.soundEffectsEnabled = !this.soundPlayer.soundEffectsEnabled;
     })
 
-    gameEvents.on(signals.levelChanging, this, () => {
+    gameEvents.on(soundTriggers.stopMusic, this, () => {
       this.soundPlayer.stop(this.currentTrack?.sound);
     })
 
@@ -83,7 +83,7 @@ export class SoundManager extends GameObject {
 
   step(_deltaTime: number, root?: Main): void {
     const { input } = root!
-    if (input.getActionJustPressed('SPACE') && (gameState.current === STATE_INITIAL || gameState.current === STATE_LAUNCHING || gameState.isPlaying))
+    if (input.getActionJustPressed('Space') && (gameState.current === STATE_INITIAL || gameState.current === STATE_LAUNCHING || gameState.isPlaying))
       this.soundPlayer.play('paddle');
   }
 

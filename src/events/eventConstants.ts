@@ -24,4 +24,5 @@ export const soundTriggers = {
   playExpirationDeath: 'PLAY_EXPIRED',
   playMoveCursor: 'PLAY_SELECTION',
   playSelectionConfirmed: 'PLAY_CONFIRMATION',
+  stopMusic: 'STOP_MUSIC',
 }

@@ -7,7 +7,7 @@ import { gameEvents } from '../events/Events';
 import { GameInput } from './GameInput';
 import { GameObject } from './GameObject';
 import { Level } from './Level';
-import { signals } from '../events/eventConstants';
+import { signals, soundTriggers } from '../events/eventConstants';
 import { gameState } from '../game/GameState';
 import { Title } from '../game/Title';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
@@ -197,7 +197,7 @@ export class Main extends GameObject {
         {
           text: 'play',
           action: () => {
-            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[2]));
+            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]));
           },
           actOnState: STATE_INITIAL,
         }]
@@ -214,6 +214,7 @@ export class Main extends GameObject {
         {
           text: 'retry',
           action: () => {
+            gameEvents.emit(soundTriggers.stopMusic);
             const levelConfig = (this.level as Pinball)?.levelConfiguration
             gameEvents.emit(signals.levelChanging, new Pinball(levelConfig));
             gameState.set(STATE_INITIAL);
