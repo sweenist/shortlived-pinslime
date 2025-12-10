@@ -48,6 +48,7 @@ export class Paddle extends GameObject {
   isActivated: boolean = false;
   isTriggered: boolean = false;
   activationTime: number = 0;
+  lastCollisionTime: number = -Infinity;
 
   constructor(params: PaddleParams) {
     super(params.position);

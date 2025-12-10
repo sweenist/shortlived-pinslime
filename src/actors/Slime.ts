@@ -15,7 +15,7 @@ import {
   MOVE_RIGHT,
   MOVE_UP,
 } from './slimeAnimations';
-import { moveTowards, updateMidPoint } from '../utils/moveUtils';
+import { calculateCollision, moveTowards, updateMidPoint } from '../utils/moveUtils';
 import { gameEvents } from '../events/Events';
 import type { ItemEventMetaData } from '../types/eventTypes';
 import type { Main } from '../gameEngine/Main';
@@ -45,6 +45,7 @@ export class Slime extends GameObject {
   isTurning: boolean = false;
   gizmo: Sprite;
   isLevelBuilding: boolean = false;
+  lastPaddleCollisionTime: number = -Infinity;
 
   debugExpired: number = 0;
 
@@ -273,44 +274,28 @@ export class Slime extends GameObject {
   }
 
   checkForPaddle() {
-    const isHorizontal = [LEFT, RIGHT].includes(this.facingDirection);
+    const nearbyPaddles = (this.parent as Pinball).paddles.filter((paddle) => {
+      if (this.facingDirection === RIGHT) return paddle.position.x > this.position.x && paddle.position.y === this.position.y;
+      if (this.facingDirection === LEFT) return paddle.position.x < this.position.x && paddle.position.y === this.position.y;
+      if (this.facingDirection === DOWN) return paddle.position.y > this.position.y && paddle.position.x === this.position.x;
+      if (this.facingDirection === UP) return paddle.position.y < this.position.y && paddle.position.x === this.position.x;
+      return true;
+    });
 
-    // only check if midpoint coordinate is multiple of 16
-    if (isHorizontal && this.midPoint.x % 16 !== 0)
-      return;
-    if (!isHorizontal && this.midPoint.y % 16 !== 0)
-      return;
+    const validCollisions = nearbyPaddles.map((paddle) => {
+      return {
+        paddle,
+        overlap: calculateCollision(this.position, paddle.position),
+        collisionTime: paddle.lastCollisionTime ?? -Infinity
+      };
+    }).filter(({ overlap }) => overlap > 0)
+      .sort((src, target) => {
+        return target.overlap !== src.overlap
+          ? target.overlap - src.overlap
+          : src.collisionTime - target.collisionTime;
+      });
 
-    const usePaddleExtrema = [UP, LEFT].includes(this.facingDirection);
-
-    let checkPosition: Vector2 = this.midPoint.duplicate();
-
-    switch (this.facingDirection) {
-      case 'UP':
-        {
-          checkPosition.x = this.position.x + 16;
-          break;
-        }
-      case 'DOWN': {
-        checkPosition.x = this.position.x;
-        break;
-      }
-      case 'LEFT': {
-        checkPosition.y = this.position.y + 16;
-        break;
-      }
-      case 'RIGHT': {
-        checkPosition.y = this.position.y;
-      }
-    }
-
-    const candidate = (this.parent as Pinball).paddles.find((paddle) => {
-      return usePaddleExtrema
-        ? paddle.bottomRight.equals(checkPosition)
-        : paddle.position.equals(checkPosition);
-    }) ?? null;
-
-    this.paddle = candidate;
+    this.paddle = validCollisions.length > 0 ? validCollisions[0].paddle : null;
   }
 
   turn(ramp: Ramp, kill: () => void) {
@@ -334,6 +319,7 @@ export class Slime extends GameObject {
     if (this.paddle && this.paddle.isActivated) {
       this.destinationPosition = this.paddle.position.duplicate();
       this.facingDirection = this.paddle.deflection;
+      this.paddle.lastCollisionTime = performance.now();
       this.paddle = null;
     }
   }
