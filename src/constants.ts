@@ -1,3 +1,5 @@
+import type { DrawLayers } from "./types";
+
 export const backgroundColor = '#070e0f';
 export const fadeIn = 1;
 export const fadeOut = -1;
@@ -33,3 +35,10 @@ export const SOUNDS = [
   'deathMusic',
   'levelMusic',
 ] as const;
+
+export const LayerPriority: Record<DrawLayers, number> = {
+      GROUND: 0,
+      DEFAULT: 1,
+      SKY: 2,
+      USER_INTERFACE: 3,
+    } as const;

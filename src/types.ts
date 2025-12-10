@@ -16,7 +16,7 @@ export const DirectionShift = {
 
 export type DirectionShiftType = typeof DirectionShift[keyof typeof DirectionShift];
 
-export type DrawLayers = 'DEFAULT' | 'GROUND' | 'SKY' | 'USER_INTERFACE';
+export type DrawLayers = 'GROUND' | 'DEFAULT' | 'SKY' | 'USER_INTERFACE';
 
 export type DialogueScenario = {
   message: string;

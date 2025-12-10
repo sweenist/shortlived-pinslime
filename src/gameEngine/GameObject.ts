@@ -2,6 +2,7 @@ import { Vector2 } from '../utils/vector';
 import { gameEvents } from '../events/Events';
 import type { Main } from './Main';
 import type { DrawLayers } from '../types';
+import { LayerPriority } from '../constants';
 
 export class GameObject {
   children: GameObject[] = [];
@@ -59,9 +60,15 @@ export class GameObject {
 
   getOrderedDrawSprites() {
     return [...this.children].sort((src, target) => {
-      if (target.drawLayer === 'GROUND') return 1;
-      if (target.drawLayer === 'SKY') return -1;
-      return src.position.y > target.position.y ? 1 : -1;
+      const pa = LayerPriority[src.drawLayer] ?? LayerPriority.DEFAULT;
+      const pb = LayerPriority[target.drawLayer] ?? LayerPriority.DEFAULT;
+
+      if (pa !== pb) return pa - pb;
+
+      // Same layer: sort by y so that lower (larger y) are drawn later (on top)
+      const dy = src.position.y - target.position.y;
+      if (dy === 0) return 0;
+      return dy > 0 ? 1 : -1;
     });
   }
 
