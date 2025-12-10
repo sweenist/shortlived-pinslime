@@ -84,7 +84,6 @@ class Resources {
 
       sound.src = this.soundsToLoad[key];
       this.sounds.set(key, { sound, loaded: false, name: key, defaultVolume: 0.85 });
-      sound.addEventListener('canplaythrough', () => { console.info(`Can play ${key}`) });
     });
   }
 }

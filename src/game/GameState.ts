@@ -51,7 +51,6 @@ export class GameState {
   private enterIndex(index: number) {
     this._index = index;
     this._remaining = this._stateDurations[this.current] ?? null;
-    console.info("State", this.current)
     gameEvents.emit(signals.stateChanged, this.current);
   }
 
