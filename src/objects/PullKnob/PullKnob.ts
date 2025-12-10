@@ -25,6 +25,8 @@ export class PullKnob extends GameObject {
       frameRows: 7,
       frameIndex: 0,
       frameSize: new Vector2(80, 16),
+      alwaysDraw: true,
+      name: 'pullknob_Pin',
       animations: new Animations({
         idle: new FrameIndexPattern(IDLE),
         launching: new FrameIndexPattern(LAUNCHING),
@@ -37,6 +39,8 @@ export class PullKnob extends GameObject {
       position: knobOffset,
       frameIndex: 0,
       frameSize: new Vector2(16, 32),
+      alwaysDraw: true,
+      name: 'pullknob_Knob',
       animations: new Animations({
         idle: new FrameIndexPattern(IDLE),
         launching: new OffsetIndexPattern(KNOB_LAUNCHING),

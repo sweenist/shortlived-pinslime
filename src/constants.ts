@@ -37,8 +37,8 @@ export const SOUNDS = [
 ] as const;
 
 export const LayerPriority: Record<DrawLayers, number> = {
-      GROUND: 0,
-      DEFAULT: 1,
-      SKY: 2,
-      USER_INTERFACE: 3,
-    } as const;
+  GROUND: 0,
+  DEFAULT: 1,
+  SKY: 2,
+  USER_INTERFACE: 3,
+} as const;

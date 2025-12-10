@@ -24,6 +24,10 @@ export class Vector2 implements Vector2Interface {
     return new Vector2(this.x + addend.x, this.y + addend.y);
   }
 
+  addPoint(addend: point) {
+    return new Vector2(this.x + addend.x, this.y + addend.y);
+  }
+
   multiply(multiplicand: number) {
     return new Vector2(this.x * multiplicand, this.y * multiplicand);
   }

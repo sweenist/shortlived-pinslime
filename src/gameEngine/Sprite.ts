@@ -4,6 +4,7 @@ import type { ImageResource } from '../Resources';
 import { spriteSize, Vector2 } from '../utils/vector';
 import { OffsetIndexPattern } from './animations/OffsetIndexPattern';
 import type { DrawLayers } from '../types';
+import type { Main } from './Main';
 
 export interface SpriteParams {
   resource: ImageResource;
@@ -15,6 +16,7 @@ export interface SpriteParams {
   scale?: number;
   position?: Vector2;
   animations?: Animations;
+  alwaysDraw?: boolean;
   drawLayer?: DrawLayers;
 }
 
@@ -28,6 +30,8 @@ export class Sprite extends GameObject {
   scale: number;
   animations?: Animations | null;
   isVisible: boolean = true;
+  isInDisplayPort: boolean = true;
+  alwaysDraw: boolean;
 
   constructor(params: SpriteParams) {
     super(params.position); // relative offset
@@ -40,6 +44,7 @@ export class Sprite extends GameObject {
     this.scale = params.scale ?? 1;
     this.animations = params.animations;
     this.drawLayer = params.drawLayer ?? 'DEFAULT';
+    this.alwaysDraw = params.alwaysDraw ?? false;
 
     this.buildFrameMap();
   }
@@ -58,8 +63,11 @@ export class Sprite extends GameObject {
     }
   }
 
-  step(deltaTime: number) {
+  step(deltaTime: number, root?: Main): void {
     if (!this.animations) return;
+
+    const { camera } = root!;
+    this.isInDisplayPort = camera.isWithinViewPort(this.position) ?? true
 
     this.animations?.step(deltaTime);
     this.frameIndex = this.animations?.frame;
@@ -75,6 +83,8 @@ export class Sprite extends GameObject {
       if (debug) console.debug(`${this.resource.name} is not loaded`);
       return;
     }
+    if (!this.isInDisplayPort && !this.alwaysDraw) return;
+
     let frameCoordX = 0;
     let frameCoordY = 0;
 

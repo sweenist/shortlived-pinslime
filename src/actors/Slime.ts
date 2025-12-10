@@ -90,6 +90,7 @@ export class Slime extends GameObject {
       frameSize: new Vector2(128, 128),
       frameColumns: 8,
       frameRows: 7,
+      alwaysDraw: true,
       position: new Vector2(-64, -112),
       animations: new Animations(
         { death: new FrameIndexPattern(DEATH), }
