@@ -17,18 +17,16 @@ import {
 } from './slimeAnimations';
 import { calculateCollision, moveTowards } from '../utils/moveUtils';
 import { gameEvents } from '../events/Events';
-import type { ItemEventMetaData } from '../types/eventTypes';
 import type { Main } from '../gameEngine/Main';
 import type { Direction, GameStateType, Movement } from '../types';
 import { signals } from '../events/eventConstants';
 import { Ramp } from '../objects/Obstacles/Ramp';
 import { Paddle } from '../objects/Paddle/Paddle';
 import { AfterImage } from './AfterImage';
-import { ScoreToast } from '../objects/TextBox/ScoreToast';
 import type { Pinball } from '../levels/Pinball';
 import { gameState } from '../game/GameState';
+import { ItemCollectionShell } from '../objects/Item/ItemCollectionShell';
 
-const itemShiftStep = new Vector2(0, -1);
 
 export class Slime extends GameObject {
   facingDirection: Direction;
@@ -38,8 +36,7 @@ export class Slime extends GameObject {
   speed: number;
   afterImage: AfterImage;
   deathThroes: Sprite;
-  itemPickupTime: number = 0;
-  itemPickupShell?: GameObject;
+  itemPickupShell: ItemCollectionShell;
   isLocked: boolean = false;
   isTurning: boolean = false;
   gizmo: Sprite;
@@ -72,6 +69,8 @@ export class Slime extends GameObject {
       }),
     });
 
+    this.itemPickupShell = new ItemCollectionShell();
+
     this.gizmo = new Sprite({
       resource: resources.images['gizmo'],
       frameSize: spriteSize,
@@ -82,6 +81,7 @@ export class Slime extends GameObject {
 
     this.addChild(this.body);
     this.addChild(this.afterImage);
+    this.addChild(this.itemPickupShell);
 
     this.deathThroes = new Sprite({
       resource: resources.images['slimeDeath'],
@@ -100,10 +100,6 @@ export class Slime extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on<ItemEventMetaData>(signals.slimeItemCollect, this, (value) =>
-      this.onItemCollect(value)
-    );
-
     gameEvents.on<Vector2>(signals.gameAction, this, (_) => {
       this.redirect();
     });
@@ -120,14 +116,12 @@ export class Slime extends GameObject {
       }
       else if (value === STATE_EXPIRED) {
         this.afterImage.clearShadows();
-        this.itemPickupShell?.destroy();
         this.body.animations?.playOnce('expired', () => {
           this.body.isVisible = false;
         });
       }
       else if (value === STATE_DEAD) {
         this.afterImage.clearShadows();
-        this.itemPickupShell?.destroy();
         this.body.isVisible = false;
         this.addChild(this.deathThroes);
         this.deathThroes.animations?.playOnce('death', () => this.removeChild(this.deathThroes));
@@ -150,11 +144,7 @@ export class Slime extends GameObject {
     });
   }
 
-  step(deltaTime: number, root: Main) {
-    if (this.itemPickupTime > 0) {
-      this.processOnItemPickup(deltaTime);
-    }
-
+  step(_deltaTime: number, root: Main) {
     const { input } = root;
     if (input.getActionJustPressed('Space') && this.paddle) {
       this.redirect()
@@ -233,40 +223,6 @@ export class Slime extends GameObject {
     }
 
     this.destinationPosition = destination;
-  }
-
-  processOnItemPickup(delta: number) {
-    this.itemPickupTime -= delta;
-    const itemSprites = this.itemPickupShell?.children.filter((child) => child.name === 'item');
-    itemSprites?.forEach((item) => {
-      item.position = item.position.add(itemShiftStep);
-    });
-
-    if (this.itemPickupTime <= 0) {
-      this.itemPickupShell?.destroy();
-    }
-  }
-
-  onItemCollect(value: ItemEventMetaData) {
-    const { image, points } = value;
-
-    gameEvents.emit(signals.scoreUpdate, points);
-    this.itemPickupTime = 750;
-
-    this.itemPickupShell = new GameObject(); //TODO: make this a single gameobject and handle its render logic in that object
-    const scoreSpriteText = new ScoreToast({ position: new Vector2(20, -12), score: `${points}` });
-    this.itemPickupShell.addChild(
-      new Sprite({
-        resource: image,
-        frameSize: spriteSize,
-        position: new Vector2(0, -18),
-        name: 'item'
-      })
-    );
-    this.itemPickupShell.addChild(scoreSpriteText);
-
-    this.itemPickupShell.name = 'shell';
-    this.addChild(this.itemPickupShell);
   }
 
   checkForPaddle() {

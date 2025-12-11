@@ -124,3 +124,19 @@ export class Sprite extends GameObject {
     }
   }
 }
+
+export class FadeableSprite extends Sprite {
+  alpha: number = 1;
+
+  constructor(params: SpriteParams & { alpha?: number }) {
+    super(params);
+
+    this.alpha = params.alpha ?? 1;
+  }
+
+  draw(ctx: CanvasRenderingContext2D, position: Vector2, debug?: boolean): void {
+    ctx.globalAlpha = this.alpha;
+    super.draw(ctx, position, debug)
+    ctx.globalAlpha = 1.0;
+  }
+}
