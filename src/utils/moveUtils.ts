@@ -1,4 +1,4 @@
-import { spriteSize, type Vector2 } from './vector';
+import { spriteSize, Vector2 } from './vector';
 
 export function moveTowards(actorPosition: Vector2, destination: Vector2, speed: number) {
   let traverseX = destination.x - actorPosition.x;
@@ -25,7 +25,11 @@ export function moveTowards(actorPosition: Vector2, destination: Vector2, speed:
 
 export function calculateCollision(sourcePosition: Vector2, targetPosition: Vector2): number {
   const sourceExtrema = sourcePosition.add(spriteSize);
-  const targetExtrema = targetPosition.add(spriteSize);
+  const targetExtrema = targetPosition.add(spriteSize.add(new Vector2(3, 3)));
+
+  // do stuff to increase paddle's hitbox... not great but the interaction still sux
+  targetPosition = targetPosition.add(new Vector2(-3, -3));
+
 
   const overlapX = Math.max(0, Math.min(sourceExtrema.x, targetExtrema.x) - Math.max(sourcePosition.x, targetPosition.x));
   const overlapY = Math.max(0, Math.min(sourceExtrema.y, targetExtrema.y) - Math.max(sourcePosition.y, targetPosition.y));
