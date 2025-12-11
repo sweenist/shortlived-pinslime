@@ -15,7 +15,7 @@ import {
   MOVE_RIGHT,
   MOVE_UP,
 } from './slimeAnimations';
-import { calculateCollision, moveTowards, updateMidPoint } from '../utils/moveUtils';
+import { calculateCollision, moveTowards } from '../utils/moveUtils';
 import { gameEvents } from '../events/Events';
 import type { ItemEventMetaData } from '../types/eventTypes';
 import type { Main } from '../gameEngine/Main';
@@ -32,7 +32,6 @@ const itemShiftStep = new Vector2(0, -1);
 
 export class Slime extends GameObject {
   facingDirection: Direction;
-  midPoint: Vector2;
   destinationPosition: Vector2;
   body: Sprite;
   paddle: Paddle | null | undefined;
@@ -72,8 +71,6 @@ export class Slime extends GameObject {
         expired: new FrameIndexPattern(EXPIRED),
       }),
     });
-
-    this.midPoint = this.position.add(new Vector2(8, 8));
 
     this.gizmo = new Sprite({
       resource: resources.images['gizmo'],
@@ -174,7 +171,6 @@ export class Slime extends GameObject {
 
     if (gameState.isPlaying) {
       const distance = moveTowards(this.position, this.destinationPosition, this.speed);
-      updateMidPoint(this.position, this.midPoint);
       this.checkForPaddle();
 
       const hasArrived = distance < 1;
@@ -257,7 +253,7 @@ export class Slime extends GameObject {
     gameEvents.emit(signals.scoreUpdate, points);
     this.itemPickupTime = 750;
 
-    this.itemPickupShell = new GameObject();
+    this.itemPickupShell = new GameObject(); //TODO: make this a single gameobject and handle its render logic in that object
     const scoreSpriteText = new ScoreToast({ position: new Vector2(20, -12), score: `${points}` });
     this.itemPickupShell.addChild(
       new Sprite({

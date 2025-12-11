@@ -23,11 +23,6 @@ export function moveTowards(actorPosition: Vector2, destination: Vector2, speed:
   return distance;
 }
 
-export function updateMidPoint(position: Vector2, midPoint: Vector2, offset: number = 8) {
-  midPoint.x = position.x + offset;
-  midPoint.y = position.y + offset;
-}
-
 export function calculateCollision(sourcePosition: Vector2, targetPosition: Vector2): number {
   const sourceExtrema = sourcePosition.add(spriteSize);
   const targetExtrema = targetPosition.add(spriteSize);
