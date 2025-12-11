@@ -9,9 +9,12 @@ type CharacterSprites = {
   sprite: Sprite;
 };
 
+const MAX_OPACITY = 1.0;
+
 export class ScoreToast extends GameObject {
   drawWords: boolean = false;
   scoreChars: CharacterSprites[];
+  alpha: number = 1.0;
 
   constructor(params: { position: Vector2, score: string }) {
     super(params.position);
@@ -52,7 +55,10 @@ export class ScoreToast extends GameObject {
       const widthCharOffset = cursorX - 5;
 
       const drawPosition = new Vector2(widthCharOffset, position.y);
+
+      ctx.globalAlpha = this.alpha;
       sprite.draw(ctx, drawPosition);
+      ctx.globalAlpha = MAX_OPACITY;
 
       cursorX += width * sprite.scale + 1;
       currentShowIndex += 1;
