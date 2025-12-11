@@ -14,7 +14,6 @@ import { PullKnob } from '../objects/PullKnob/PullKnob';
 import { Sprite } from '../gameEngine/Sprite';
 import { Stopwatch } from '../objects/Stopwatch/Stopwatch';
 import { Item } from '../objects/Item/Item';
-import type { ItemEventMetaData } from '../types/eventTypes';
 import { signals, soundTriggers } from '../events/eventConstants';
 import { gameEvents } from '../events/Events';
 import type { LevelConfiguration } from './configurationManager';
@@ -28,7 +27,6 @@ const TILE_WIDTH = 16 as const
 
 export class Pinball extends Level {
   mapAddresses: string[] = [];
-  score: number = 0;
   optionsMenu: OptionDialog | undefined;
   levelConfiguration: LevelConfiguration;
   scoreHud: ScoreHud;
@@ -92,10 +90,6 @@ export class Pinball extends Level {
   }
 
   ready(): void {
-    gameEvents.on<ItemEventMetaData>(signals.slimeItemCollect, this, ({ points }) => {
-      this.score += points ?? 0;
-    });
-
     gameEvents.on(signals.gameAction, this, () => {
       gameEvents.emit(soundTriggers.playPaddle)
     });

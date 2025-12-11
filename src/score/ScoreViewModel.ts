@@ -5,6 +5,7 @@ import { gameState } from "../game/GameState";
 import { GameObject } from "../gameEngine/GameObject";
 import type { Main } from "../gameEngine/Main";
 import type { GameStateType } from "../types";
+import type { ItemEventMetaData } from "../types/eventTypes";
 
 export class ScoreViewModel extends GameObject {
   score: number;
@@ -22,8 +23,8 @@ export class ScoreViewModel extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on<number>(signals.scoreUpdate, this, (value) => {
-      this.score += value;
+    gameEvents.on<ItemEventMetaData>(signals.slimeItemCollect, this, ({ points }) => {
+      this.score += points ?? 0;
     })
 
     gameEvents.on<GameStateType>(signals.stateChanged, this, (state) => {
