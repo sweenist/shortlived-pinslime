@@ -26,7 +26,6 @@ const TILE_HEIGHT = 16 as const;
 const TILE_WIDTH = 16 as const
 
 export class Pinball extends Level {
-  mapAddresses: string[] = [];
   optionsMenu: OptionDialog | undefined;
   levelConfiguration: LevelConfiguration;
   scoreHud: ScoreHud;

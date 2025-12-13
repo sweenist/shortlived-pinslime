@@ -9,6 +9,10 @@ import {
   DEATH,
   EXPIRED,
   IDLE_START,
+  IMPENDING_DOOM_DOWN,
+  IMPENDING_DOOM_LEFT,
+  IMPENDING_DOOM_RIGHT,
+  IMPENDING_DOOM_UP,
   LAUNCH,
   MOVE_DOWN,
   MOVE_LEFT,
@@ -26,6 +30,7 @@ import { AfterImage } from './AfterImage';
 import type { Pinball } from '../levels/Pinball';
 import { gameState } from '../game/GameState';
 import { ItemCollectionShell } from '../objects/Item/ItemCollectionShell';
+import { gridCells } from '../utils/grid';
 
 
 export class Slime extends GameObject {
@@ -66,6 +71,10 @@ export class Slime extends GameObject {
         moveLeft: new FrameIndexPattern(MOVE_LEFT),
         moveRight: new FrameIndexPattern(MOVE_RIGHT),
         expired: new FrameIndexPattern(EXPIRED),
+        doomUp: new FrameIndexPattern(IMPENDING_DOOM_UP),
+        doomRight: new FrameIndexPattern(IMPENDING_DOOM_RIGHT),
+        doomDown: new FrameIndexPattern(IMPENDING_DOOM_DOWN),
+        doomLeft: new FrameIndexPattern(IMPENDING_DOOM_LEFT),
       }),
     });
 
@@ -188,22 +197,26 @@ export class Slime extends GameObject {
 
     if (this.facingDirection === UP) {
       nextY -= gridSize;
-      this.body.animations?.play('moveUp');
+      const animationType = this.checkUpcomingObstacles();
+      this.body.animations?.play(`${animationType}Up`);
     }
 
     if (this.facingDirection === DOWN) {
       nextY += gridSize;
-      this.body.animations?.play('moveDown');
+      const animationType = this.checkUpcomingObstacles();
+      this.body.animations?.play(`${animationType}Down`);
     }
 
     if (this.facingDirection === LEFT) {
       nextX -= gridSize;
-      this.body.animations?.play('moveLeft');
+      const animationType = this.checkUpcomingObstacles();
+      this.body.animations?.play(`${animationType}Left`);
     }
 
     if (this.facingDirection === RIGHT) {
       nextX += gridSize;
-      this.body.animations?.play('moveRight');
+      const animationType = this.checkUpcomingObstacles();
+      this.body.animations?.play(`${animationType}Right`);
     }
 
     const destination = new Vector2(nextX, nextY);
@@ -276,6 +289,33 @@ export class Slime extends GameObject {
     }
   }
 
+
+  checkUpcomingObstacles(): 'move' | 'doom' {
+    for (let i = 1; i <= 7; i++) {
+      let checkPosition = this.destinationPosition.duplicate();
+      if (this.facingDirection === UP) {
+        checkPosition = checkPosition.add(new Vector2(0, -gridCells(i)));
+      } else if (this.facingDirection === DOWN) {
+        checkPosition = checkPosition.add(new Vector2(0, gridCells(i)));
+      } else if (this.facingDirection === LEFT) {
+        checkPosition = checkPosition.add(new Vector2(-gridCells(i), 0));
+      } else if (this.facingDirection === RIGHT) {
+        checkPosition = checkPosition.add(new Vector2(gridCells(i), 0));
+      }
+
+      // short circuit if any tile ahead is solid
+      const destinationTile = this.parent?.children.filter((child) => {
+        return child.position.equals(checkPosition);
+      });
+      const isObstruction = destinationTile?.some(tile => tile.isSolid);
+      const isRamp = destinationTile?.some(tile => tile instanceof Ramp);
+      if (isObstruction || isRamp) {
+        return isObstruction ? 'doom' : 'move';
+      }
+    }
+    return 'move';
+  }
+
   debug(level: number) {
     const arrow = '-'.repeat(level + 1);
 
@@ -288,3 +328,5 @@ export class Slime extends GameObject {
     });
   }
 }
+
+
