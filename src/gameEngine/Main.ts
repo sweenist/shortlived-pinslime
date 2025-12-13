@@ -7,13 +7,14 @@ import { gameEvents } from '../events/Events';
 import { GameInput } from './GameInput';
 import { GameObject } from './GameObject';
 import { Level } from './Level';
-import { signals, soundTriggers } from '../events/eventConstants';
+import { signals } from '../events/eventConstants';
 import { gameState } from '../game/GameState';
 import { Title } from '../game/Title';
 import { OptionDialog } from '../objects/TextBox/OptionDialog';
 import { Pinball } from '../levels/Pinball';
-import { configurationManager } from '../levels/configurationManager';
+import { configurationManager, type LevelConfiguration } from '../levels/configurationManager';
 import { SoundManager } from '../sound/SoundManager';
+import { buildRetryOption, quitGameOption } from '../menu/gameOverOptions';
 
 export interface MainGameParams {
   ctx: CanvasRenderingContext2D;
@@ -51,16 +52,16 @@ export class Main extends GameObject {
   }
 
   ready(): void {
-    gameEvents.on<Level | Title>(signals.levelChanging, this, (newLevel) => {
-      if (newLevel instanceof Level) {
-        this.title?.destroy();
-        this.setLevel(newLevel);
-      } else if (newLevel instanceof Title) {
+    gameEvents.on<LevelConfiguration | Title>(signals.levelChanging, this, (newLevel) => {
+      if (newLevel instanceof Title) {
         this.level?.destroy();
         gameState.set(STATE_TITLE);
         this.title = newLevel;
         this.camera.position = Vector2.Zero();
         this.addChild(this.title);
+      } else {
+        this.title?.destroy();
+        this.setLevel(new Pinball(newLevel as LevelConfiguration));
       }
     });
 
@@ -196,9 +197,7 @@ export class Main extends GameObject {
       options: [
         {
           text: 'play',
-          action: () => {
-            gameEvents.emit(signals.levelChanging, new Pinball(configurationManager[0]));
-          },
+          action: () => gameEvents.emit(signals.levelChanging, configurationManager[0]),
           actOnState: STATE_INITIAL,
         }]
     });
@@ -207,26 +206,19 @@ export class Main extends GameObject {
   }
   private showOptionsForGameOver() {
     this.hideOptions();
+    const levelConfig = (this.level as Pinball)?.levelConfiguration
+
     this.optionsMenu = new OptionDialog({
       divId: '#options',
       canvasId: '#options-canvas',
       options: [
         {
           text: 'retry',
-          action: () => {
-            gameEvents.emit(soundTriggers.stopMusic);
-            const levelConfig = (this.level as Pinball)?.levelConfiguration
-            gameEvents.emit(signals.levelChanging, new Pinball(levelConfig));
-            gameState.set(STATE_INITIAL);
-            console.info('retry')
-          }
+          action: () => buildRetryOption(levelConfig)
         },
         {
           text: 'quit',
-          action: () => {
-            gameState.set(STATE_TITLE);
-            gameEvents.emit(signals.levelChanging, new Title())
-          }
+          action: quitGameOption
         }
       ]
     });
