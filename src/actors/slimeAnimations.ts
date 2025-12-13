@@ -25,6 +25,11 @@ export const MOVE_RIGHT = makeMovementFrames(8)
 export const MOVE_DOWN = makeMovementFrames(10);
 export const MOVE_LEFT = makeMovementFrames(12);
 
+export const IMPENDING_DOOM_UP = makeAnimation(14, 1500, 2);
+export const IMPENDING_DOOM_RIGHT = makeAnimation(16, 1500, 2);
+export const IMPENDING_DOOM_DOWN = makeAnimation(18, 1500, 2);
+export const IMPENDING_DOOM_LEFT = makeAnimation(20, 1500, 2);
+
 export const DEATH = makeAnimation(7, 1700, 47);
 export const EXPIRED = makeAnimation(25, 1500, 8);
 
@@ -78,6 +83,7 @@ export const IDLE_START: animationConfiguration = {
     },
   ]
 };
+
 export const LAUNCH: animationConfiguration = {
   duration: 1000,
   type: 'frame',
