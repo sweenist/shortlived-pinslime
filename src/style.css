@@ -16,6 +16,7 @@ canvas {
   display: grid;
   margin-left: auto;
   margin-right: auto;
+  container-type: size;
   grid-template-columns: 10fr 20fr 1fr 10fr;
   grid-template-rows: minmax(9%, 10fr) 20fr 20fr 4fr 20fr;
   border: 2px solid #e1e1e1;
@@ -49,12 +50,27 @@ canvas {
 }
 
 #sub-options {
+  padding: 2%;
   grid-row: 3/5;
   grid-column: 2/4;
-  height: auto;
+  height: fit-content;
   margin-left: 4%;
   margin-top: 4%;
   z-index: 3;
+}
+
+#options > button,
+#sub-options > button {
+  height: 10cqh;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+}
+
+#options > button:hover,
+#sub-options > button:hover {
+  background-color: #cacaca;
+  opacity: 50%;
 }
 
 .opening {
@@ -144,6 +160,7 @@ canvas.menu {
   object-position: -32px -32px;
 }
 
+[data-visible='false'],
 .hidden {
   visibility: hidden;
   height: 1px;
