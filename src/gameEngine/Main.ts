@@ -41,7 +41,7 @@ export class Main extends GameObject {
   constructor(params: MainGameParams) {
     super(params.position);
 
-    this.camera = new Camera(canvasManager.mainCanvas, true);
+    this.camera = new Camera(true);
     this.input = new GameInput();
     this.title = new Title();
     this.soundManager = new SoundManager();

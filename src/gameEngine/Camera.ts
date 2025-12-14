@@ -5,34 +5,29 @@ import { Level } from './Level';
 import { signals } from '../events/eventConstants';
 import type { Movement } from '../types';
 import type { Main } from './Main';
+import { canvasManager } from './CanvasManager';
 
 export class Camera extends GameObject {
   canvas: HTMLCanvasElement;
-  canvasWidth: number;
-  canvasHeight: number;
   halfActor = 8;
   halfWidth: number;
   halfHeight: number;
   clampToMap: boolean
   rectExtrema: Vector2;
 
-  constructor(canvas: HTMLCanvasElement, clampToMap: boolean) {
+  constructor(clampToMap: boolean) {
     super();
-    this.canvas = canvas;
-    this.canvasWidth = canvas.width;
-    this.canvasHeight = canvas.height;
-    this.halfWidth = -this.halfActor + this.canvasWidth / 2;
-    this.halfHeight = -this.halfActor + this.canvasHeight / 2;
+    this.canvas = canvasManager.mainCanvas;
+    this.halfWidth = -this.halfActor + this.canvas.width / 2;
+    this.halfHeight = -this.halfActor + this.canvas.height / 2;
 
     this.canvas.addEventListener('resize', () => {
-      this.canvasWidth = canvas.width;
-      this.canvasHeight = canvas.height;
-      this.halfWidth = -this.halfActor + this.canvasWidth / 2;
-      this.halfHeight = -this.halfActor + this.canvasHeight / 2;
+      this.halfWidth = -this.halfActor + this.canvas.width / 2;
+      this.halfHeight = -this.halfActor + this.canvas.height / 2;
 
     });
 
-    this.rectExtrema = this.position.addPoint({ x: this.canvasWidth, y: this.canvasWidth });
+    this.rectExtrema = this.position.addPoint({ x: this.canvas.width, y: this.canvas.height });
     this.clampToMap = clampToMap;
   }
 
@@ -48,7 +43,7 @@ export class Camera extends GameObject {
 
   centerPositionOnTarget(target: Vector2) {
     this.position = new Vector2(-target.x + this.halfWidth, -target.y + this.halfHeight);
-    this.rectExtrema = this.position.addPoint({ x: this.canvasWidth, y: this.canvasWidth });
+    this.rectExtrema = this.position.addPoint({ x: this.canvas.width, y: this.canvas.height });
     if (this.clampToMap) this.clamp()
 
   }
@@ -58,8 +53,8 @@ export class Camera extends GameObject {
 
     if (!level || !level.mapSize) return;
 
-    const minX = -level.mapSize.x + this.canvasWidth;
-    const minY = -level.mapSize.y + this.canvasHeight;
+    const minX = -level.mapSize.x + this.canvas.width;
+    const minY = -level.mapSize.y + this.canvas.height;
 
     if (this.position.x > 0) this.position.x = 0;
     if (this.position.y > 0) this.position.y = 0;
