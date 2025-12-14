@@ -1,3 +1,4 @@
+import { canvasManager } from "../gameEngine/CanvasManager";
 import { GameObject } from "../gameEngine/GameObject";
 import type { Main } from "../gameEngine/Main";
 import { Label } from "../objects/TextBox/Label";
@@ -13,15 +14,11 @@ export class ScoreHud extends GameObject {
   hiScoreValue: ScoreText;
   timeLabel: Label;
   timeValue: ScoreText;
-  canvasContext: CanvasRenderingContext2D;
 
   constructor(viewModel: ScoreViewModel) {
     super();
 
     this.viewModel = viewModel;
-    //gross but whatever
-    const canvas = document.querySelector<HTMLCanvasElement>('#score-canvas');
-    this.canvasContext = canvas?.getContext('2d')!;
 
     this.scoreLabel = new Label({
       text: 'SCORE',
@@ -74,6 +71,6 @@ export class ScoreHud extends GameObject {
   }
 
   draw(_ctx: CanvasRenderingContext2D, _position: Vector2, _debug?: boolean): void {
-    super.draw(this.canvasContext, this.position);
+    super.draw(canvasManager.getContext('score'), this.position);
   }
 }
