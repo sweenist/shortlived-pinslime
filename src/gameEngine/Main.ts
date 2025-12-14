@@ -15,9 +15,9 @@ import { Pinball } from '../levels/Pinball';
 import { configurationManager, type LevelConfiguration } from '../levels/configurationManager';
 import { SoundManager } from '../sound/SoundManager';
 import { buildRetryOption, quitGameOption } from '../menu/gameOverOptions';
+import { canvasManager } from './CanvasManager';
 
 export interface MainGameParams {
-  ctx: CanvasRenderingContext2D;
   position?: Vector2;
   level?: Level;
 }
@@ -41,7 +41,7 @@ export class Main extends GameObject {
   constructor(params: MainGameParams) {
     super(params.position);
 
-    this.camera = new Camera(params.ctx.canvas, true);
+    this.camera = new Camera(canvasManager.mainCanvas, true);
     this.input = new GameInput();
     this.title = new Title();
     this.soundManager = new SoundManager();
@@ -170,16 +170,19 @@ export class Main extends GameObject {
     });
   }
 
-  drawForeground(ctx: CanvasRenderingContext2D) {
-    super.drawForeground(ctx);
+  drawForeground() {
+    const ctx = canvasManager.getContext('options')
+    if (ctx) {
+      super.drawForeground(ctx);
 
-    if (this.isFading) {
-      ctx.save();
-      ctx.globalAlpha = 1 - this.fadeAlpha;
-      ctx.fillStyle = '#000';
-      ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      ctx.restore();
-    }
+      if (this.isFading) {
+        ctx.save();
+        ctx.globalAlpha = 1 - this.fadeAlpha;
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.restore();
+      }
+    } else console.warn("no context found for 'options'");
   }
 
   private hideOptions() {

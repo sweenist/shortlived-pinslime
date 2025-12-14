@@ -3,20 +3,14 @@ import './style.css';
 import { GameLoop } from './gameEngine/GameLoop';
 import { Main } from './gameEngine/Main';
 import { gameState } from './game/GameState';
+import { canvasManager } from './gameEngine/CanvasManager';
 
-const mainCanvas = document.querySelector<HTMLCanvasElement>('#game-canvas')!;
-const mainContext = mainCanvas.getContext('2d')!;
+canvasManager.build({
+  'options': document.querySelector<HTMLCanvasElement>('#options-canvas')!,
+  'score': document.querySelector<HTMLCanvasElement>('#score-canvas')!
+});
 
-const menuCanvas = document.querySelector<HTMLCanvasElement>('#options-canvas')!;
-const menuContext = menuCanvas.getContext('2d')!;
-menuContext.imageSmoothingEnabled = false;
-
-const scoreCanvas = document.querySelector<HTMLCanvasElement>('#score-canvas')!
-const scoreContext = scoreCanvas.getContext('2d')!;
-scoreContext.imageSmoothingEnabled = false;
-
-
-const mainScene = new Main({ ctx: mainContext });
+const mainScene = new Main({});
 
 const update = (deltaTime: number) => {
   mainScene.stepEntry(deltaTime, mainScene);
@@ -25,10 +19,9 @@ const update = (deltaTime: number) => {
 };
 
 const draw = () => {
-  mainContext.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
-  menuContext.clearRect(0, 0, menuCanvas.width, menuCanvas.height);
-  scoreContext.clearRect(0, 0, scoreCanvas.width, scoreCanvas.height);
+  canvasManager.clear();
 
+  const mainContext = canvasManager.mainContext;
   mainScene.drawBackground(mainContext);
   mainContext.save();
 
@@ -37,7 +30,7 @@ const draw = () => {
 
   mainContext.restore();
 
-  mainScene.drawForeground(menuContext);
+  mainScene.drawForeground();
 };
 
 const gameLoop = new GameLoop(update, draw);

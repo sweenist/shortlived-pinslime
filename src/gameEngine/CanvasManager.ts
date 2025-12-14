@@ -1,21 +1,21 @@
 import { GameObject } from "./GameObject";
 
-interface CanvasManagerParams {
-  main: HTMLCanvasElement,
-  integralCanvases?: { [key: string]: HTMLCanvasElement }
+type Visual = {
+  canvas: HTMLCanvasElement,
+  context: CanvasRenderingContext2D
 }
 
-export class CanvasManager extends GameObject {
+class CanvasManager extends GameObject {
   scale: number;
   mainContext: CanvasRenderingContext2D;
   mainCanvas: HTMLCanvasElement;
-  integralCanvases?: { [key: string]: HTMLCanvasElement };
+  integralCanvases: { [key: string]: Visual } = {};
   transientCanvases: Record<string, HTMLCanvasElement[]> = {};
 
-  constructor(params: CanvasManagerParams) {
+  constructor() {
     super();
 
-    this.mainCanvas = params.main
+    this.mainCanvas = document.querySelector<HTMLCanvasElement>('#game-canvas')!;
     this.mainContext = this.mainCanvas.getContext('2d')!;
     this.scale = this.mainCanvas.width / this.mainCanvas.clientWidth;
 
@@ -24,7 +24,24 @@ export class CanvasManager extends GameObject {
       this.mainCanvas.height = Math.floor(this.mainCanvas.parentElement?.clientHeight ?? this.mainCanvas.height);
     });
 
-    this.integralCanvases = params.integralCanvases
+  }
+
+  build(canvases: { [key: string]: HTMLCanvasElement }) {
+    //TODO: rethink this data structure
+    Object.keys(canvases).forEach((key) => {
+      const context = canvases[key].getContext('2d')!;
+      context.imageSmoothingEnabled = false;
+      this.integralCanvases[key] = { canvas: canvases[key], context };
+    });
+  }
+
+  clear() {
+    this.mainContext.clearRect(0, 0, this.mainCanvas.width, this.mainCanvas.height);
+    Object.values(this.integralCanvases).forEach((visual) => {
+      visual.context.clearRect(0, 0, visual.canvas.width, visual.canvas.height);
+    });
+
+    //TODO: clear transient
   }
 
   createCanvas(id: string, parentElement: HTMLElement, zIndex: number = 1): HTMLCanvasElement {
@@ -40,9 +57,15 @@ export class CanvasManager extends GameObject {
     return canvas;
   }
 
+  getContext(id: string) {
+    return this.integralCanvases[id]?.context ?? null;
+  }
+
   remove(id: string) {
     delete this.transientCanvases[id];
     const containerToRemove = (document.querySelector(`#${id}`));
     containerToRemove?.remove();
   }
 }
+
+export const canvasManager = new CanvasManager();
